@@ -22,9 +22,10 @@ head(nl)
 options(max.print = 99999)
 E(g)$curved=.2 
 E(g)$vertex.label.family="Helvetica"
+```
 
 ## Darstellung von Personen und Institutionen, bi-partite
-
+```
 V(g)[V(g)$type == 1]$shape <- "square"
 V(g)[V(g)$type == 0]$shape <- "circle"
 V(g)[V(g)$type == 0]$color <- "cornflowerblue"
@@ -87,6 +88,7 @@ edge_density(g) # Dichte
 centr_betw(g, directed=TRUE) # Betweenness-Zentralität
 betw <- betweenness(g, directed=TRUE) # Betweenness
 bet <- betweenness(g, directed = TRUE)
+
 ```
 ## Preisträger-Netzwerk
 ```
@@ -118,72 +120,72 @@ jury1
 V(jury1)$workinmedia=="2"*
 
 **alle Personen (type) streichen, die workinmedia = NA haben (nur Jurymitglieder haben 1 oder 2)**
-``
+```
 jury2 <- delete_vertices(jury1, V(jury1)[(is.na(workinmedia)) & (type == 0)])
 jury2
-`` 
+```
 
 **streicht alle Institutionen, die keine Verbindung zu Jurymitgliedern haben**
-``
+```
 juryfinal <- delete_vertices (jury2, V(jury2)[degree(jury2, mode="all")=="0"])
 juryfinal
 plot (juryfinal, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-``
+```
 
 **Outdegree berechnen**
-``
+```
 outdjury <- degree(juryfinal, mode="out")
 outdjury
 sort(outdjury)
-``
+```
 
 **Indegree berechnen**
-``
+```
 indjury <- degree(juryfinal, mode="in")
 indjury
 sort(indjury)
-``
+```
 
 ## Auswertung nach Jahren
 
 ### 2019
-``
+```
 year2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
 year2019
 plot (year2019)
-``
+```
 
 ### 2018
-``
+```
 year2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
 year2018
 plot (year2018)
-``
+```
 
 ### 2017
-``
+```
 year2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
 year2017
 plot (year2017)
-``
+```
 
 ### 2016
-``
+```
 year2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
 year2016
 plot (year2016)
-``
+```
 
 ### 2015
-``
+```
 year2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
 year2015
 plot (year2015)
-``
+```
 
 #### Gruppenpreise
 
-``
+```
 gruppenpreise2015 <- E(year2015)$format == 2
 gruppenpreise2015
 sum(gruppenpreise2015, na.rm = TRUE)
@@ -203,18 +205,18 @@ sum(gruppenpreise2018, na.rm = TRUE)
 gruppenpreise2019 <- E(year2019)$format == 2
 gruppenpreise2019
 sum(gruppenpreise2019, na.rm = TRUE)
-``
+```
 
 #### Männer/Frauen
-``
+```
 maennerjury <- V(juryfinal)$sex == 1
 sum (maennerjury, na.rm = TRUE)
 frauenjury <- V(juryfinal)$sex == 2
 sum (frauenjury, na.rm = TRUE)
-``
+```
 
 ## Gesamt
-``
+```
 maenner2015 <- V(year2015)$sex == 1
 sum (maenner2015, na.rm = TRUE)
 maenner2016 <- V(year2016)$sex == 1
@@ -235,11 +237,10 @@ sum (frauen2017, na.rm = TRUE)
 frauen2018 <- V(year2018)$sex == 2
 sum (frauen2018, na.rm = TRUE)
 frauen2019 <- V(year2019)$sex == 2
-sum (frauen2019, na.rm = TRUE)
-``
+```
 
 ## in Jury
-``
+```
 juryfinal2015 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2015"])
 frauenjury2015 <- V(juryfinal2015)$sex == 2
 sum (frauenjury2015, na.rm = TRUE)
@@ -269,11 +270,10 @@ frauenjury2019 <- V(juryfinal2019)$sex == 2
 sum (frauenjury2019, na.rm = TRUE)
 maennerjury2019 <- V(juryfinal2019)$sex == 1
 sum (maennerjury2019, na.rm = TRUE)
-``
+```
 
 ## unter Preisträgern
-
-``
+```
 preistraeger2015 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2015"])
 frauenpreistraeger2015 <- V(preistraeger2015)$sex == 2
 sum (frauenpreistraeger2015, na.rm = TRUE)
@@ -304,12 +304,12 @@ frauenpreistraeger2019 <- V(preistraeger2019)$sex == 2
 sum (frauenpreistraeger2019, na.rm = TRUE)
 maennerpreistraeger2019 <- V(preistraeger2019)$sex == 1
 sum (maennerpreistraeger2019, na.rm = TRUE)
-``
+```
 
 ##### Dominanz einzelner Medienunternehmen nach Jahren
 
 ## Wer (Personen) hat die meisten Preise abegräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.
-``
+```
 preistraeger2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
 nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
 outd_nur_preistraeger2015 <- degree(nur_preistraeger2015, mode="out")
@@ -334,12 +334,12 @@ preistraeger2019 <- subgraph.edges(g, E(g)[year == "2019"])
 nur_preistraeger2019 <- subgraph.edges(preistraeger2019, E(preistraeger2019)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
 outd_nur_preistraeger2019 <- degree(nur_preistraeger2019, mode="out")
 sort(outd_nur_preistraeger2019)
-``
+```
 
 ## Wer (Medienunternehmen) beschäftigt die meisten Preisträger (nach Jahren)?
 
 ## größter Indegree (gesamt, nach Jahren)
-``
+```
 ind2015 <- degree(year2015, mode="in")
 sort(ind2015)
 
@@ -354,15 +354,16 @@ sort(ind2018)
 
 ind2019 <- degree(year2019, mode="in")
 sort(ind2019)
-``
+```
 
 ## ab hier: Spielwiese 
 
 # Ego-Netzwerk Obermayer
+```
 edge_attr(g, "relation", index = E(g))
 h <- simplify(g, edge.attr.comb = "sum"))
 h
 obermayer <- subgraph <- make_ego_graph(h, order=1, c("Bastian Obermayer"))
 obermayer
 plot(obermayer[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-
+```
