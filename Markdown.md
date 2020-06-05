@@ -148,43 +148,44 @@ sort(indjury)
 
 ## Auswertung nach Jahren
 
-### 2019
+### Gesamt
+
+#### 2019
 ```
 year2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
 year2019
 plot (year2019)
 ```
 
-### 2018
+#### 2018
 ```
 year2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
 year2018
 plot (year2018)
 ```
 
-### 2017
+#### 2017
 ```
 year2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
 year2017
 plot (year2017)
 ```
 
-### 2016
+#### 2016
 ```
 year2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
 year2016
 plot (year2016)
 ```
 
-### 2015
+#### 2015
 ```
 year2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
 year2015
 plot (year2015)
 ```
 
-#### Gruppenpreise
-
+### Gruppenpreise
 ```
 gruppenpreise2015 <- E(year2015)$format == 2
 gruppenpreise2015
@@ -207,7 +208,7 @@ gruppenpreise2019
 sum(gruppenpreise2019, na.rm = TRUE)
 ```
 
-#### Männer/Frauen
+### Männer/Frauen
 ```
 maennerjury <- V(juryfinal)$sex == 1
 sum (maennerjury, na.rm = TRUE)
@@ -215,7 +216,7 @@ frauenjury <- V(juryfinal)$sex == 2
 sum (frauenjury, na.rm = TRUE)
 ```
 
-## Gesamt
+#### Gesamt
 ```
 maenner2015 <- V(year2015)$sex == 1
 sum (maenner2015, na.rm = TRUE)
@@ -239,7 +240,7 @@ sum (frauen2018, na.rm = TRUE)
 frauen2019 <- V(year2019)$sex == 2
 ```
 
-## in Jury
+#### in Jury
 ```
 juryfinal2015 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2015"])
 frauenjury2015 <- V(juryfinal2015)$sex == 2
@@ -272,7 +273,7 @@ maennerjury2019 <- V(juryfinal2019)$sex == 1
 sum (maennerjury2019, na.rm = TRUE)
 ```
 
-## unter Preisträgern
+#### unter Preisträgern
 ```
 preistraeger2015 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2015"])
 frauenpreistraeger2015 <- V(preistraeger2015)$sex == 2
@@ -306,9 +307,9 @@ maennerpreistraeger2019 <- V(preistraeger2019)$sex == 1
 sum (maennerpreistraeger2019, na.rm = TRUE)
 ```
 
-##### Dominanz einzelner Medienunternehmen nach Jahren
+### Dominanz einzelner Medienunternehmen nach Jahren
 
-## Wer (Personen) hat die meisten Preise abegräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.
+#### Wer (Personen) hat die meisten Preise abegräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.
 ```
 preistraeger2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
 nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
@@ -336,9 +337,9 @@ outd_nur_preistraeger2019 <- degree(nur_preistraeger2019, mode="out")
 sort(outd_nur_preistraeger2019)
 ```
 
-## Wer (Medienunternehmen) beschäftigt die meisten Preisträger (nach Jahren)?
+#### Wer (Medienunternehmen) beschäftigt die meisten Preisträger (nach Jahren)?**
 
-## größter Indegree (gesamt, nach Jahren)
+**größter Indegree (gesamt, nach Jahren)**
 ```
 ind2015 <- degree(year2015, mode="in")
 sort(ind2015)
