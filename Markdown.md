@@ -1,8 +1,7 @@
-# BA
-## kommentierter Code
+# BA (kommentierter Code)
+##Legende
+*g = Gesamtnetzwerk*
 
-*Legende
-g = Gesamtnetzwerk*
 
 ## Netzwerk laden 
 ```
