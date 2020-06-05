@@ -1,9 +1,9 @@
 # BA (kommentierter Code)
-##Legende
+## Legende
 *g = Gesamtnetzwerk*
 
 
-## Netzwerk laden 
+## Netzwerk laden
 ```
 library(igraph)
 el <- read.csv("el.csv", header = TRUE, as.is=T, sep = ";")
@@ -15,27 +15,36 @@ g
 plot(g)
 head(el)
 head(nl)
+```
 
 ## Grundsätzliche Darstellung
-
+```
 options(max.print = 99999)
 E(g)$curved=.2 
 E(g)$vertex.label.family="Helvetica"
 ```
 
 ## Darstellung von Personen und Institutionen, bi-partite
+
+Färbt edges unterschiedlicher types verschieden ein & gib ihnen unterscheidbare Formen
 ```
 V(g)[V(g)$type == 1]$shape <- "square"
 V(g)[V(g)$type == 0]$shape <- "circle"
 V(g)[V(g)$type == 0]$color <- "cornflowerblue"
 V(g)[V(g)$type == 1]$color <- "aquamarine2"
+```
 
+Färbt verschiedene relations unterschiedlich ein
+```
 E(g)[relation == 3]$color <- "green"
 E(g)[relation == 2]$color <- "orange"
 E(g)[relation == 1]$color <- "blue"
 
 plot(g)
+```
 
+Zeigt Attribute des Netzwerks an
+```
 E(g)
 V(g)
 edge_attr(g)
@@ -43,23 +52,48 @@ vertex_attr(g)
 ```
 
 ## Beschreibung Gesamtnetzwerk
+
+Zeigt Attribute an, die "institutiontype" = 1 haben (= Medienunternehmen)
 ```
-g
 vertex_attr(g, ("institutiontype" == 1), index=V(g))
+```
+Erzeugt Teilnetzwerk mit ausschließlich Preisen (Frage: Wie viele Preise im Gesamtnetzwerk?)
+```
 preise <- induced_subgraph(g, V(g)[which (institutiontype == 1)])
 preise
+```
+Erzeugt Teilnetzwerk mit ausschließlich Medien (Frage: Wie viele Medien im Gesamtnetzwerk?)
+```
 medien <- induced_subgraph(g, V(g)[which (institutiontype == 2)])
 medien
+```
+Erzeugt Teilnetzwerk mit ausschließlich Personen (Frage: Wie viele Personen im Gesamtnetzwerk?)
+```
 personen <- induced_subgraph(g, V(g)[which (type == 0)])
 personen
+```
+Erzeugt Teilnetzwerk mit ausschließlich Preisträgern (Frage: Wie viele Preisträger im Gesamtnetzwerk?)
+```
 preistraeger <- induced_subgraph(personen, V(personen)[which (is.na(workinmedia))])
 preistraeger
+```
+Erzeugt Teilnetzwerk mit ausschließlich Juroren (Frage: Wie viele Juroren im Gesamtnetzwerk?)
+```
 juroren <- induced_subgraph(personen, V(personen)[which (!is.na(workinmedia))])
 juroren
+```
+Erzeugt Teilnetzwerk mit ausschließlich Männern (Frage: Wie viele Männer im Gesamtnetzwerk?)
+```
 maenner <- induced_subgraph(personen, V(personen)[which (sex == 1)])
 maenner
+```
+Erzeugt Teilnetzwerk mit ausschließlich Frauen (Frage: Wie viele Frauen im Gesamtnetzwerk?)
+```
 frauen <- induced_subgraph(personen, V(personen)[which (sex == 2)])
 frauen
+```
+Erzeugt Teilnetzwerk mit ausschließlich Preisverleihungen (Frage: Wie viele Preisverleihungen an Einzelpersonen gab es?)
+```
 verleihung1 <- delete_edges(g, E(g)[relation == 3])
 verleihung <- delete_edges(verleihung1, E(verleihung1)[relation == 2])
 verleihung
@@ -67,14 +101,14 @@ verleihung
 
 ## Netzwerkmaße
 
-**Out-Degree**
+**Out-Degree im Gesamtnetzwerk**
 ```
 outd <- degree(g, mode="out")
 outd
 sort (outd)
 ```
 
-**In-Degree**
+**In-Degree im Gesamtnetzwerk**
 ```
 ind <- degree(g, mode="in")
 ind
@@ -90,27 +124,41 @@ bet <- betweenness(g, directed = TRUE)
 
 ```
 ## Preisträger-Netzwerk
+
+1. Entfernt alle Nodes, die bei "workinmedia" _nicht_ NA haben (trifft auf alle Nodes außer Jurymitgliedern zu)
 ```
 preistraeger1 <- delete_vertices(g, V(g)[!is.na(workinmedia)])
 preistraeger1
+```
+2. Entfernt aus oberem Netzwerk alle Jury-Beziehungen ("relation" = 3)
+```
 preistraeger2 <- delete_edges (preistraeger1, E(preistraeger1)[relation==3])
 preistraeger2
+```
+3. Entfernt aus oberem Netzwerk alle Institutionen, die keine Verbindung zu Preisträgern haben (Degree-Wert = 0)
+```
 preistraegerfinal <- delete_vertices (preistraeger2, V(preistraeger2)[degree(preistraeger2, mode="all")=="0"])
 preistraegerfinal
-
+```
+4. Wirft das Preisträgernetzwerk aus
+```
 plot (preistraegerfinal, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-
+```
+Berechnet Out-Degree von Preisträgernetzwerk 
+```
 outdpreistraeger <- degree(preistraegerfinal, mode="out")
 outdpreistraeger
 sort(outdpreistraeger)
-
+```
+Berechnet In-Degree von Preisträgernetzwerk 
+```
 indpreistraeger <- degree(preistraegerfinal, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
 ## Jury-Netzwerk
 
-**alle Preisträgerbeziehungen streichen**
+1. Entfernt alle Preisträger-Beziehungen aus edgelist
 ```
 jury1 <- delete_edges (g, E(g)[relation==1])
 jury1
@@ -118,27 +166,27 @@ jury1
 *V(jury1)$workinmedia=="1"
 V(jury1)$workinmedia=="2"*
 
-**alle Personen (type) streichen, die workinmedia = NA haben (nur Jurymitglieder haben 1 oder 2)**
+2. Entfernt aus oberem Netzwerk alle Personen (type = 0), die bei "workinmedia" = NA haben (also alle Preisträger)
 ```
 jury2 <- delete_vertices(jury1, V(jury1)[(is.na(workinmedia)) & (type == 0)])
 jury2
 ```
-
-**streicht alle Institutionen, die keine Verbindung zu Jurymitgliedern haben**
+3. Entfernt aus oberem Netzwerk alle Institutionen, die keine Verbindung zu Jurymitgliedern haben (Degree-Wert = 0)
 ```
 juryfinal <- delete_vertices (jury2, V(jury2)[degree(jury2, mode="all")=="0"])
 juryfinal
+```
+4. Wirft das Jurynetzwerk aus
+```
 plot (juryfinal, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
-
-**Outdegree berechnen**
+Berechnet Out-Degree von Jurynetzwerk
 ```
 outdjury <- degree(juryfinal, mode="out")
 outdjury
 sort(outdjury)
 ```
-
-**Indegree berechnen**
+Berechnet In-Degree von Jurynetzwerk
 ```
 indjury <- degree(juryfinal, mode="in")
 indjury
@@ -150,6 +198,7 @@ sort(indjury)
 ### Gesamt
 
 #### 2019
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2019
 ```
 year2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
 year2019
@@ -157,6 +206,7 @@ plot (year2019)
 ```
 
 #### 2018
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2018
 ```
 year2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
 year2018
@@ -164,6 +214,7 @@ plot (year2018)
 ```
 
 #### 2017
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2017
 ```
 year2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
 year2017
@@ -171,6 +222,7 @@ plot (year2017)
 ```
 
 #### 2016
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2016
 ```
 year2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
 year2016
@@ -178,6 +230,7 @@ plot (year2016)
 ```
 
 #### 2015
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2015
 ```
 year2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
 year2015
@@ -185,25 +238,54 @@ plot (year2015)
 ```
 
 ### Gruppenpreise
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2015 (s.o.), bei denen ein Gruppenpreis verliehen wurde
 ```
 gruppenpreise2015 <- E(year2015)$format == 2
 gruppenpreise2015
+```
+Summiert alle Gruppenpreisverleihungen, die es im Jahr 2015 gab
+```
 sum(gruppenpreise2015, na.rm = TRUE)
+```
 
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2016 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+```
 gruppenpreise2016 <- E(year2016)$format == 2
 gruppenpreise2016
+```
+Summiert alle Gruppenpreisverleihungen, die es im Jahr 2016 gab
+```
 sum(gruppenpreise2016, na.rm = TRUE)
+```
 
+
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2017 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+```
 gruppenpreise2017 <- E(year2017)$format == 2
 gruppenpreise2017
+```
+Summiert alle Gruppenpreisverleihungen, die es im Jahr 2017 gab
+```
 sum(gruppenpreise2017, na.rm = TRUE)
+```
 
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2018 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+```
 gruppenpreise2018 <- E(year2018)$format == 2
 gruppenpreise2018
+```
+Summiert alle Gruppenpreisverleihungen, die es im Jahr 2018 gab
+```
 sum(gruppenpreise2018, na.rm = TRUE)
+```
 
+Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2019 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+```
 gruppenpreise2019 <- E(year2019)$format == 2
 gruppenpreise2019
+```
+Summiert alle Gruppenpreisverleihungen, die es im Jahr 2019 gab
+```
 sum(gruppenpreise2019, na.rm = TRUE)
 ```
 
