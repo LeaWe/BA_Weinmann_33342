@@ -688,7 +688,7 @@ frauen_preistraeger_bremerfernsehpreis
 frauen_djp <- induced_subgraph(djp[[1]], V(djp[[1]])[which (sex == 2)])
 frauen_djp
 
-frauen_jury_djp <- induced_subgraph(frauen_djp, V(djp)[which (!is.na(workinmedia))])
+frauen_jury_djp <- induced_subgraph(frauen_djp, V(frauen_djp)[which (!is.na(workinmedia))])
 frauen_jury_djp
 
 frauen_preistraeger_djp <- induced_subgraph(frauen_djp, V(djp)[which (is.na(workinmedia))])
