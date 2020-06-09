@@ -192,6 +192,143 @@ indjury <- degree(juryfinal, mode="in")
 indjury
 sort(indjury)
 ```
+## Einzelne Preisnetzwerke
+
+Erstellt Teilnetzwerke der einzelnen Preise
+
+**Alternativer Medienpreis**
+```
+alternativermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Alternativer Medienpreis"))
+alternativermedienpreis
+plot(alternativermedienpreis[[1]])
+```
+**Axel-Springer-Preis**
+```
+axelspringerpreis <- subgraph <- make_ego_graph(g, order=1, c("Axel-Springer-Preis für junge Journalisten"))
+axelspringerpreis
+plot(axelspringerpreis[[1]])
+```
+**Bremer Fernsehpreis**
+```
+bremerfernsehpreis <- subgraph <- make_ego_graph(g, order=1, c("Bremer Fernsehpreis"))
+bremerfernsehpreis
+plot(bremerfernsehpreis[[1]])
+```
+**djp**
+```
+djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
+djp
+plot(djp[[1]])
+```
+**Deutscher Radiopreis**
+```
+deutscherradiopreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Radiopreis"))
+deutscherradiopreis
+plot(deutscherradiopreis[[1]])
+```
+**Deutscher Reporterpreis**
+```
+deutscherreporterpreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Reporterpreis"))
+deutscherreporterpreis
+plot(deutscherreporterpreis[[1]])
+```
+**Ernst-Schneider-Preis**
+```
+ernstschneiderpreis <- subgraph <- make_ego_graph(g, order=1, c("Ernst-Schneider-Preis"))
+ernstschneiderpreis
+plot(ernstschneiderpreis[[1]])
+```
+**Georg von Holtzbrink-Preis**
+```
+gvhpreis <- subgraph <- make_ego_graph(g, order=1, c("Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"))
+gvhpreis
+plot(gvhpreis[[1]])
+```
+**Grimme Online Award**
+```
+grimmeonlineaward <- subgraph <- make_ego_graph(g, order=1, c("Grimme Online Award"))
+grimmeonlineaward
+plot(grimmeonlineaward[[1]])
+```
+**Helmut-Schmidt-Preis**helmutschmidtpreis
+```
+helmutschmidtpreis <- subgraph <- make_ego_graph(g, order=1, c("Helmut-Schmidt-Journalistenpreis"))
+helmutschmidtpreis
+plot(helmutschmidtpreis[[1]])
+```
+**Herbert-Quandt-Preis**
+```
+herbertquandtpreis <- subgraph <- make_ego_graph(g, order=1, c("Herbert Quandt Medienpreis"))
+herbertquandtpreis
+plot(herbertquandtpreis[[1]])
+```
+**Journalist des Jahres**
+```
+journalistdesjahres <- subgraph <- make_ego_graph(g, order=1, c("Journalist des Jahres"))
+journalistdesjahres
+plot(journalistdesjahres[[1]])
+```
+**Katholischer Medienpreis**
+```
+katholischermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Katholischer Medienpreis"))
+katholischermedienpreis
+plot(katholischermedienpreis[[1]])
+```
+**Kurt-Tucholsky-Preis**
+```
+kurttucholskypreis <- subgraph <- make_ego_graph(g, order=1, c("Kurt-Tucholsky-Preis für literarische Publizistik"))
+kurttucholskypreis
+plot(kurttucholskypreis[[1]])
+```
+**Leuchtturm**
+```
+leuchtturm <- subgraph <- make_ego_graph(g, order=1, c("Leuchtturm für besondere publizistische Leistungen"))
+leuchtturm
+plot(leuchtturm[[1]])
+```
+**Ludwig-Börne-Preis**
+```
+ludwigboernepreis <- subgraph <- make_ego_graph(g, order=1, c("Ludwig-Börne-Preis"))
+ludwigboernepreis
+plot(ludwigboernepreis[[1]])
+```
+**Ludwig-Erhard-Preis**
+```
+ludwigerhardpreis <- subgraph <- make_ego_graph(g, order=1, c("Ludwig-Erhard-Preis für Wirtschaftspublizistik"))
+ludwigerhardpreis
+plot(ludwigerhardpreis[[1]])
+```
+**Nannen-Preis**
+```
+nannenpreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
+"))
+djp
+plot(djp[[1]])
+```
+**Robert-Geisendörfer-Preis**
+robertgeisendoerferpreis
+```
+djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
+"))
+djp
+plot(djp[[1]])
+```
+**Theodor-Wolff-Preis**
+theodorwolffpreis
+```
+djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
+"))
+djp
+plot(djp[[1]])
+```
+**Wächterpreis**
+waechterpreis
+```
+djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
+"))
+djp
+plot(djp[[1]])
+```
 
 ## Auswertung nach Jahren
 
@@ -247,7 +384,6 @@ Summiert alle Gruppenpreisverleihungen, die es im Jahr 2015 gab
 ```
 sum(gruppenpreise2015, na.rm = TRUE)
 ```
-
 Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2016 (s.o.), bei denen ein Gruppenpreis verliehen wurde
 ```
 gruppenpreise2016 <- E(year2016)$format == 2
@@ -257,8 +393,6 @@ Summiert alle Gruppenpreisverleihungen, die es im Jahr 2016 gab
 ```
 sum(gruppenpreise2016, na.rm = TRUE)
 ```
-
-
 Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2017 (s.o.), bei denen ein Gruppenpreis verliehen wurde
 ```
 gruppenpreise2017 <- E(year2017)$format == 2
@@ -268,7 +402,6 @@ Summiert alle Gruppenpreisverleihungen, die es im Jahr 2017 gab
 ```
 sum(gruppenpreise2017, na.rm = TRUE)
 ```
-
 Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2018 (s.o.), bei denen ein Gruppenpreis verliehen wurde
 ```
 gruppenpreise2018 <- E(year2018)$format == 2
@@ -290,35 +423,68 @@ sum(gruppenpreise2019, na.rm = TRUE)
 ```
 
 ### Männer/Frauen
+Teilnetzwerk, nur männliche Nodes im Jurynetzwerk (und ihre Summe)
 ```
 maennerjury <- V(juryfinal)$sex == 1
 sum (maennerjury, na.rm = TRUE)
+```
+Teilnetzwerk, nur weibliche Nodes im Jurynetzwerk (und ihre Summe)
+```
 frauenjury <- V(juryfinal)$sex == 2
 sum (frauenjury, na.rm = TRUE)
 ```
 
 #### ...gesamt
+Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2015 (und ihre Summe):
 ```
 maenner2015 <- V(year2015)$sex == 1
 sum (maenner2015, na.rm = TRUE)
+```
+Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2016 (und ihre Summe):
+```
 maenner2016 <- V(year2016)$sex == 1
 sum (maenner2016, na.rm = TRUE)
+```
+Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2017 (und ihre Summe):
+```
 maenner2017<- V(year2017)$sex == 1
 sum (maenner2017, na.rm = TRUE)
+```
+Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2018 (und ihre Summe):
+```
 maenner2018 <- V(year2018)$sex == 1
 sum (maenner2018, na.rm = TRUE)
+```
+Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2019 (und ihre Summe):
+```
 maenner2019 <- V(year2019)$sex == 1
 sum (maenner2019, na.rm = TRUE)
+```
 
+Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2015 (und ihre Summe):
+```
 frauen2015 <- V(year2015)$sex == 2
 sum (frauen2015, na.rm = TRUE)
+```
+Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2016 (und ihre Summe):
+```
 frauen2016 <- V(year2016)$sex == 2
 sum (frauen2016, na.rm = TRUE)
+```
+Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2017 (und ihre Summe):
+```
 frauen2017 <- V(year2017)$sex == 2
 sum (frauen2017, na.rm = TRUE)
+```
+Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2018 (und ihre Summe):
+```
 frauen2018 <- V(year2018)$sex == 2
 sum (frauen2018, na.rm = TRUE)
+```
+Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2019 (und ihre Summe):
+```
 frauen2019 <- V(year2019)$sex == 2
+sum (frauen2019, na.rm = TRUE)
 ```
 
 #### ...in Jury
@@ -374,32 +540,51 @@ sum (maennerjury2019, na.rm = TRUE)
 ```
 
 #### ...unter Preisträgern
+1. Erstelle Teilnetzwerk um alle Preisträger des Jahres **2015**
 ```
 preistraeger2015 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2015"])
+```
+2. Filtere alle weiblichen Nodes heraus
+```
 frauenpreistraeger2015 <- V(preistraeger2015)$sex == 2
+```
+3. Summiere alle weiblichen Nodes
+```
 sum (frauenpreistraeger2015, na.rm = TRUE)
+```
+4. Ebenso für alle männlichen Nodes
+```
 maennerpreistraeger2015 <- V(preistraeger2015)$sex == 1
 sum (maennerpreistraeger2015, na.rm = TRUE)
+```
 
+Für **2016**:
+```
 preistraeger2016 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2016"])
 frauenpreistraeger2016 <- V(preistraeger2016)$sex == 2
 preistraeger2016
 sum (frauenpreistraeger2016, na.rm = TRUE)
 maennerpreistraeger2016 <- V(preistraeger2016)$sex == 1
 sum (maennerpreistraeger2016, na.rm = TRUE)
-
+```
+Für **2017**:
+```
 preistraeger2017 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2017"])
 frauenpreistraeger2017 <- V(preistraeger2017)$sex == 2
 sum (frauenpreistraeger2017, na.rm = TRUE)
 maennerpreistraeger2017 <- V(preistraeger2017)$sex == 1
 sum (maennerpreistraeger2017, na.rm = TRUE)
-
+```
+Für **2018**:
+```
 preistraeger2018 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2018"])
 frauenpreistraeger2018 <- V(preistraeger2018)$sex == 2
 sum (frauenpreistraeger2018, na.rm = TRUE)
 maennerpreistraeger2018 <- V(preistraeger2018)$sex == 1
 sum (maennerpreistraeger2018, na.rm = TRUE)
-
+```
+Für **2019**:
+```
 preistraeger2019 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2019"])
 frauenpreistraeger2019 <- V(preistraeger2019)$sex == 2
 sum (frauenpreistraeger2019, na.rm = TRUE)
@@ -456,6 +641,26 @@ sort(ind2018)
 ind2019 <- degree(year2019, mode="in")
 sort(ind2019)
 ```
+## Homophilie
+
+### Männer/Frauenverteilung
+
+#### Positiv-/Negativbeispiele nach Preisen 
+
+** Alternativer Medienpreis**
+1. Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)
+frauen_alternativermedienpreis <- induced_subgraph(alternativermedienpreis[[1]], V(alternativermedienpreis[[1]])[which (sex == 2)])
+frauen_alternativermedienpreis
+
+2. Zähle alle Frauen, die in der Jury saßen (einzelne Personen werden mehrfach gezählt)
+frauen_jury_alternativermedienpreis <- induced_subgraph(frauen_alternativermedienpreis, V(frauen_alternativermedienpreis)[which (!is.na(workinmedia))])
+frauen_jury_alternativermedienpreis
+
+3. Zähle alle Frauen, die einen Preis gewonnen haben (einzelne Personen werden mehrfach gezählt)
+frauen_preistraeger_alternativermedienpreis <- induced_subgraph(frauen_alternativermedienpreis, V(frauen_alternativermedienpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_alternativermedienpreis
+
+**xxx**
 
 ## ab hier: Spielwiese 
 
