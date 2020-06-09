@@ -661,7 +661,7 @@ frauen_preistraeger_alternativermedienpreis
 
 **Axel-Springer-Preis**
 ```
-frauen_axelspringerpreis <- induced_subgraph(axelspringerpreis[[1]], V(alternativermedienpreis[[1]])[which (sex == 2)])
+frauen_axelspringerpreis <- induced_subgraph(axelspringerpreis[[1]], V(axelspringerpreis[[1]])[which (sex == 2)])
 frauen_axelspringerpreis
 
 frauen_jury_axelspringerpreis <- induced_subgraph(frauen_axelspringerpreis, V(frauen_axelspringerpreis)[which (!is.na(workinmedia))])
