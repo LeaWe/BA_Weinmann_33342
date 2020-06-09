@@ -197,132 +197,381 @@ sort(indjury)
 Erstellt Teilnetzwerke der einzelnen Preise
 
 **Alternativer Medienpreis**
+Gesamt
 ```
 alternativermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Alternativer Medienpreis"))
 alternativermedienpreis
 plot(alternativermedienpreis[[1]])
 ```
+Jury
+```
+jury_alternativermedienpreis <- induced_subgraph(alternativermedienpreis, V(alternativermedienpreis)[which (!is.na(workinmedia))])
+jury_alternativermedienpreis
+```
+Preisträger
+```
+preistraeger_alternativermedienpreis <- induced_subgraph(alternativermedienpreis, V(falternativermedienpreis)[which (is.na(workinmedia))])
+preistraeger_alternativermedienpreis
+```
 **Axel-Springer-Preis**
+Gesamt
 ```
 axelspringerpreis <- subgraph <- make_ego_graph(g, order=1, c("Axel-Springer-Preis für junge Journalisten"))
 axelspringerpreis
 plot(axelspringerpreis[[1]])
 ```
+Jury
+```
+jury_axelspringerpreis <- induced_subgraph(axelspringerpreis, V(axelspringerpreis)[which (!is.na(workinmedia))])
+jury_axelspringerpreis
+```
+Preisträger
+```
+preistraeger_axelspringerpreis <- induced_subgraph(axelspringerpreis, V(axelspringerpreis)[which (is.na(workinmedia))])
+preistraeger_axelspringerpreis
+```
+
 **Bremer Fernsehpreis**
+Gesamt
 ```
 bremerfernsehpreis <- subgraph <- make_ego_graph(g, order=1, c("Bremer Fernsehpreis"))
 bremerfernsehpreis
 plot(bremerfernsehpreis[[1]])
 ```
+Jury
+```
+jury_bremerfernsehpreis <- induced_subgraph(bremerfernsehpreis, V(bremerfernsehpreis)[which (!is.na(workinmedia))])
+jury_bremerfernsehpreis
+```
+Preisträger
+```
+preistraeger_bremerfernsehpreis <- induced_subgraph(bremerfernsehpreis, V(bremerfernsehpreis)[which (is.na(workinmedia))])
+preistraeger_bremerfernsehpreis
+```
+
 **djp**
+Gesamt
 ```
 djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
 djp
 plot(djp[[1]])
 ```
+Jury
+```
+jury_djp <- induced_subgraph(djp, V(djp)[which (!is.na(workinmedia))])
+jury_djp
+```
+Preisträger
+```
+preistraeger_djp <- induced_subgraph(djp, V(djp)[which (is.na(workinmedia))])
+preistraeger_djp
+```
+
 **Deutscher Radiopreis**
+Gesamt
 ```
 deutscherradiopreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Radiopreis"))
 deutscherradiopreis
 plot(deutscherradiopreis[[1]])
 ```
+Jury
+```
+jury_deutscherradiopreis <- induced_subgraph(deutscherradiopreis, V(deutscherradiopreis)[which (!is.na(workinmedia))])
+jury_deutscherradiopreis
+```
+Preisträger
+```
+preistraeger_deutscherradiopreis <- induced_subgraph(deutscherradiopreis, V(deutscherradiopreis)[which (is.na(workinmedia))])
+preistraeger_deutscherradiopreis
+```
+
 **Deutscher Reporterpreis**
+Gesamt
 ```
 deutscherreporterpreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Reporterpreis"))
 deutscherreporterpreis
 plot(deutscherreporterpreis[[1]])
 ```
+Jury
+```
+jury_deutscherreporterpreis <- induced_subgraph(deutscherreporterpreis, V(deutscherreporterpreis)[which (!is.na(workinmedia))])
+jury_deutscherreporterpreis
+```
+Preisträger
+```
+preistraeger_deutscherreporterpreis <- induced_subgraph(deutscherreporterpreis, V(deutscherreporterpreis)[which (is.na(workinmedia))])
+preistraeger_deutscherreporterpreis
+```
+
 **Ernst-Schneider-Preis**
+Gesamt
 ```
 ernstschneiderpreis <- subgraph <- make_ego_graph(g, order=1, c("Ernst-Schneider-Preis"))
 ernstschneiderpreis
 plot(ernstschneiderpreis[[1]])
 ```
-**Georg von Holtzbrink-Preis**
+Jury
+```
+jury_ernstschneiderpreis <- induced_subgraph(ernstschneiderpreis, V(ernstschneiderpreis)[which (!is.na(workinmedia))])
+jury_ernstschneiderpreis
+```
+Preisträger
+```
+preistraeger_ernstschneiderpreis <- induced_subgraph(ernstschneiderpreis, V(ernstschneiderpreis)[which (is.na(workinmedia))])
+preistraeger_ernstschneiderpreis
+```
+
+**Georg von Holtzbrinck-Preis**
+Gesamt
 ```
 gvhpreis <- subgraph <- make_ego_graph(g, order=1, c("Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"))
 gvhpreis
 plot(gvhpreis[[1]])
 ```
+Jury
+```
+jury_gvhpreis <- induced_subgraph(gvhpreis, V(gvhpreis)[which (!is.na(workinmedia))])
+jury_gvhpreis
+```
+Preisträger
+```
+preistraeger_gvhpreis <- induced_subgraph(gvhpreis, V(gvhpreis)[which (is.na(workinmedia))])
+preistraeger_gvhpreis
+```
+
 **Grimme Online Award**
+Gesamt
 ```
 grimmeonlineaward <- subgraph <- make_ego_graph(g, order=1, c("Grimme Online Award"))
 grimmeonlineaward
 plot(grimmeonlineaward[[1]])
 ```
-**Helmut-Schmidt-Preis**helmutschmidtpreis
+Jury
+```
+jury_grimmeonlineaward <- induced_subgraph(grimmeonlineaward, V(grimmeonlineaward)[which (!is.na(workinmedia))])
+jury_grimmeonlineaward
+```
+Preisträger
+```
+preistraeger_grimmeonlineaward <- induced_subgraph(grimmeonlineaward, V(grimmeonlineaward)[which (is.na(workinmedia))])
+preistraeger_grimmeonlineaward
+```
+
+**Helmut-Schmidt-Preis**
+Gesamt
 ```
 helmutschmidtpreis <- subgraph <- make_ego_graph(g, order=1, c("Helmut-Schmidt-Journalistenpreis"))
 helmutschmidtpreis
 plot(helmutschmidtpreis[[1]])
 ```
+Jury
+```
+jury_helmutschmidtpreis <- induced_subgraph(helmutschmidtpreis, V(helmutschmidtpreis)[which (!is.na(workinmedia))])
+jury_helmutschmidtpreis
+```
+Preisträger
+```
+preistraeger_helmutschmidtpreis <- induced_subgraph(helmutschmidtpreis, V(helmutschmidtpreis)[which (is.na(workinmedia))])
+preistraeger_helmutschmidtpreis
+```
+
 **Herbert-Quandt-Preis**
+Gesamt
 ```
 herbertquandtpreis <- subgraph <- make_ego_graph(g, order=1, c("Herbert Quandt Medienpreis"))
 herbertquandtpreis
 plot(herbertquandtpreis[[1]])
 ```
+Jury
+```
+jury_herbertquandtpreis <- induced_subgraph(herbertquandtpreis, V(herbertquandtpreis)[which (!is.na(workinmedia))])
+jury_herbertquandtpreis
+```
+Preisträger
+```
+preistraeger_herbertquandtpreis <- induced_subgraph(herbertquandtpreis, V(herbertquandtpreis)[which (is.na(workinmedia))])
+preistraeger_herbertquandtpreis
+```
+
 **Journalist des Jahres**
+Gesamt
 ```
 journalistdesjahres <- subgraph <- make_ego_graph(g, order=1, c("Journalist des Jahres"))
 journalistdesjahres
 plot(journalistdesjahres[[1]])
 ```
+Jury
+```
+jury_journalistdesjahres <- induced_subgraph(journalistdesjahres, V(journalistdesjahres)[which (!is.na(workinmedia))])
+jury_journalistdesjahres
+```
+Preisträger
+```
+preistraeger_journalistdesjahres <- induced_subgraph(journalistdesjahres, V(journalistdesjahres)[which (is.na(workinmedia))])
+preistraeger_journalistdesjahres
+```
+
 **Katholischer Medienpreis**
+Gesamt
 ```
 katholischermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Katholischer Medienpreis"))
 katholischermedienpreis
 plot(katholischermedienpreis[[1]])
 ```
+Jury
+```
+jury_katholischermedienpreis <- induced_subgraph(katholischermedienpreis, V(katholischermedienpreis)[which (!is.na(workinmedia))])
+jury_katholischermedienpreis
+```
+Preisträger
+```
+preistraeger_katholischermedienpreis <- induced_subgraph(katholischermedienpreis, V(katholischermedienpreis)[which (is.na(workinmedia))])
+preistraeger_katholischermedienpreis
+```
+
 **Kurt-Tucholsky-Preis**
+Gesamt
 ```
 kurttucholskypreis <- subgraph <- make_ego_graph(g, order=1, c("Kurt-Tucholsky-Preis für literarische Publizistik"))
 kurttucholskypreis
 plot(kurttucholskypreis[[1]])
 ```
+Jury
+```
+jury_kurttucholskypreis <- induced_subgraph(kurttucholskypreis, V(kurttucholskypreis)[which (!is.na(workinmedia))])
+jury_kurttucholskypreis
+```
+Preisträger
+```
+preistraeger_kurttucholskypreis <- induced_subgraph(kurttucholskypreis, V(kurttucholskypreis)[which (is.na(workinmedia))])
+preistraeger_kurttucholskypreis
+```
+
 **Leuchtturm**
+Gesamt
 ```
 leuchtturm <- subgraph <- make_ego_graph(g, order=1, c("Leuchtturm für besondere publizistische Leistungen"))
 leuchtturm
 plot(leuchtturm[[1]])
 ```
+Jury
+```
+jury_leuchtturm <- induced_subgraph(leuchtturm, V(leuchtturm)[which (!is.na(workinmedia))])
+jury_leuchtturm
+```
+Preisträger
+```
+preistraeger_leuchtturm <- induced_subgraph(leuchtturm, V(leuchtturm)[which (is.na(workinmedia))])
+preistraeger_leuchtturm
+```
+
 **Ludwig-Börne-Preis**
+Gesamt
 ```
 ludwigboernepreis <- subgraph <- make_ego_graph(g, order=1, c("Ludwig-Börne-Preis"))
 ludwigboernepreis
 plot(ludwigboernepreis[[1]])
 ```
+Jury
+```
+jury_ludwigboernepreis <- induced_subgraph(ludwigboernepreis, V(ludwigboernepreis)[which (!is.na(workinmedia))])
+jury_ludwigboernepreis
+```
+Preisträger
+```
+preistraeger_ludwigboernepreis <- induced_subgraph(ludwigboernepreis, V(ludwigboernepreis)[which (is.na(workinmedia))])
+preistraeger_ludwigboernepreis
+```
+
 **Ludwig-Erhard-Preis**
+Gesamt
 ```
 ludwigerhardpreis <- subgraph <- make_ego_graph(g, order=1, c("Ludwig-Erhard-Preis für Wirtschaftspublizistik"))
 ludwigerhardpreis
 plot(ludwigerhardpreis[[1]])
 ```
+Jury
+```
+jury_ludwigerhardpreis <- induced_subgraph(ludwigerhardpreis, V(ludwigerhardpreis)[which (!is.na(workinmedia))])
+jury_ludwigerhardpreis
+```
+Preisträger
+```
+preistraeger_ludwigerhardpreis <- induced_subgraph(ludwigerhardpreis, V(ludwigerhardpreis)[which (is.na(workinmedia))])
+preistraeger_ludwigerhardpreis
+```
+
 **Nannen-Preis**
+Gesamt
 ```
 nannenpreis <- subgraph <- make_ego_graph(g, order=1, c("Nannen Preis"))
 nannenpreis
 plot(nannenpreis[[1]])
 ```
+Jury
+```
+jury_nannenpreis <- induced_subgraph(nannenpreis, V(nannenpreis)[which (!is.na(workinmedia))])
+jury_nannenpreis
+```
+Preisträger
+```
+preistraeger_nannenpreis <- induced_subgraph(nannenpreis, V(nannenpreis)[which (is.na(workinmedia))])
+preistraeger_nannenpreis
+```
+
 **Robert-Geisendörfer-Preis**
+Gesamt
 ```
 robertgeisendoerferpreis <- subgraph <- make_ego_graph(g, order=1, c("Robert Geisendörfer Preis"))
 robertgeisendoerferpreis
 plot(robertgeisendoerferpreis[[1]])
 ```
+Jury
+```
+jury_robertgeisendoerferpreis <- induced_subgraph(robertgeisendoerferpreis, V(robertgeisendoerferpreis)[which (!is.na(workinmedia))])
+jury_robertgeisendoerferpreis
+```
+Preisträger
+```
+preistraeger_robertgeisendoerferpreis <- induced_subgraph(robertgeisendoerferpreis, V(robertgeisendoerferpreis)[which (is.na(workinmedia))])
+preistraeger_robertgeisendoerferpreis
+```
+
 **Theodor-Wolff-Preis**
+Gesamt
 ```
 theodorwolffpreis <- subgraph <- make_ego_graph(g, order=1, c("Theodor-Wolff-Preis"))
 theodorwolffpreis
 plot(theodorwolffpreis[[1]])
 ```
+Jury
+```
+jury_theodorwolffpreis <- induced_subgraph(theodorwolffpreis, V(theodorwolffpreis)[which (!is.na(workinmedia))])
+jury_theodorwolffpreis
+```
+Preisträger
+```
+preistraeger_theodorwolffpreis <- induced_subgraph(theodorwolffpreis, V(theodorwolffpreis)[which (is.na(workinmedia))])
+preistraeger_theodorwolffpreis
+```
+
 **Wächterpreis**
+Gesamt
 ```
 waechterpreis <- subgraph <- make_ego_graph(g, order=1, c("Wächterpreis der Tagespresse"))
 waechterpreis
 plot(waechterpreis[[1]])
 ```
-
+Jury
+```
+jury_waechterpreis <- induced_subgraph(waechterpreis, V(waechterpreis)[which (!is.na(workinmedia))])
+jury_waechterpreis
+```
+Preisträger
+```
+preistraeger_waechterpreis <- induced_subgraph(waechterpreis, V(waechterpreis)[which (is.na(workinmedia))])
+preistraeger_waechterpreis
+```
 ## Auswertung nach Jahren
 
 ### Gesamt
@@ -718,13 +967,23 @@ frauen_jury_deutscherreporterpreis
 frauen_preistraeger_deutscherreporterpreis <- induced_subgraph(frauen_deutscherreporterpreis, V(frauen_deutscherreporterpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_deutscherreporterpreis
 ```
+**Ernst-Schneider-Preis**
+```
+frauen_ernstschneiderpreis <- induced_subgraph(ernstschneiderpreis[[1]], V(ernstschneiderpreis[[1]])[which (sex == 2)])
+frauen_ernstschneiderpreis
 
+frauen_jury_ernstschneiderpreis <- induced_subgraph(frauen_ernstschneiderpreis, V(frauen_ernstschneiderpreis)[which (!is.na(workinmedia))])
+frauen_jury_ernstschneiderpreis
+
+frauen_preistraeger_ernstschneiderpreis <- induced_subgraph(frauen_ernstschneiderpreis, V(frauen_ernstschneiderpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_ernstschneiderpreis
+```
 **Georg von Holtzbrinck-Preis**
 ```
 frauen_gvhpreis <- induced_subgraph(gvhpreis[[1]], V(gvhpreis[[1]])[which (sex == 2)])
 frauen_gvhpreis
 
-frauen_jury_gvhpreis <- induced_subgraph(frauen_gvhrpreis, V(frauen_gvhpreis)[which (!is.na(workinmedia))])
+frauen_jury_gvhpreis <- induced_subgraph(frauen_gvhpreis, V(frauen_gvhpreis)[which (!is.na(workinmedia))])
 frauen_jury_gvhpreis
 
 frauen_preistraeger_gvhpreis <- induced_subgraph(frauen_gvhpreis, V(frauen_gvhpreis)[which (is.na(workinmedia))])
