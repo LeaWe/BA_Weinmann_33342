@@ -300,34 +300,27 @@ plot(ludwigerhardpreis[[1]])
 ```
 **Nannen-Preis**
 ```
-nannenpreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
-"))
-djp
-plot(djp[[1]])
+nannenpreis <- subgraph <- make_ego_graph(g, order=1, c("Nannen Preis"))
+nannenpreis
+plot(nannenpreis[[1]])
 ```
 **Robert-Geisendörfer-Preis**
-robertgeisendoerferpreis
 ```
-djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
-"))
-djp
-plot(djp[[1]])
+robertgeisendoerferpreis <- subgraph <- make_ego_graph(g, order=1, c("Robert Geisendörfer Preis"))
+robertgeisendoerferpreis
+plot(robertgeisendoerferpreis[[1]])
 ```
 **Theodor-Wolff-Preis**
-theodorwolffpreis
 ```
-djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
-"))
-djp
-plot(djp[[1]])
+theodorwolffpreis <- subgraph <- make_ego_graph(g, order=1, c("Theodor-Wolff-Preis"))
+theodorwolffpreis
+plot(theodorwolffpreis[[1]])
 ```
 **Wächterpreis**
-waechterpreis
 ```
-djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)
-"))
-djp
-plot(djp[[1]])
+waechterpreis <- subgraph <- make_ego_graph(g, order=1, c("Wächterpreis der Tagespresse"))
+waechterpreis
+plot(waechterpreis[[1]])
 ```
 
 ## Auswertung nach Jahren
