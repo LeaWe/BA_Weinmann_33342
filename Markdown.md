@@ -691,7 +691,7 @@ frauen_djp
 frauen_jury_djp <- induced_subgraph(frauen_djp, V(frauen_djp)[which (!is.na(workinmedia))])
 frauen_jury_djp
 
-frauen_preistraeger_djp <- induced_subgraph(frauen_djp, V(djp)[which (is.na(workinmedia))])
+frauen_preistraeger_djp <- induced_subgraph(frauen_djp, V(frauen_djp)[which (is.na(workinmedia))])
 frauen_preistraeger_djp
 ```
 
@@ -700,10 +700,10 @@ frauen_preistraeger_djp
 frauen_deutscherradiopreis <- induced_subgraph(deutscherradiopreis[[1]], V(deutscherradiopreis[[1]])[which (sex == 2)])
 frauen_deutscherradiopreis
 
-frauen_jury_deutscherradiopreis <- induced_subgraph(frauen_deutscherradiopreis, V(deutscherradiopreis)[which (!is.na(workinmedia))])
+frauen_jury_deutscherradiopreis <- induced_subgraph(frauen_deutscherradiopreis, V(frauen_deutscherradiopreis)[which (!is.na(workinmedia))])
 frauen_jury_deutscherradiopreis
 
-frauen_preistraeger_deutscherradiopreis <- induced_subgraph(frauen_deutscherradiopreis, V(deutscherradiopreis)[which (is.na(workinmedia))])
+frauen_preistraeger_deutscherradiopreis <- induced_subgraph(frauen_deutscherradiopreis, V(frauen_deutscherradiopreis)[which (is.na(workinmedia))])
 frauen_preistraeger_deutscherradiopreis
 ```
 
@@ -712,10 +712,10 @@ frauen_preistraeger_deutscherradiopreis
 frauen_deutscherreporterpreis <- induced_subgraph(deutscherreporterpreis[[1]], V(deutscherreporterpreis[[1]])[which (sex == 2)])
 frauen_deutscherreporterpreis
 
-frauen_jury_deutscherreporterpreis <- induced_subgraph(frauen_deutscherreporterpreis, V(deutscherreporterpreis)[which (!is.na(workinmedia))])
+frauen_jury_deutscherreporterpreis <- induced_subgraph(frauen_deutscherreporterpreis, V(frauen_deutscherreporterpreis)[which (!is.na(workinmedia))])
 frauen_jury_deutscherreporterpreis
 
-frauen_preistraeger_deutscherreporterpreis <- induced_subgraph(frauen_deutscherreporterpreis, V(deutscherreporterpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_deutscherreporterpreis <- induced_subgraph(frauen_deutscherreporterpreis, V(frauen_deutscherreporterpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_deutscherreporterpreis
 ```
 
@@ -724,10 +724,10 @@ frauen_preistraeger_deutscherreporterpreis
 frauen_gvhpreis <- induced_subgraph(gvhpreis[[1]], V(gvhpreis[[1]])[which (sex == 2)])
 frauen_gvhpreis
 
-frauen_jury_gvhpreis <- induced_subgraph(frauen_gvhrpreis, V(gvhpreis)[which (!is.na(workinmedia))])
+frauen_jury_gvhpreis <- induced_subgraph(frauen_gvhrpreis, V(frauen_gvhpreis)[which (!is.na(workinmedia))])
 frauen_jury_gvhpreis
 
-frauen_preistraeger_gvhpreis <- induced_subgraph(frauen_gvhpreis, V(gvhpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_gvhpreis <- induced_subgraph(frauen_gvhpreis, V(frauen_gvhpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_gvhpreis
 ```
 
@@ -736,10 +736,10 @@ frauen_preistraeger_gvhpreis
 frauen_grimmeonlineaward <- induced_subgraph(grimmeonlineaward[[1]], V(grimmeonlineaward[[1]])[which (sex == 2)])
 frauen_grimmeonlineaward
 
-frauen_jury_grimmeonlineaward <- induced_subgraph(frauen_grimmeonlineaward, V(grimmeonlineaward)[which (!is.na(workinmedia))])
+frauen_jury_grimmeonlineaward <- induced_subgraph(frauen_grimmeonlineaward, V(frauen_grimmeonlineaward)[which (!is.na(workinmedia))])
 frauen_jury_grimmeonlineaward
 
-frauen_preistraeger_grimmeonlineaward <- induced_subgraph(frauen_grimmeonlineaward, V(grimmeonlineaward)[which (is.na(workinmedia))])
+frauen_preistraeger_grimmeonlineaward <- induced_subgraph(frauen_grimmeonlineaward, V(frauen_grimmeonlineaward)[which (is.na(workinmedia))])
 frauen_preistraeger_grimmeonlineaward
 ```
 
@@ -748,10 +748,10 @@ frauen_preistraeger_grimmeonlineaward
 frauen_helmutschmidtpreis <- induced_subgraph(helmutschmidtpreis[[1]], V(helmutschmidtpreis[[1]])[which (sex == 2)])
 frauen_helmutschmidtpreis
 
-frauen_jury_helmutschmidtpreis <- induced_subgraph(frauen_helmutschmidtpreis, V(helmutschmidtpreis)[which (!is.na(workinmedia))])
+frauen_jury_helmutschmidtpreis <- induced_subgraph(frauen_helmutschmidtpreis, V(frauen_helmutschmidtpreis)[which (!is.na(workinmedia))])
 frauen_jury_helmutschmidtpreis
 
-frauen_preistraeger_helmutschmidtpreis <- induced_subgraph(frauen_helmutschmidtpreis, V(helmutschmidtpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_helmutschmidtpreis <- induced_subgraph(frauen_helmutschmidtpreis, V(frauen_helmutschmidtpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_helmutschmidtpreis
 ```
 
@@ -760,10 +760,10 @@ frauen_preistraeger_helmutschmidtpreis
 frauen_herbertquandtpreis <- induced_subgraph(herbertquandtpreis[[1]], V(herbertquandtpreis[[1]])[which (sex == 2)])
 frauen_herbertquandtpreis 
 
-frauen_jury_herbertquandtpreis <- induced_subgraph(frauen_herbertquandtpreis, V(herbertquandtpreis)[which (!is.na(workinmedia))])
+frauen_jury_herbertquandtpreis <- induced_subgraph(frauen_herbertquandtpreis, V(frauen_herbertquandtpreis)[which (!is.na(workinmedia))])
 frauen_jury_herbertquandtpreis
 
-frauen_preistraeger_herbertquandtpreis <- induced_subgraph(frauen_herbertquandtpreis, V(herbertquandtpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_herbertquandtpreis <- induced_subgraph(frauen_herbertquandtpreis, V(frauen_herbertquandtpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_herbertquandtpreis
 ```
 
@@ -772,10 +772,10 @@ frauen_preistraeger_herbertquandtpreis
 frauen_journalistdesjahres <- induced_subgraph(journalistdesjahres[[1]], V(journalistdesjahres[[1]])[which (sex == 2)])
 frauen_journalistdesjahres
 
-frauen_jury_journalistdesjahres <- induced_subgraph(frauen_journalistdesjahres, V(journalistdesjahres)[which (!is.na(workinmedia))])
+frauen_jury_journalistdesjahres <- induced_subgraph(frauen_journalistdesjahres, V(frauen_journalistdesjahres)[which (!is.na(workinmedia))])
 frauen_jury_journalistdesjahres
 
-frauen_preistraeger_journalistdesjahres <- induced_subgraph(frauen_journalistdesjahres, V(journalistdesjahres)[which (is.na(workinmedia))])
+frauen_preistraeger_journalistdesjahres <- induced_subgraph(frauen_journalistdesjahres, V(frauen_journalistdesjahres)[which (is.na(workinmedia))])
 frauen_preistraeger_journalistdesjahres
 ```
 
@@ -784,10 +784,10 @@ frauen_preistraeger_journalistdesjahres
 frauen_katholischermedienpreis <- induced_subgraph(katholischermedienpreis[[1]], V(katholischermedienpreis[[1]])[which (sex == 2)])
 frauen_katholischermedienpreis
 
-frauen_jury_katholischermedienpreis <- induced_subgraph(frauen_katholischermedienpreis, V(katholischermedienpreis)[which (!is.na(workinmedia))])
+frauen_jury_katholischermedienpreis <- induced_subgraph(frauen_katholischermedienpreis, V(frauen_katholischermedienpreis)[which (!is.na(workinmedia))])
 frauen_jury_katholischermedienpreis
 
-frauen_preistraeger_katholischermedienpreis <- induced_subgraph(frauen_katholischermedienpreis, V(katholischermedienpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_katholischermedienpreis <- induced_subgraph(frauen_katholischermedienpreis, V(frauen_katholischermedienpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_katholischermedienpreis
 ```
 
@@ -796,10 +796,10 @@ frauen_preistraeger_katholischermedienpreis
 frauen_kurttucholskypreis <- induced_subgraph(kurttucholskypreis[[1]], V(kurttucholskypreis[[1]])[which (sex == 2)])
 frauen_kurttucholskypreis
 
-frauen_jury_kurttucholskypreis <- induced_subgraph(frauen_kurttucholskypreis, V(kurttucholskypreis)[which (!is.na(workinmedia))])
+frauen_jury_kurttucholskypreis <- induced_subgraph(frauen_kurttucholskypreis, V(frauen_kurttucholskypreis)[which (!is.na(workinmedia))])
 frauen_jury_kurttucholskypreis
 
-frauen_preistraeger_kurttucholskypreis <- induced_subgraph(frauen_kurttucholskypreis, V(kurttucholskypreis)[which (is.na(workinmedia))])
+frauen_preistraeger_kurttucholskypreis <- induced_subgraph(frauen_kurttucholskypreis, V(frauen_kurttucholskypreis)[which (is.na(workinmedia))])
 frauen_preistraeger_kurttucholskypreis
 ```
 
@@ -808,10 +808,10 @@ frauen_preistraeger_kurttucholskypreis
 frauen_leuchtturm <- induced_subgraph(leuchtturm[[1]], V(leuchtturm[[1]])[which (sex == 2)])
 frauen_leuchtturm
 
-frauen_jury_leuchtturm <- induced_subgraph(frauen_leuchtturm, V(leuchtturm)[which (!is.na(workinmedia))])
+frauen_jury_leuchtturm <- induced_subgraph(frauen_leuchtturm, V(frauen_leuchtturm)[which (!is.na(workinmedia))])
 frauen_jury_leuchtturm
 
-frauen_preistraeger_leuchtturm <- induced_subgraph(frauen_leuchtturm, V(leuchtturm)[which (is.na(workinmedia))])
+frauen_preistraeger_leuchtturm <- induced_subgraph(frauen_leuchtturm, V(frauen_leuchtturm)[which (is.na(workinmedia))])
 frauen_preistraeger_leuchtturm
 ```
 
@@ -820,10 +820,10 @@ frauen_preistraeger_leuchtturm
 frauen_ludwigboernepreis <- induced_subgraph(ludwigboernepreis[[1]], V(ludwigboernepreis[[1]])[which (sex == 2)])
 frauen_ludwigboernepreis
 
-frauen_jury_ludwigboernepreis <- induced_subgraph(frauen_ludwigboernepreis, V(ludwigboernepreis)[which (!is.na(workinmedia))])
+frauen_jury_ludwigboernepreis <- induced_subgraph(frauen_ludwigboernepreis, V(frauen_ludwigboernepreis)[which (!is.na(workinmedia))])
 frauen_jury_ludwigboernepreis
 
-frauen_preistraeger_ludwigboernepreis <- induced_subgraph(frauen_ludwigboernepreis, V(ludwigboernepreis)[which (is.na(workinmedia))])
+frauen_preistraeger_ludwigboernepreis <- induced_subgraph(frauen_ludwigboernepreis, V(frauen_ludwigboernepreis)[which (is.na(workinmedia))])
 frauen_preistraeger_ludwigboernepreis
 ```
 
@@ -832,10 +832,10 @@ frauen_preistraeger_ludwigboernepreis
 frauen_ludwigerhardpreis <- induced_subgraph(ludwigerhardpreis[[1]], V(ludwigerhardpreis[[1]])[which (sex == 2)])
 frauen_ludwigerhardpreis
 
-frauen_jury_ludwigerhardpreis <- induced_subgraph(frauen_ludwigerhardpreis, V(ludwigerhardpreis)[which (!is.na(workinmedia))])
+frauen_jury_ludwigerhardpreis <- induced_subgraph(frauen_ludwigerhardpreis, V(frauen_ludwigerhardpreis)[which (!is.na(workinmedia))])
 frauen_jury_ludwigerhardpreis
 
-frauen_preistraeger_ludwigerhardpreis <- induced_subgraph(frauen_ludwigerhardpreis, V(ludwigerhardpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_ludwigerhardpreis <- induced_subgraph(frauen_ludwigerhardpreis, V(frauen_ludwigerhardpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_ludwigerhardpreis
 ```
 
@@ -844,10 +844,10 @@ frauen_preistraeger_ludwigerhardpreis
 frauen_nannenpreis <- induced_subgraph(nannenpreis[[1]], V(nannenpreis[[1]])[which (sex == 2)])
 frauen_nannenpreis
 
-frauen_jury_nannenpreis <- induced_subgraph(frauen_nannenpreis, V(nannenpreis)[which (!is.na(workinmedia))])
+frauen_jury_nannenpreis <- induced_subgraph(frauen_nannenpreis, V(frauen_nannenpreis)[which (!is.na(workinmedia))])
 frauen_jury_nannenpreis
 
-frauen_preistraeger_nannenpreis <- induced_subgraph(frauen_nannenpreis, V(nannenpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_nannenpreis <- induced_subgraph(frauen_nannenpreis, V(frauen_nannenpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_nannenpreis
 ```
 
@@ -856,10 +856,10 @@ frauen_preistraeger_nannenpreis
 frauen_robertgeisendoerferpreis <- induced_subgraph(robertgeisendoerferpreis[[1]], V(robertgeisendoerferpreis[[1]])[which (sex == 2)])
 frauen_robertgeisendoerferpreis
 
-frauen_jury_robertgeisendoerferpreis <- induced_subgraph(frauen_robertgeisendoerferpreis, V(robertgeisendoerferpreis)[which (!is.na(workinmedia))])
+frauen_jury_robertgeisendoerferpreis <- induced_subgraph(frauen_robertgeisendoerferpreis, V(frauen_robertgeisendoerferpreis)[which (!is.na(workinmedia))])
 frauen_jury_robertgeisendoerferpreis
 
-frauen_preistraeger_robertgeisendoerferpreis <- induced_subgraph(frauen_robertgeisendoerferpreis, V(robertgeisendoerferpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_robertgeisendoerferpreis <- induced_subgraph(frauen_robertgeisendoerferpreis, V(frauen_robertgeisendoerferpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_robertgeisendoerferpreis
 ```
 
@@ -868,10 +868,10 @@ frauen_preistraeger_robertgeisendoerferpreis
 frauen_theodorwolffpreis <- induced_subgraph(theodorwolffpreis[[1]], V(theodorwolffpreis[[1]])[which (sex == 2)])
 frauen_theodorwolffpreis
 
-frauen_jury_theodorwolffpreis <- induced_subgraph(frauen_theodorwolffpreis, V(theodorwolffpreis)[which (!is.na(workinmedia))])
+frauen_jury_theodorwolffpreis <- induced_subgraph(frauen_theodorwolffpreis, V(frauen_theodorwolffpreis)[which (!is.na(workinmedia))])
 frauen_jury_theodorwolffpreis
 
-frauen_preistraeger_theodorwolffpreis <- induced_subgraph(frauen_theodorwolffpreis, V(theodorwolffpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_theodorwolffpreis <- induced_subgraph(frauen_theodorwolffpreis, V(frauen_theodorwolffpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_theodorwolffpreis
 ```
 
@@ -880,10 +880,10 @@ frauen_preistraeger_theodorwolffpreis
 frauen_waechterpreis <- induced_subgraph(waechterpreis[[1]], V(waechterpreis[[1]])[which (sex == 2)])
 frauen_waechterpreis
 
-frauen_jury_waechterpreis <- induced_subgraph(frauen_waechterpreis, V(waechterpreis)[which (!is.na(workinmedia))])
+frauen_jury_waechterpreis <- induced_subgraph(frauen_waechterpreis, V(frauen_waechterpreis)[which (!is.na(workinmedia))])
 frauen_jury_waechterpreis
 
-frauen_preistraeger_waechterpreis <- induced_subgraph(frauen_waechterpreis, V(waechterpreis)[which (is.na(workinmedia))])
+frauen_preistraeger_waechterpreis <- induced_subgraph(frauen_waechterpreis, V(frauen_waechterpreis)[which (is.na(workinmedia))])
 frauen_preistraeger_waechterpreis
 ```
 
