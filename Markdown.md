@@ -910,6 +910,11 @@ sum(frauen_preistraeger_alternativermedienpreis, na.rm = TRUE)
 ```
 
 **Axel-Springer-Preis**
+Gesamt
+```
+frauen_axelspringerpreis <-  V(axelspringerpreis[[1]])$sex == 2
+sum(frauen_axelspringerpreis, na.rm = TRUE)
+```
 Jury
 ```
 frauen_jury_axelspringerpreis <- V(jury_axelspringerpreis[[1]])$sex == 2
@@ -942,17 +947,17 @@ sum(frauen_preistraeger_bremerfernsehpreis, na.rm = TRUE)
 **djp**
 Gesamt
 ```
-frauen_djp <- V(bremerfernsehpreis[[1]])$sex == 2
+frauen_djp <- V(djp[[1]])$sex == 2
 sum(frauen_djp, na.rm = TRUE)
 ```
 Jury
 ```
-frauen_jury_djp <- V(jury_bremerfernsehpreis[[1]])$sex == 2
+frauen_jury_djp <- V(jury_djp[[1]])$sex == 2
 sum(frauen_jury_djp, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_djp <- V(preistraeger_bremerfernsehpreis[[1]])$sex == 2
+frauen_preistraeger_djp <- V(preistraeger_djp[[1]])$sex == 2
 sum(frauen_preistraeger_djp, na.rm = TRUE)
 ```
 
