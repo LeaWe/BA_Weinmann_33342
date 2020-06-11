@@ -891,362 +891,363 @@ sort(ind2019)
 #### Positiv-/Negativbeispiele nach Preisen (Wie viele Frauen waren vertreten?) 
 
 **Alternativer Medienpreis**
-1. Durch Herauslöschen aller Männer: Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)
+  1. Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)	
 ```
-frauen_alternativermedienpreis <- delete_vertices(alternativermedienpreis[[1]], V(alternativermedienpreis[[1]])[which (sex == 1)])
+frauen_alternativermedienpreis <- delete_vertices(alternativermedienpreis, V(alternativermedienpreis)[which (sex == 1)])
 gsize(frauen_alternativermedienpreis)
 ```
 
-2.  Durch Herauslöschen aller Männer: Zähle alle Frauen, die in der Jury saßen (einzelne Personen werden mehrfach gezählt)
+2. Zähle alle Frauen, die in der Jury saßen (einzelne Personen werden mehrfach gezählt)
 ```
-frauen_jury_alternativermedienpreis <- delete_vertices(jury_alternativermedienpreis, V(jury_alternativermedienpreis)[which (sex == 1)])
-gsize(frauen_jury_alternativermedienpreis)
+frauen_jury_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 3
+sum(frauen_jury_alternativermedienpreis, na.rm = TRUE)
 ```
 
-3.  Durch Herauslöschen aller Männer: Zähle alle Frauen, die einen Preis gewonnen haben (einzelne Personen werden mehrfach gezählt)
+3. Zähle alle Frauen, die einen Preis gewonnen haben (einzelne Personen werden mehrfach gezählt)
 ```
-frauen_preistraeger_alternativermedienpreis <- delete_vertices(preistraeger_alternativermedienpreis, V(preistraeger_alternativermedienpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_alternativermedienpreis)
+frauen_preistraeger_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 1	
+sum(frauen_preistraeger_alternativermedienpreis, na.rm = TRUE)
 ```
+
 
 **Axel-Springer-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_axelspringerpreis <- delete_vertices(axelspringerpreis[[1]], V(axelspringerpreis[[1]])[which (sex == 1)])
 gsize(frauen_axelspringerpreis)
 ```
 Jury
 ```
-frauen_jury_axelspringerpreis <- delete_vertices(jury_axelspringerpreis, V(jury_axelspringerpreis)[which (sex == 1)])
-gsize(frauen_jury_axelspringerpreis)
+frauen_jury_axelspringerpreis <- E(frauen_axelspringerpreis)$relation == 3
+sum(frauen_jury_axelspringerpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_axelspringerpreis <- delete_vertices(preistraeger_axelspringerpreis, V(preistraeger_axelspringerpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_axelspringerpreis)
+frauen_preistraeger_axelspringerpreis <- E(frauen_axelspringerpreis)$relation == 1	
+sum(frauen_preistraeger_axelspringerpreis, na.rm = TRUE)
 ```
 
 **Bremer Fernsehpreis**
-Gesamt
+  Gesamt
 ```
 frauen_bremerfernsehpreis <-  delete_vertices(bremerfernsehpreis[[1]], V(bremerfernsehpreis[[1]])[which (sex == 1)])
 gsize(frauen_bremerfernsehpreis)
 ```
 Jury
 ```
-frauen_jury_bremerfernsehpreis  <- delete_vertices(jury_bremerfernsehpreis, V(jury_bremerfernsehpreis)[which (sex == 1)])
-gsize(frauen_jury_bremerfernsehpreis)
+frauen_jury_bremerfernsehpreis  <- E(frauen_bremerfernsehpreis)$relation == 3
+sum(frauen_jury_bremerfernsehpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_bremerfernsehpreis  <- delete_vertices(preistraeger_bremerfernsehpreis, V(preistraeger_bremerfernsehpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_bremerfernsehpreis)
+frauen_preistraeger_bremerfernsehpreis <- E(frauen_bremerfernsehpreis)$relation == 1	
+sum(frauen_preistraeger_bremerfernsehpreis, na.rm = TRUE)
 ```
 
 **djp**
-Gesamt
+  Gesamt
 ```
 frauen_djp <-  delete_vertices(djp[[1]], V(djp[[1]])[which (sex == 1)])
 gsize(frauen_djp)
 ```
 Jury
 ```
-frauen_jury_djp  <- delete_vertices(jury_djp, V(jury_djp)[which (sex == 1)])
-gsize(frauen_jury_djp)
+frauen_jury_djp  <- E(frauen_djp)$relation == 3
+sum(frauen_jury_djp, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_djp  <- delete_vertices(preistraeger_djp, V(preistraeger_djp)[which (sex == 1)])
-gsize(frauen_preistraeger_djp)
+frauen_preistraeger_djp  <- E(frauen_djp)$relation == 1	
+sum(frauen_preistraeger_djp, na.rm = TRUE)
 ```
 
 **Deutscher Radiopreis**
-Gesamt
+  Gesamt
 ```
 frauen_deutscherradiopreis <-  delete_vertices(deutscherradiopreis[[1]], V(deutscherradiopreis[[1]])[which (sex == 1)])
 gsize(frauen_deutscherradiopreis)
 ```
 Jury
 ```
-frauen_jury_deutscherradiopreis  <- delete_vertices(jury_deutscherradiopreis, V(jury_deutscherradiopreis)[which (sex == 1)])
-gsize(frauen_jury_deutscherradiopreis)
+frauen_jury_deutscherradiopreis  <- E(frauen_deutscherradiopreis)$relation == 3
+sum(frauen_jury_deutscherradiopreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_deutscherradiopreis  <- delete_vertices(preistraeger_deutscherradiopreis, V(preistraeger_deutscherradiopreis)[which (sex == 1)])
-gsize(frauen_preistraeger_deutscherradiopreis)
+frauen_preistraeger_deutscherradiopreis <- E(frauen_deutscherradiopreis)$relation == 1	
+sum(frauen_preistraeger_deutscherradiopreis, na.rm = TRUE)
 ```
 
 **Deutscher Reporterpreis**
-Gesamt
+  Gesamt
 ```
 frauen_deutscherreporterpreis <-  delete_vertices(deutscherreporterpreis[[1]], V(deutscherreporterpreis[[1]])[which (sex == 1)])
 gsize(frauen_deutscherreporterpreis)
 ```
 Jury
 ```
-frauen_jury_deutscherreporterpreis  <- delete_vertices(jury_deutscherreporterpreis, V(jury_deutscherreporterpreis)[which (sex == 1)])
-gsize(frauen_jury_deutscherreporterpreis)
+frauen_jury_deutscherreporterpreis  <- E(frauen_deutscherreporterpreis)$relation == 3
+sum(frauen_jury_deutscherreporterpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_deutscherreporterpreis  <- delete_vertices(preistraeger_deutscherreporterpreis, V(preistraeger_deutscherreporterpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_deutscherreporterpreis)
+frauen_preistraeger_deutscherreporterpreis  <- E(frauen_deutscherreporterpreis)$relation == 1	
+sum(frauen_preistraeger_deutscherreporterpreis, na.rm = TRUE)
 ```
 
 **Ernst-Schneider-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_ernstschneiderpreis <-  delete_vertices(ernstschneiderpreis[[1]], V(ernstschneiderpreis[[1]])[which (sex == 1)])
 gsize(frauen_ernstschneiderpreis)
 ```
 Jury
 ```
-frauen_jury_ernstschneiderpreis  <- delete_vertices(jury_ernstschneiderpreis, V(jury_ernstschneiderpreis)[which (sex == 1)])
-gsize(frauen_jury_ernstschneiderpreis)
+frauen_jury_ernstschneiderpreis  <- E(frauen_ernstschneiderpreis)$relation == 3
+sum(frauen_jury_ernstschneiderpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_ernstschneiderpreis  <- delete_vertices(preistraeger_ernstschneiderpreis, V(preistraeger_ernstschneiderpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_ernstschneiderpreis)
+frauen_preistraeger_ernstschneiderpreis  <- E(frauen_ernstschneiderpreis)$relation == 1	
+sum(frauen_preistraeger_ernstschneiderpreis, na.rm = TRUE)
 ```
 
 **Georg von Holtzbrinck-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_gvhpreis <-  delete_vertices(gvhpreis[[1]], V(gvhpreis[[1]])[which (sex == 1)])
 gsize(frauen_gvhpreis)
 ```
 Jury
 ```
-frauen_jury_gvhpreis <- delete_vertices(jury_gvhpreis, V(jury_gvhpreis)[which (sex == 1)])
-gsize(frauen_jury_gvhpreis)
+frauen_jury_gvhpreis <- E(frauen_gvhpreis)$relation == 3
+sum(frauen_jury_gvhpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_gvhpreis <- delete_vertices(preistraeger_gvhpreis, V(preistraeger_gvhpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_gvhpreis)
+frauen_preistraeger_gvhpreis <- E(frauen_gvhpreis)$relation == 1	
+sum(frauen_preistraeger_gvhpreis, na.rm = TRUE)
 ```
 
 **Grimme Online Award**
-Gesamt
+  Gesamt
 ```
 frauen_grimmeonlineaward <-  delete_vertices(grimmeonlineaward[[1]], V(grimmeonlineaward[[1]])[which (sex == 1)])
 gsize(frauen_grimmeonlineaward)
 ```
 Jury
 ```
-frauen_jury_grimmeonlineaward <- delete_vertices(jury_grimmeonlineaward, V(jury_grimmeonlineaward)[which (sex == 1)])
-gsize(frauen_jury_grimmeonlineaward)
+frauen_jury_grimmeonlineaward <- E(frauen_grimmeonlineaward)$relation == 3
+sum(frauen_jury_grimmeonlineaward, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_grimmeonlineaward <- delete_vertices(preistraeger_grimmeonlineaward, V(preistraeger_grimmeonlineaward)[which (sex == 1)])
-gsize(frauen_preistraeger_grimmeonlineaward)
+frauen_preistraeger_grimmeonlineaward <- E(frauen_grimmeonlineaward)$relation == 1	
+sum(frauen_preistraeger_grimmeonlineaward, na.rm = TRUE)
 ```
 
 **Helmut-Schmidt-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_helmutschmidtpreis <-  delete_vertices(helmutschmidtpreis[[1]], V(helmutschmidtpreis[[1]])[which (sex == 1)])
 gsize(frauen_helmutschmidtpreis)
 ```
 Jury
 ```
-frauen_jury_helmutschmidtpreis <- delete_vertices(jury_helmutschmidtpreis, V(jury_helmutschmidtpreis)[which (sex == 1)])
-gsize(frauen_jury_helmutschmidtpreis)
+frauen_jury_helmutschmidtpreis <- E(frauen_helmutschmidtpreis)$relation == 3
+sum(frauen_jury_helmutschmidtpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_helmutschmidtpreis <- delete_vertices(preistraeger_helmutschmidtpreis, V(preistraeger_helmutschmidtpreis)[which (sex == 1)])
-gsize(frauen_preistraegerhelmutschmidtpreis)
+frauen_preistraeger_helmutschmidtpreis <- E(frauen_helmutschmidtpreis)$relation == 1	
+sum(frauen_preistraeger_helmutschmidtpreis, na.rm = TRUE)
 ```
 
 **Herbert-Quandt-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_herbertquandtpreis <-  delete_vertices(herbertquandtpreis[[1]], V(herbertquandtpreis[[1]])[which (sex == 1)])
 gsize(frauen_herbertquandtpreis)
 ```
 Jury
 ```
-frauen_jury_herbertquandtpreis <- delete_vertices(jury_herbertquandtpreis, V(jury_herbertquandtpreis)[which (sex == 1)])
-gsize(frauen_jury_herbertquandtpreis)
+frauen_jury_herbertquandtpreis <- E(frauen_herbertquandtpreis)$relation == 3
+sum(frauen_jury_herbertquandtpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_herbertquandtpreis <- delete_vertices(preistraeger_herbertquandtpreis, V(preistraeger_herbertquandtpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_herbertquandtpreis)
+frauen_preistraeger_herbertquandtpreis <- E(frauen_herbertquandtpreis)$relation == 1	
+sum(frauen_preistraeger_herbertquandtpreis, na.rm = TRUE)
 ```
 
 **Journalist des Jahres**
-Gesamt
+  Gesamt
 ```
 frauen_journalistdesjahres <-  delete_vertices(journalistdesjahres[[1]], V(journalistdesjahres[[1]])[which (sex == 1)])
 gsize(frauen_journalistdesjahres)
 ```
 Jury
 ```
-frauen_jury_journalistdesjahres <- delete_vertices(jury_journalistdesjahres, V(jury_journalistdesjahres)[which (sex == 1)])
-gsize(frauen_jury_journalistdesjahres)
+frauen_jury_journalistdesjahres <- E(frauen_journalistdesjahres)$relation == 3
+sum(frauen_jury_journalistdesjahres, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_journalistdesjahres <- delete_vertices(preistraeger_journalistdesjahres, V(preistraeger_journalistdesjahres)[which (sex == 1)])
-gsize(frauen_preistraeger_journalistdesjahres)
+frauen_preistraeger_journalistdesjahres <- E(frauen_journalistdesjahres)$relation == 1	
+sum(frauen_preistraeger_journalistdesjahres, na.rm = TRUE)
 ```
 
 **Katholischer Medienpreis**
-Gesamt
+  Gesamt
 ```
 frauen_katholischermedienpreis <-  delete_vertices(katholischermedienpreis[[1]], V(katholischermedienpreis[[1]])[which (sex == 1)])
 gsize(frauen_katholischermedienpreis)
 ```
 Jury
 ```
-frauen_jury_katholischermedienpreis <- delete_vertices(jury_katholischermedienpreis, V(jury_katholischermedienpreis)[which (sex == 1)])
-gsize(frauen_jury_katholischermedienpreis)
+frauen_jury_katholischermedienpreis <- E(frauen_katholischermedienpreis $relation == 3
+sum(frauen_jury_katholischermedienpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_katholischermedienpreis <- delete_vertices(preistraeger_katholischermedienpreis, V(preistraeger_katholischermedienpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_katholischermedienpreis)
+frauen_preistraeger_katholischermedienpreis <- E(frauen_katholischermedienpreis)$relation == 1	
+sum(frauen_preistraeger_katholischermedienpreis, na.rm = TRUE)
 ```
 
 **Kurt-Tucholsky-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_kurttucholskypreis <-  delete_vertices(kurttucholskypreis[[1]], V(kurttucholskypreis[[1]])[which (sex == 1)])
 gsize(frauen_kurttucholskypreis)
 ```
 Jury
 ```
-frauen_jury_kurttucholskypreis <- delete_vertices(jury_kurttucholskypreis, V(jury_kurttucholskypreis)[which (sex == 1)])
-gsize(frauen_jury_kurttucholskypreis)
+frauen_jury_kurttucholskypreis <- E(frauen_kurttucholskypreis)$relation == 3
+sum(frauen_jury_kurttucholskypreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_kurttucholskypreis <- delete_vertices(preistraeger_kurttucholskypreis, V(preistraeger_kurttucholskypreis)[which (sex == 1)])
-gsize(frauen_preistraeger_kurttucholskypreis)
+frauen_preistraeger_kurttucholskypreis <- E(frauen_kurttucholskypreis)$relation == 1	
+sum(frauen_preistraeger_kurttucholskypreis, na.rm = TRUE)
 ```
 
 **Leuchtturm**
-Gesamt
+  Gesamt
 ```
 frauen_leuchtturm <- delete_vertices(leuchtturm[[1]], V(leuchtturm[[1]])[which (sex == 1)])
 gsize(frauen_leuchtturm)
 ```
 Jury
 ```
-frauen_jury_leuchtturm <- delete_vertices(jury_leuchtturm, V(jury_leuchtturm)[which (sex == 1)])
-gsize(frauen_jury_leuchtturm)
+frauen_jury_leuchtturm <- E(frauen_leuchtturm)$relation == 3
+sum(frauen_jury_leuchtturm, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_leuchtturm <- delete_vertices(preistraeger_leuchtturm, V(preistraeger_leuchtturm)[which (sex == 1)])
-gsize(frauen_preistraeger_leuchtturm)
+frauen_preistraeger_leuchtturm <- E(frauen_leuchtturm)$relation == 1	
+sum(frauen_preistraeger_leuchtturm, na.rm = TRUE)
 ```
 
 **Ludwig-Börne-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_ludwigboernepreis <- delete_vertices(ludwigboernepreis[[1]], V(ludwigboernepreis[[1]])[which (sex == 1)])
 gsize(frauen_ludwigboernepreis)
 ```
 Jury
 ```
-frauen_jury_ludwigboernepreis <- delete_vertices(jury_ludwigboernepreis, V(jury_ludwigboernepreis)[which (sex == 1)])
-gsize(frauen_jury_ludwigboernepreis)
+frauen_jury_ludwigboernepreis <- E(frauen_ludwigboernepreis)$relation == 3
+sum(frauen_jury_ludwigboernepreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_ludwigboernepreis <- delete_vertices(preistraeger_ludwigboernepreis, V(preistraeger_ludwigboernepreis)[which (sex == 1)])
-gsize(frauen_preistraeger_ludwigboernepreis)
+frauen_preistraeger_ludwigboernepreis <- E(frauen_ludwigboernepreis)$relation == 1	
+sum(frauen_preistraeger_ludwigboernepreis, na.rm = TRUE)
 ```
 
 **Ludwig-Erhard-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_ludwigerhardpreis <-  delete_vertices(ludwigerhardpreis[[1]], V(ludwigerhardpreis[[1]])[which (sex == 1)])
 gsize(frauen_ludwigerhardpreis)
 ```
 Jury
 ```
-frauen_jury_ludwigerhardpreis <- delete_vertices(jury_ludwigerhardpreis, V(jury_ludwigerhardpreis)[which (sex == 1)])
-gsize(frauen_jury_luwdigerhardpreis)
+frauen_jury_ludwigerhardpreis <- E(frauen_ludwigerhardpreis)$relation == 3
+sum(frauen_jury_ludwigerhardpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_ludwigerhardpreis <- delete_vertices(preistraeger_ludwigerhardpreis, V(preistraeger_ludwigerhardpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_ludwigerhardpreis)
+frauen_preistraeger_ludwigerhardpreis <- E(frauen_ludwigerhardpreis)$relation == 1	
+sum(frauen_preistraeger_ludwigerhardpreis, na.rm = TRUE)
 ```
 
 **Nannen-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_nannenpreis <-  delete_vertices(nannenpreis[[1]], V(nannenpreis[[1]])[which (sex == 1)])
 gsize(frauen_nannenpreis)
 ```
 Jury
 ```
-frauen_jury_nannenpreis <- delete_vertices(jury_nannenpreis, V(jury_nannenpreis)[which (sex == 1)])
-gsize(frauen_jury_nannenpreis)
+frauen_jury_nannenpreis <- E(frauen_nannenpreis)$relation == 3
+sum(frauen_jury_nannenpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_nannenpreis <- delete_vertices(preistraeger_nannenpreis, V(preistraeger_nannenpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_nannenpreis)
+frauen_preistraeger_nannenpreis <- E(frauen_nannenpreis)$relation == 1	
+sum(frauen_preistraeger_nannenpreis, na.rm = TRUE)
 ```
 
 **Robert-Geisendörfer-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_robertgeisendoerferpreis <-  delete_vertices(robertgeisendoerferpreis[[1]], V(robertgeisendoerferpreis[[1]])[which (sex == 1)])
 gsize(frauen_robertgeisendoerferpreis)
 ```
 Jury
 ```
-frauen_jury_robertgeisendoerferpreis <- delete_vertices(jury_robertgeisendoerferpreis, V(jury_robertgeisendoerferpreis)[which (sex == 1)])
-gsize(frauen_jury_robertgeisendoerferpreis)
+frauen_jury_robertgeisendoerferpreis <- E(frauen_robertgeisendoerferpreis)$relation == 3
+sum(frauen_robertgeisendoerferpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_robertgeisendoerferpreis <- delete_vertices(preistraeger_robertgeisendoerferpreis, V(preistraeger_robertgeisendoerferpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_robertgeisendoerferpreis)
+frauen_preistraeger_robertgeisendoerferpreis <- E(frauen_robertgeisendoerferpreis)$relation == 1	
+sum(frauen_preistraeger_robertgeisendoerferpreis, na.rm = TRUE)
 ```
 
 **Theodor-Wolff-Preis**
-Gesamt
+  Gesamt
 ```
 frauen_theodorwolffpreis <-  delete_vertices(theodorwolffpreis[[1]], V(theodorwolffpreis[[1]])[which (sex == 1)])
 gsize(frauen_theodorwolffpreis)
 ```
 Jury
 ```
-frauen_jury_theodorwolffpreis <- delete_vertices(jury_theodorwolffpreis, V(jury_theodorwolffpreis)[which (sex == 1)])
-gsize(frauen_jury_theodorwolffpreis)
+frauen_jury_theodorwolffpreis <- E(theodorwolffpreis)$relation == 3
+sum(frauen_jury_theodorwolffpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_theodorwolffpreis <- delete_vertices(preistraeger_theodorwolffpreis, V(preistraeger_theodorwolffpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_theodorwolffpreis)
+frauen_preistraeger_theodorwolffpreis <- E(frauen_theodorwolffpreis)$relation == 1	
+sum(frauen_preistraeger_theodorwolffpreis, na.rm = TRUE)
 ```
 
 **Wächterpreis**
-Gesamt
+  Gesamt
 ```
 frauen_waechterpreis <-  delete_vertices(waechterpreis[[1]], V(waechterpreis[[1]])[which (sex == 1)])
 gsize(frauen_waechterpreis)
 ```
 Jury
 ```
-frauen_jury_waechterpreis <- delete_vertices(jury_waechterpreis, V(jury_waechterpreis)[which (sex == 1)])
-gsize(frauen_jury_waechterpreis)
+frauen_jury_waechterpreis <- E(frauen_waechterpreis)$relation == 3
+sum(frauen_jury_waechterpreis, na.rm = TRUE)
 ```
 Preisträger
 ```
-frauen_preistraeger_waechterpreis <- delete_vertices(preistraeger_waechterpreis, V(preistraeger_waechterpreis)[which (sex == 1)])
-gsize(frauen_preistraeger_waechterpreis)
+frauen_preistraeger_waechterpreis <- E(frauen_waechterpreis)$relation == 1
+sum(frauen_preistraeger_waechterpreis, na.rm = TRUE)
 ```
 
 ## ab hier: Spielwiese 
