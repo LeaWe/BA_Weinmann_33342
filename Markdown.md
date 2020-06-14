@@ -583,6 +583,7 @@ Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2019
 year2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
 year2019
 plot (year2019)
+indyear2019 <- 
 ```
 
 #### 2018
@@ -838,34 +839,48 @@ sum (maennerpreistraeger2019, na.rm = TRUE)
 ### Dominanz einzelner Medienunternehmen nach Jahren
 
 **Wer (Personen) hat die meisten Preise abgeräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.**
+
+Für **2015**:
 ```
 preistraeger2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
-nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) 
+```
+weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+```
 outd_nur_preistraeger2015 <- degree(nur_preistraeger2015, mode="out")
 sort(outd_nur_preistraeger2015)
-
+```
+Für **2016**:
+```
 preistraeger2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
-nur_preistraeger2016 <- subgraph.edges(preistraeger2016, E(preistraeger2016)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+nur_preistraeger2016 <- subgraph.edges(preistraeger2016, E(preistraeger2016)[relation == 1])
+
 outd_nur_preistraeger2016 <- degree(nur_preistraeger2016, mode="out")
 sort(outd_nur_preistraeger2016)
-
+```
+Für **2017**:
+```
 preistraeger2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
-nur_preistraeger2017 <- subgraph.edges(preistraeger2017, E(preistraeger2017)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+nur_preistraeger2017 <- subgraph.edges(preistraeger2017, E(preistraeger2017)[relation == 1])
 outd_nur_preistraeger2017 <- degree(nur_preistraeger2017, mode="out")
 sort(outd_nur_preistraeger2017)
-
+```
+Für **2018**:
+```
 preistraeger2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
-nur_preistraeger2018 <- subgraph.edges(preistraeger2018, E(preistraeger2018)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+nur_preistraeger2018 <- subgraph.edges(preistraeger2018, E(preistraeger2018)[relation == 1])
 outd_nur_preistraeger2018 <- degree(nur_preistraeger2018, mode="out")
 sort(outd_nur_preistraeger2018)
-
+```
+Für **2019**:
+```
 preistraeger2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
-nur_preistraeger2019 <- subgraph.edges(preistraeger2019, E(preistraeger2019)[relation == 1]) # weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+nur_preistraeger2019 <- subgraph.edges(preistraeger2019, E(preistraeger2019)[relation == 1])
 outd_nur_preistraeger2019 <- degree(nur_preistraeger2019, mode="out")
 sort(outd_nur_preistraeger2019)
 ```
 
-**Wer (Medienunternehmen) beschäftigt die meisten Preisträger (nach Jahren)?**
+#### Wer (Medienunternehmen) beschäftigt die meisten Preisträger (nach Jahren)?
 
 **größter Indegree (gesamt, nach Jahren)**
 ```
@@ -884,6 +899,42 @@ sort(ind2018)
 ind2019 <- degree(year2019, mode="in")
 sort(ind2019)
 ```
+
+**größter Indegree (unter PT, nach Jahren)**
+```
+indpreistraeger2015 <- degree(preistraeger2015, mode="in")
+sort(indpreistraeger2015)
+
+indpreistraeger2016 <- degree(preistraeger2016, mode="in")
+sort(indpreistraeger2016)
+
+indpreistraeger2017 <- degree(year2017, mode="in")
+sort(indpreistraeger2017)
+
+indpreistraeger2018 <- degree(preistraeger2018, mode="in")
+sort(indpreistraeger2018)
+
+indpreistraeger2019 <- degree(preistraeger2019, mode="in")
+sort(indpreistraeger2019)
+```
+**größter Indegree (unter Jury, nach Jahren)**
+```
+indjury2015 <- degree(juryfinal2015, mode="in")
+sort(indjury2015)
+
+indjury2016 <- degree(juryfinal2016, mode="in")
+sort(indjury2016)
+
+indjury2017 <- degree(juryfinal2017, mode="in")
+sort(indjury2017)
+
+indjury2018 <- degree(juryfinal2018, mode="in")
+sort(indjury2018)
+
+indjury2019 <- degree(juryfinal2019, mode="in")
+sort(indjury2019)
+```
+
 ## Homophilie
 
 ### Männer/Frauenverteilung
