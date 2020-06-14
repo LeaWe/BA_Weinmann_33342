@@ -1,7 +1,17 @@
 # BA (kommentierter Code)
 ## Legende
 *g = Gesamtnetzwerk*
-
+*g2 = bereinigtes Netzwerk, alle gelöscht mit degree < 3*
+*g3 = Elite in der Elite, alle gelöscht mit degree < 15*
+*preistraegerfinal = Preisträgernetzwerk*
+  *nach Jahren: preistraeger2015, preistraeger2016,...
+*juryfinal = Jurynetzwerk*
+   *nach Jahren: juryfinal2015, juryfinal2016,...
+*ind-/outd- = Präfix für In-/Outdegree-Netzwerke*
+*preistraeger_xx = Preisträgernetzwerk eines Teilnetzwerks
+*jury_xx = Jurynetzwerk eines Teilnetzwerks
+*gruppenpreise2015, gruppenpreise2016... = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre
+*einzelpreise2015,... = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre
 
 ## Netzwerk laden
 ```
@@ -192,6 +202,23 @@ indjury <- degree(juryfinal, mode="in")
 indjury
 sort(indjury)
 ```
+## Bereinigtes Netzwerk
+**Lösche alle Nodes, die nur eine oder zwei Beziehungen haben**
+(nur einen Preis gewonnen // zwei Preise gewonnen, aber keinen festen Arbeitgeber // nur ein oder zwei Arbeitsverhältnisse)
+```
+g2 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<3)])
+g2
+plot(g2)
+```
+
+## Elite in Elite
+**Lösche alle Nodes, die nur weniger als 15 Beziehungen haben --> Elitenetzwerk!**
+```
+g3 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<15)])
+g3
+plot (g3)
+```
+
 ## Einzelne Preisnetzwerke
 
 Erstellt Teilnetzwerke der einzelnen Preise
@@ -619,51 +646,73 @@ plot (year2015)
 ```
 
 ### Gruppenpreise
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2015 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+Wirft alle edges aus, die eine Gruppenpreis-Verleihung im Jahr 2015 erfasst haben
 ```
-gruppenpreise2015 <- E(year2015)$format == 2
-gruppenpreise2015
+gruppenpreise2015_einzeln <- E(year2015)$format == 2
+gruppenpreise2015_einzeln
 ```
 Summiert alle Gruppenpreisverleihungen, die es im Jahr 2015 gab
 ```
-sum(gruppenpreise2015, na.rm = TRUE)
+sum(gruppenpreise2015_einzeln, na.rm = TRUE)
 ```
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2016 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+Für 2016:
 ```
-gruppenpreise2016 <- E(year2016)$format == 2
-gruppenpreise2016
+gruppenpreise2016_einzeln <- E(year2016)$format == 2
+gruppenpreise2016_einzeln
+sum(gruppenpreise2016_einzeln, na.rm = TRUE)
 ```
-Summiert alle Gruppenpreisverleihungen, die es im Jahr 2016 gab
+Für 2017:
 ```
-sum(gruppenpreise2016, na.rm = TRUE)
+gruppenpreise2017_einzeln <- E(year2017)$format == 2
+gruppenpreise2017_einzeln
+sum(gruppenpreise2017_einzeln, na.rm = TRUE)
 ```
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2017 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+Für 2018:
 ```
-gruppenpreise2017 <- E(year2017)$format == 2
-gruppenpreise2017
+gruppenpreise2018_einzeln <- E(year2018)$format == 2
+gruppenpreise2018_einzeln
+sum(gruppenpreise2018_einzeln, na.rm = TRUE)
 ```
-Summiert alle Gruppenpreisverleihungen, die es im Jahr 2017 gab
+Für 2019:
 ```
-sum(gruppenpreise2017, na.rm = TRUE)
-```
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2018 (s.o.), bei denen ein Gruppenpreis verliehen wurde
-```
-gruppenpreise2018 <- E(year2018)$format == 2
-gruppenpreise2018
-```
-Summiert alle Gruppenpreisverleihungen, die es im Jahr 2018 gab
-```
-sum(gruppenpreise2018, na.rm = TRUE)
+gruppenpreise2019_einzeln <- E(year2019)$format == 2
+gruppenpreise2019_einzeln
+sum(gruppenpreise2019_einzeln, na.rm = TRUE)
 ```
 
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2019 (s.o.), bei denen ein Gruppenpreis verliehen wurde
+### Einzelpreise
+Wirft alle edges aus, die eine Einzelpreis-Verleihung im Jahr 2015 erfasst haben
 ```
-gruppenpreise2019 <- E(year2019)$format == 2
-gruppenpreise2019
+einzelpreise2015_einzeln <- E(year2015)$format == 1
+einzelpreise2015_einzeln
 ```
-Summiert alle Gruppenpreisverleihungen, die es im Jahr 2019 gab
+Summiert alle Einzelpreisverleihungen, die es im Jahr 2015 gab
 ```
-sum(gruppenpreise2019, na.rm = TRUE)
+sum(einzelpreise2015_einzeln, na.rm = TRUE)
+```
+Für 2016:
+```
+einzelpreise2016_einzeln <- E(year2016)$format == 1
+einzelpreise2016_einzeln
+sum(einzelpreise2016_einzeln, na.rm = TRUE)
+```
+Für 2017:
+```
+einzelpreise2017_einzeln <- E(year2017)$format == 1
+einzelpreise2017_einzeln
+sum(einzelpreise2017_einzeln, na.rm = TRUE)
+```
+Für 2018:
+```
+einzelpreise2018_einzeln <- E(year2018)$format == 1
+einzelpreise2018_einzeln
+sum(einzelpreise2018_einzeln, na.rm = TRUE)
+```
+Für 2019:
+```
+einzelpreise2019_einzeln <- E(year2019)$format == 1
+einzelpreise2019_einzeln
+sum(einzelpreise2019_einzeln, na.rm = TRUE)
 ```
 
 ### Männer/Frauen
@@ -836,104 +885,6 @@ maennerpreistraeger2019 <- V(preistraeger2019)$sex == 1
 sum (maennerpreistraeger2019, na.rm = TRUE)
 ```
 
-### Dominanz einzelner Medienunternehmen nach Jahren
-
-**Wer (Personen) hat die meisten Preise abgeräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.**
-
-Für **2015**:
-```
-preistraeger2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
-nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) 
-```
-weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
-```
-outd_nur_preistraeger2015 <- degree(nur_preistraeger2015, mode="out")
-sort(outd_nur_preistraeger2015)
-```
-Für **2016**:
-```
-preistraeger2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
-nur_preistraeger2016 <- subgraph.edges(preistraeger2016, E(preistraeger2016)[relation == 1])
-
-outd_nur_preistraeger2016 <- degree(nur_preistraeger2016, mode="out")
-sort(outd_nur_preistraeger2016)
-```
-Für **2017**:
-```
-preistraeger2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
-nur_preistraeger2017 <- subgraph.edges(preistraeger2017, E(preistraeger2017)[relation == 1])
-outd_nur_preistraeger2017 <- degree(nur_preistraeger2017, mode="out")
-sort(outd_nur_preistraeger2017)
-```
-Für **2018**:
-```
-preistraeger2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
-nur_preistraeger2018 <- subgraph.edges(preistraeger2018, E(preistraeger2018)[relation == 1])
-outd_nur_preistraeger2018 <- degree(nur_preistraeger2018, mode="out")
-sort(outd_nur_preistraeger2018)
-```
-Für **2019**:
-```
-preistraeger2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
-nur_preistraeger2019 <- subgraph.edges(preistraeger2019, E(preistraeger2019)[relation == 1])
-outd_nur_preistraeger2019 <- degree(nur_preistraeger2019, mode="out")
-sort(outd_nur_preistraeger2019)
-```
-
-#### Wer (Medienunternehmen) beschäftigt die meisten Preisträger (nach Jahren)?
-
-**größter Indegree (gesamt, nach Jahren)**
-```
-ind2015 <- degree(year2015, mode="in")
-sort(ind2015)
-
-ind2016 <- degree(year2016, mode="in")
-sort(ind2016)
-
-ind2017 <- degree(year2017, mode="in")
-sort(ind2017)
-
-ind2018 <- degree(year2018, mode="in")
-sort(ind2018)
-
-ind2019 <- degree(year2019, mode="in")
-sort(ind2019)
-```
-
-**größter Indegree (unter PT, nach Jahren)**
-```
-indpreistraeger2015 <- degree(preistraeger2015, mode="in")
-sort(indpreistraeger2015)
-
-indpreistraeger2016 <- degree(preistraeger2016, mode="in")
-sort(indpreistraeger2016)
-
-indpreistraeger2017 <- degree(year2017, mode="in")
-sort(indpreistraeger2017)
-
-indpreistraeger2018 <- degree(preistraeger2018, mode="in")
-sort(indpreistraeger2018)
-
-indpreistraeger2019 <- degree(preistraeger2019, mode="in")
-sort(indpreistraeger2019)
-```
-**größter Indegree (unter Jury, nach Jahren)**
-```
-indjury2015 <- degree(juryfinal2015, mode="in")
-sort(indjury2015)
-
-indjury2016 <- degree(juryfinal2016, mode="in")
-sort(indjury2016)
-
-indjury2017 <- degree(juryfinal2017, mode="in")
-sort(indjury2017)
-
-indjury2018 <- degree(juryfinal2018, mode="in")
-sort(indjury2018)
-
-indjury2019 <- degree(juryfinal2019, mode="in")
-sort(indjury2019)
-```
 
 ## Homophilie
 
@@ -1299,6 +1250,164 @@ Preisträger
 ```
 frauen_preistraeger_waechterpreis <- E(frauen_waechterpreis)$relation == 1
 sum(frauen_preistraeger_waechterpreis, na.rm = TRUE)
+```
+
+### Dominanz einzelner Medienunternehmen nach Jahren
+
+**Wer (Personen) hat die meisten Preise abgeräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.**
+
+Für **2015**:
+```
+preistraeger2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
+nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) 
+```
+weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+```
+outd_nur_preistraeger2015 <- degree(nur_preistraeger2015, mode="out")
+sort(outd_nur_preistraeger2015)
+```
+Für **2016**:
+```
+preistraeger2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
+nur_preistraeger2016 <- subgraph.edges(preistraeger2016, E(preistraeger2016)[relation == 1])
+
+outd_nur_preistraeger2016 <- degree(nur_preistraeger2016, mode="out")
+sort(outd_nur_preistraeger2016)
+```
+Für **2017**:
+```
+preistraeger2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
+nur_preistraeger2017 <- subgraph.edges(preistraeger2017, E(preistraeger2017)[relation == 1])
+outd_nur_preistraeger2017 <- degree(nur_preistraeger2017, mode="out")
+sort(outd_nur_preistraeger2017)
+```
+Für **2018**:
+```
+preistraeger2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
+nur_preistraeger2018 <- subgraph.edges(preistraeger2018, E(preistraeger2018)[relation == 1])
+outd_nur_preistraeger2018 <- degree(nur_preistraeger2018, mode="out")
+sort(outd_nur_preistraeger2018)
+```
+Für **2019**:
+```
+preistraeger2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
+nur_preistraeger2019 <- subgraph.edges(preistraeger2019, E(preistraeger2019)[relation == 1])
+outd_nur_preistraeger2019 <- degree(nur_preistraeger2019, mode="out")
+sort(outd_nur_preistraeger2019)
+```
+
+#### Wer (Medienunternehmen) beschäftigt die meisten Preisträger und Jurymitglieder (nach Jahren)?
+
+**größter Indegree (gesamt, nach Jahren)**
+```
+ind2015 <- degree(year2015, mode="in")
+sort(ind2015)
+
+ind2016 <- degree(year2016, mode="in")
+sort(ind2016)
+
+ind2017 <- degree(year2017, mode="in")
+sort(ind2017)
+
+ind2018 <- degree(year2018, mode="in")
+sort(ind2018)
+
+ind2019 <- degree(year2019, mode="in")
+sort(ind2019)
+```
+
+**größter Indegree (unter PT, nach Jahren)**
+```
+indpreistraeger2015 <- degree(preistraeger2015, mode="in")
+sort(indpreistraeger2015)
+
+indpreistraeger2016 <- degree(preistraeger2016, mode="in")
+sort(indpreistraeger2016)
+
+indpreistraeger2017 <- degree(year2017, mode="in")
+sort(indpreistraeger2017)
+
+indpreistraeger2018 <- degree(preistraeger2018, mode="in")
+sort(indpreistraeger2018)
+
+indpreistraeger2019 <- degree(preistraeger2019, mode="in")
+sort(indpreistraeger2019)
+```
+
+_Zusatz: Indegree von Gruppen- & Einzelpreisnetzwerken:_
+Gruppenpreise:
+```
+gruppenpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 1)])
+gruppenpreise2 <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[(degree(gruppenpreise1, mode="out")=="1") & (type == 0)])
+gruppenpreise <- delete_vertices (gruppenpreise2, V(gruppenpreise2)[degree(gruppenpreise2, mode="all")=="0"])
+indgruppenpreise <- degree(gruppenpreise, mode="in")
+sort(indgruppenpreise)
+
+gruppenpreise2015 <- subgraph.edges(gruppenpreise, E(gruppenpreise)[year == "2015"]) 
+indgruppenpreise2015 <- degree(gruppenpreise2015, mode="in")
+sort(indgruppenpreise2015)
+
+gruppenpreise2016 <- subgraph.edges(gruppenpreise, E(gruppenpreise)[year == "2016"]) 
+indgruppenpreise2016 <- degree(gruppenpreise2016, mode="in")
+sort(indgruppenpreise2016)
+
+gruppenpreise2017 <- subgraph.edges(gruppenpreise, E(gruppenpreise)[year == "2017"]) 
+indgruppenpreise2017 <- degree(gruppenpreise2017, mode="in")
+sort(indgruppenpreise2017)
+
+gruppenpreise2018 <- subgraph.edges(gruppenpreise, E(gruppenpreise)[year == "2018"]) 
+indgruppenpreise2018 <- degree(gruppenpreise2018, mode="in")
+sort(indgruppenpreise2018)
+
+gruppenpreise2019 <- subgraph.edges(gruppenpreise, E(gruppenpreise)[year == "2019"]) 
+indgruppenpreise2019 <- degree(gruppenpreise2019, mode="in")
+sort(indgruppenpreise2019)
+```
+Einzelpreise:
+```
+einzelpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 2)])
+einzelpreise2 <- delete_vertices (einzelpreise1, V(einzelpreise1)[(degree(einzelpreise1, mode="out")=="1") & (type == 0)])
+einzelpreise <- delete_vertices (einzelpreise2, V(einzelpreise2)[degree(einzelpreise2, mode="all")=="0"])
+indeinzelpreise <- degree(einzelpreise, mode="in")
+sort(indeinzelpreise)
+
+einzelpreise2015 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == "2015"]) 
+indeinzelpreise2015 <- degree(einzelpreise2015, mode="in")
+sort(indeinzelpreise2015)
+
+einzelpreise2016 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == "2016"]) 
+indeinzelpreise2016 <- degree(einzelpreise2016, mode="in")
+sort(indeinzelpreise2016)
+
+einzelpreise2017 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == "2017"]) 
+indeinzelpreise2017 <- degree(einzelpreise2017, mode="in")
+sort(indeinzelpreise2017)
+
+einzelpreise2018 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == "2018"]) 
+indeinzelpreise2018 <- degree(einzelpreise2018, mode="in")
+sort(indeinzelpreise2018)
+
+einzelpreise2019 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == "2019"]) 
+indeinzelpreise2019 <- degree(einzelpreise2019, mode="in")
+sort(indeinzelpreise2019)
+```
+
+**größter Indegree (unter Jury, nach Jahren)**
+```
+indjury2015 <- degree(juryfinal2015, mode="in")
+sort(indjury2015)
+
+indjury2016 <- degree(juryfinal2016, mode="in")
+sort(indjury2016)
+
+indjury2017 <- degree(juryfinal2017, mode="in")
+sort(indjury2017)
+
+indjury2018 <- degree(juryfinal2018, mode="in")
+sort(indjury2018)
+
+indjury2019 <- degree(juryfinal2019, mode="in")
+sort(indjury2019)
 ```
 
 ## ab hier: Spielwiese 
