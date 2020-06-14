@@ -206,17 +206,19 @@ sort(indjury)
 **Lösche alle Nodes, die nur eine oder zwei Beziehungen haben**
 (nur einen Preis gewonnen // zwei Preise gewonnen, aber keinen festen Arbeitgeber // nur ein oder zwei Arbeitsverhältnisse)
 ```
-g2 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<3)])
+g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<3)])
+g2 <- delete_vertices (g2_1, V(g2_1)[degree(g2_1, mode="all")=="0"])
 g2
 plot(g2)
 ```
 
 ## Elite in Elite
-**Lösche alle Nodes, die nur weniger als 15 Beziehungen haben --> Elitenetzwerk!**
+**Lösche alle Nodes, die nur weniger als 20 Beziehungen haben --> Elitenetzwerk!**
 ```
-g3 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<15)])
+g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<20)])
+g3 <- delete_vertices (g3_1, V(g3_1)[degree(g3_1, mode="all")=="0"])
 g3
-plot (g3)
+plot(g3, edge.arrow.size=.02, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
 
 ## Einzelne Preisnetzwerke
