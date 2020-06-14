@@ -4,14 +4,14 @@
 *g2 = bereinigtes Netzwerk, alle gelöscht mit degree < 3*
 *g3 = Elite in der Elite, alle gelöscht mit degree < 15*
 *preistraegerfinal = Preisträgernetzwerk*
-  *nach Jahren: preistraeger2015, preistraeger2016,...
+  *nach Jahren: preistraeger2015, preistraeger2016,...*
 *juryfinal = Jurynetzwerk*
-   *nach Jahren: juryfinal2015, juryfinal2016,...
+   *nach Jahren: juryfinal2015, juryfinal2016,...*
 *ind-/outd- = Präfix für In-/Outdegree-Netzwerke*
-*preistraeger_xx = Preisträgernetzwerk eines Teilnetzwerks
-*jury_xx = Jurynetzwerk eines Teilnetzwerks
-*gruppenpreise2015, gruppenpreise2016... = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre
-*einzelpreise2015,... = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre
+*preistraeger_xx = Preisträgernetzwerk eines Teilnetzwerks*
+*jury_xx = Jurynetzwerk eines Teilnetzwerks*
+*gruppenpreise2015, gruppenpreise2016... = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre*
+*einzelpreise2015,... = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre*
 
 ## Netzwerk laden
 ```
