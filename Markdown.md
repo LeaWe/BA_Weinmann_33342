@@ -2,7 +2,7 @@
 ## Legende
 *g = Gesamtnetzwerk*
 *g2 = bereinigtes Netzwerk, alle gelöscht mit degree < 3*
-*g3 = Elite in der Elite, alle gelöscht mit degree < 15*
+*g3 = Elite in der Elite, alle gelöscht mit degree < 20*
 *preistraegerfinal = Preisträgernetzwerk*
   *nach Jahren: preistraeger2015, preistraeger2016,...*
 *juryfinal = Jurynetzwerk*
