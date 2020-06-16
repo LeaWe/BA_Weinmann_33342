@@ -1446,6 +1446,11 @@ Nach Indegree sortieren:
 ind_alternativermedienpreis_2grad_oP <- degree(alternativermedienpreis_2grad_oP, mode="in")
 sort(ind_alternativermedienpreis_2grad_oP)
 ```
+Zähle und summiere alle Arbeitgeberberziehungen (relation = 2) im Preisnetzwerk
+```
+ag_alternativermedienpreis <- (E(alternativermedienpreis_2grad[[1]])$relation == 2)
+sum(ag_alternativermedienpreis, na.rm = TRUE)
+```
 
 _Axel-Springer-Preis_
 ```
@@ -1465,6 +1470,9 @@ plot(axelspringerpreis_2grad_oP)
 
 ind_axelspringerpreis_2grad_oP <- degree(axelspringerpreis_2grad_oP, mode="in")
 sort(ind_axelspringerpreis_2grad_oP)
+
+ag_axelspringerpreis <- (E(axelspringerpreis_2grad[[1]])$relation == 2)
+sum(ag_axelspringerpreis, na.rm = TRUE)
 ```
 
 _Bremer Fernsehpreis_
@@ -1485,6 +1493,9 @@ plot(bremerfernsehpreis_2grad_oP)
 
 ind_bremerfernsehpreis_2grad_oP <- degree(bremerfernsehpreis_2grad_oP, mode="in")
 sort(ind_bremerfernsehpreis_2grad_oP)
+
+ag_bremerfernsehpreis <- (E(bremerfernsehpreis_2grad[[1]])$relation == 2)
+sum(ag_bremerfernsehpreis, na.rm = TRUE)
 ```
 
 _djp_
@@ -1505,6 +1516,9 @@ plot(djp_2grad_oP)
 
 ind_djp_2grad_oP <- degree(djp_2grad_oP, mode="in")
 sort(ind_djp_2grad_oP)
+
+ag_djp <- (E(djp_2grad[[1]])$relation == 2)
+sum(ag_djp, na.rm = TRUE)
 ```
 
 _Deutscher Radiopreis_
@@ -1525,6 +1539,9 @@ plot(deutscherradiopreis_2grad_oP)
 
 ind_deutscherradiopreis_2grad_oP <- degree(deutscherradiopreis_2grad_oP, mode="in")
 sort(ind_deutscherradiopreis_2grad_oP)
+
+ag_deutscherradiopreis <- (E(deutscherradiopreis_2grad[[1]])$relation == 2)
+sum(ag_deutscherradiopreis, na.rm = TRUE)
 ```
 
 _Deutscher Reporterpreis_
@@ -1545,6 +1562,9 @@ plot(deutscherreporterpreis_2grad_oP)
 
 ind_deutscherreporterpreis_2grad_oP <- degree(deutscherreporterpreis_2grad_oP, mode="in")
 sort(ind_deutscherreporterpreis_2grad_oP)
+
+ag_deutscherreporterpreis <- (E(deutscherreporterpreis_2grad[[1]])$relation == 2)
+sum(ag_deutscherreporterpreis, na.rm = TRUE)
 ```
 
 _Ernst-Schneider-Preis_
@@ -1565,6 +1585,9 @@ plot(ernstschneiderpreis_2grad_oP)
 
 ind_ernstschneiderpreis_2grad_oP <- degree(ernstschneiderpreis_2grad_oP, mode="in")
 sort(ind_ernstschneiderpreis_2grad_oP)
+
+ag_ernstschneiderpreis <- (E(ernstschneiderpreis_2grad[[1]])$relation == 2)
+sum(ag_ernstschneiderpreis, na.rm = TRUE)
 ```
 
 _GvH-Preis_
@@ -1585,6 +1608,9 @@ plot(gvhpreis_2grad_oP)
 
 ind_gvhpreis_2grad_oP <- degree(gvhpreis_2grad_oP, mode="in")
 sort(ind_gvhpreis_2grad_oP)
+
+ag_gvhpreis <- (E(gvhpreis_2grad[[1]])$relation == 2)
+sum(ag_gvhpreis, na.rm = TRUE)
 ```
 
 _Grimme Online Award_
@@ -1605,6 +1631,9 @@ plot(grimmeonlineaward_2grad_oP)
 
 ind_grimmeonlineaward_2grad_oP <- degree(grimmeonlineaward_2grad_oP, mode="in")
 sort(ind_grimmeonlineaward_2grad_oP)
+
+ag_grimmeonlineaward <- (E(grimmeonlineaward_2grad[[1]])$relation == 2)
+sum(ag_grimmeonlineaward, na.rm = TRUE)
 ```
 
 _Helmut-Schmidt-Preis_
@@ -1625,6 +1654,9 @@ plot(helmutschmidtpreis_2grad_oP)
 
 ind_helmutschmidtpreis_2grad_oP <- degree(helmutschmidtpreis_2grad_oP, mode="in")
 sort(ind_helmutschmidtpreis_2grad_oP)
+
+ag_helmutschmidtpreis <- (E(helmutschmidtpreis_2grad[[1]])$relation == 2)
+sum(ag_helmutschmidtpreis, na.rm = TRUE)
 ```
 
 _Herbert-Quandt-Preis_
@@ -1645,6 +1677,9 @@ plot(herbertquandtpreis_2grad_oP)
 
 ind_herbertquandtpreis_2grad_oP <- degree(herbertquandtpreis_2grad_oP, mode="in")
 sort(ind_herbertquandtpreis_2grad_oP)
+
+ag_herbertquandtpreis <- (E(herbertquandtpreis_2grad[[1]])$relation == 2)
+sum(ag_herbertquandtpreis, na.rm = TRUE)
 ```
 
 _Journalist des Jahres_
@@ -1656,7 +1691,7 @@ sum(beziehungen_journalistdesjahres, na.rm = TRUE)
 gruppenpreise_journalistdesjahres <- (E(journalistdesjahres[[1]])$format == 2)
 sum(gruppenpreise_journalistdesjahres, na.rm = TRUE)
 
-journalistdesjahres_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
+journalistdesjahres_2grad <- subgraph <- make_ego_graph(g, order=2, c("Journalist des Jahres"))
 journalistdesjahres_2grad
 plot(journalistdesjahres_2grad[[1]])
 
@@ -1665,6 +1700,9 @@ plot(journalistdesjahres_2grad_oP)
 
 ind_journalistdesjahres_2grad_oP <- degree(journalistdesjahres_2grad_oP, mode="in")
 sort(ind_journalistdesjahres_2grad_oP)
+
+ag_journalistdesjahres <- (E(journalistdesjahres_2grad[[1]])$relation == 2)
+sum(ag_journalistdesjahres, na.rm = TRUE)
 ```
 
 _Kath. Medienpreis_
@@ -1685,9 +1723,12 @@ plot(katholischermedienpreis_2grad_oP)
 
 ind_katholischermedienpreis_2grad_oP <- degree(katholischermedienpreis_2grad_oP, mode="in")
 sort(ind_katholischermedienpreis_2grad_oP)
+
+ag_katholischermedienpreis <- (E(katholischermedienpreis_2grad[[1]])$relation == 2)
+sum(ag_katholischermedienpreis, na.rm = TRUE)
 ```
 
-_Kurt-Kucholsky-Preis_
+_Kurt-Tucholsky-Preis_
 ```
 personen_kurttucholskypreis <- V(kurttucholskypreis[[1]])$type == 0
 sum(personen_kurttucholskypreis, na.rm = TRUE)
@@ -1705,6 +1746,9 @@ plot(kurttucholskypreis_2grad_oP)
 
 ind_kurttucholskypreis_2grad_oP <- degree(kurttucholskypreis_2grad_oP, mode="in")
 sort(ind_kurttucholskypreis_2grad_oP)
+
+ag_kurttucholskypreis <- (E(kurttucholskypreis_2grad[[1]])$relation == 2)
+sum(ag_kurttucholskypreis, na.rm = TRUE)
 ```
 
 _Leuchtturm_
@@ -1725,6 +1769,9 @@ plot(leuchtturm_2grad_oP)
 
 ind_leuchtturm_2grad_oP <- degree(leuchtturm_2grad_oP, mode="in")
 sort(ind_leuchtturm_2grad_oP)
+
+ag_leuchtturm <- (E(leuchtturm_2grad[[1]])$relation == 2)
+sum(ag_leuchtturm, na.rm = TRUE)
 ```
 
 _Ludwig-Börne-Preis_
@@ -1745,6 +1792,9 @@ plot(ludwigboernepreis_2grad_oP)
 
 ind_ludwigboernepreis_2grad_oP <- degree(ludwigboernepreis_2grad_oP, mode="in")
 sort(ind_ludwigboernepreis_2grad_oP)
+
+ag_ludwigboernepreis <- (E(ludwigboernepreis_2grad[[1]])$relation == 2)
+sum(ag_ludwigboernepreis, na.rm = TRUE)
 ```
 
 _Ludwig-Erhard-Preis_
@@ -1765,6 +1815,9 @@ plot(ludwigerhardpreis_2grad_oP)
 
 ind_ludwigerhardpreis_2grad_oP <- degree(ludwigerhardpreis_2grad_oP, mode="in")
 sort(ind_ludwigerhardpreis_2grad_oP)
+
+ag_ludwigerhardpreis <- (E(ludwigerhardpreis_2grad[[1]])$relation == 2)
+sum(ag_ludwigerhardpreis, na.rm = TRUE)
 ```
 
 _Nannenpreis_
@@ -1785,6 +1838,9 @@ plot(nannenpreis_2grad_oP)
 
 ind_nannenpreis_2grad_oP <- degree(nannenpreis_2grad_oP, mode="in")
 sort(ind_nannenpreis_2grad_oP)
+
+ag_nannenpreis <- (E(nannenpreis_2grad[[1]])$relation == 2)
+sum(ag_nannenpreis, na.rm = TRUE)
 ```
 
 _Robert-Geisendörfer-Preis_
@@ -1805,6 +1861,9 @@ plot(robertgeisendoerferpreis_2grad_oP)
 
 ind_robertgeisendoerferpreis_2grad_oP <- degree(robertgeisendoerferpreis_2grad_oP, mode="in")
 sort(ind_robertgeisendoerferpreis_2grad_oP)
+
+ag_robertgeisendoerferpreis <- (E(robertgeisendoerferpreis_2grad[[1]])$relation == 2)
+sum(ag_robertgeisendoerferpreis, na.rm = TRUE)
 ```
 
 _Theodor-Wolff-Preis_
@@ -1825,6 +1884,9 @@ plot(theodorwolffpreis_2grad_oP)
 
 ind_theodorwolffpreis_2grad_oP <- degree(theodorwolffpreis_2grad_oP, mode="in")
 sort(ind_theodorwolffpreis_2grad_oP)
+
+ag_theodorwolffpreis <- (E(theodorwolffpreis_2grad[[1]])$relation == 2)
+sum(ag_theodorwolffpreis, na.rm = TRUE)
 ```
 
 _Wächterpreis_
@@ -1845,6 +1907,9 @@ plot(waechterpreis_2grad_oP)
 
 ind_waechterpreis_2grad_oP <- degree(waechterpreis_2grad_oP, mode="in")
 sort(ind_waechterpreis_2grad_oP)
+
+ag_waechterpreis <- (E(waechterpreis_2grad[[1]])$relation == 2)
+sum(ag_waechterpreis, na.rm = TRUE)
 ```
 
 ## Visualisierungen
