@@ -320,6 +320,28 @@ Preisträger
 preistraeger_axelspringerpreis <- E(axelspringerpreis[[1]])$relation == 1
 sum(preistraeger_axelspringerpreis, na.rm = TRUE)
 ```
+**Medienkonzentration**
+```
+personen_axelspringerpreis <- V(axelspringerpreis[[1]])$type == 0
+sum(personen_axelspringerpreis, na.rm = TRUE)
+beziehungen_axelspringerpreis <- (E(axelspringerpreis[[1]])$relation == 1) + (E(axelspringerpreis[[1]])$relation == 3)
+sum(beziehungen_axelspringerpreis, na.rm = TRUE)
+gruppenpreise_axelspringerpreis <- (E(axelspringerpreis[[1]])$format == 2)
+sum(gruppenpreise_axelspringerpreis, na.rm = TRUE)
+
+axelspringerpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Axel-Springer-Preis für junge Journalisten"))
+axelspringerpreis_2grad
+plot(axelspringerpreis_2grad[[1]])
+
+axelspringerpreis_2grad_oP <- delete_vertices(axelspringerpreis_2grad[[1]], V(axelspringerpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(axelspringerpreis_2grad_oP)
+
+ind_axelspringerpreis_2grad_oP <- degree(axelspringerpreis_2grad_oP, mode="in")
+sort(ind_axelspringerpreis_2grad_oP)
+
+ag_axelspringerpreis <- (E(axelspringerpreis_2grad[[1]])$relation == 2)
+sum(ag_axelspringerpreis, na.rm = TRUE)
+```
 
 **Männer-/Frauenverteilung**  
 Gesamt
@@ -353,6 +375,28 @@ Preisträger
 ```
 preistraeger_bremerfernsehpreis <- E(bremerfernsehpreis[[1]])$relation == 1
 sum(preistraeger_bremerfernsehpreis, na.rm = TRUE)
+```
+**Medienkonzentration**
+```
+personen_bremerfernsehpreis <- V(bremerfernsehpreis[[1]])$type == 0
+sum(personen_bremerfernsehpreis, na.rm = TRUE)
+beziehungen_bremerfernsehpreis <- (E(bremerfernsehpreis[[1]])$relation == 1) + (E(bremerfernsehpreis[[1]])$relation == 3)
+sum(beziehungen_bremerfernsehpreis, na.rm = TRUE)
+gruppenpreise_bremerfernsehpreis <- (E(bremerfernsehpreis[[1]])$format == 2)
+sum(gruppenpreise_bremerfernsehpreis, na.rm = TRUE)
+
+bremerfernsehpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Bremer Fernsehpreis"))
+bremerfernsehpreis_2grad
+plot(bremerfernsehpreis_2grad[[1]])
+
+bremerfernsehpreis_2grad_oP <- delete_vertices(bremerfernsehpreis_2grad[[1]], V(bremerfernsehpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(bremerfernsehpreis_2grad_oP)
+
+ind_bremerfernsehpreis_2grad_oP <- degree(bremerfernsehpreis_2grad_oP, mode="in")
+sort(ind_bremerfernsehpreis_2grad_oP)
+
+ag_bremerfernsehpreis <- (E(bremerfernsehpreis_2grad[[1]])$relation == 2)
+sum(ag_bremerfernsehpreis, na.rm = TRUE)
 ```
 
 **Männer-/Frauenverteilung**  
@@ -389,6 +433,30 @@ Preisträger
 preistraeger_djp <- E(djp[[1]])$relation == 1
 sum(preistraeger_djp, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_djp <- V(djp[[1]])$type == 0
+sum(personen_djp, na.rm = TRUE)
+beziehungen_djp <- (E(djp[[1]])$relation == 1) + (E(djp[[1]])$relation == 3)
+sum(beziehungen_djp, na.rm = TRUE)
+gruppenpreise_djp <- (E(djp[[1]])$format == 2)
+sum(gruppenpreise_djp, na.rm = TRUE)
+
+djp_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
+djp_2grad
+plot(djp_2grad[[1]])
+
+djp_2grad_oP <- delete_vertices(djp_2grad[[1]], V(djp_2grad[[1]])[which (institutiontype == 1)])
+plot(djp_2grad_oP)
+
+ind_djp_2grad_oP <- degree(djp_2grad_oP, mode="in")
+sort(ind_djp_2grad_oP)
+
+ag_djp <- (E(djp_2grad[[1]])$relation == 2)
+sum(ag_djp, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -423,6 +491,30 @@ Preisträger
 preistraeger_deutscherradiopreis <- E(deutscherradiopreis[[1]])$relation == 1
 sum(preistraeger_deutscherradiopreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_deutscherradiopreis <- V(deutscherradiopreis[[1]])$type == 0
+sum(personen_deutscherradiopreis, na.rm = TRUE)
+beziehungen_deutscherradiopreis <- (E(deutscherradiopreis[[1]])$relation == 1) + (E(deutscherradiopreis[[1]])$relation == 3)
+sum(beziehungen_deutscherradiopreis, na.rm = TRUE)
+gruppenpreise_deutscherradiopreis <- (E(deutscherradiopreis[[1]])$format == 2)
+sum(gruppenpreise_deutscherradiopreis, na.rm = TRUE)
+
+deutscherradiopreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Radiopreis"))
+deutscherradiopreis_2grad
+plot(deutscherradiopreis_2grad[[1]])
+
+deutscherradiopreis_2grad_oP <- delete_vertices(deutscherradiopreis_2grad[[1]], V(deutscherradiopreis_2grad[[1]])[which (institutiontype == 1)])
+plot(deutscherradiopreis_2grad_oP)
+
+ind_deutscherradiopreis_2grad_oP <- degree(deutscherradiopreis_2grad_oP, mode="in")
+sort(ind_deutscherradiopreis_2grad_oP)
+
+ag_deutscherradiopreis <- (E(deutscherradiopreis_2grad[[1]])$relation == 2)
+sum(ag_deutscherradiopreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -457,6 +549,30 @@ Preisträger
 preistraeger_deutscherreporterpreis <- E(deutscherreporterpreis[[1]])$relation == 1
 sum(preistraeger_deutscherreporterpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_deutscherreporterpreis <- V(deutscherreporterpreis[[1]])$type == 0
+sum(personen_deutscherreporterpreis, na.rm = TRUE)
+beziehungen_deutscherreporterpreis <- (E(deutscherreporterpreis[[1]])$relation == 1) + (E(deutscherreporterpreis[[1]])$relation == 3)
+sum(beziehungen_deutscherreporterpreis, na.rm = TRUE)
+gruppenpreise_deutscherreporterpreis <- (E(deutscherreporterpreis[[1]])$format == 2)
+sum(gruppenpreise_deutscherreporterpreis, na.rm = TRUE)
+
+deutscherreporterpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Reporterpreis"))
+deutscherreporterpreis_2grad
+plot(deutscherreporterpreis_2grad[[1]])
+
+deutscherreporterpreis_2grad_oP <- delete_vertices(deutscherreporterpreis_2grad[[1]], V(deutscherreporterpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(deutscherreporterpreis_2grad_oP)
+
+ind_deutscherreporterpreis_2grad_oP <- degree(deutscherreporterpreis_2grad_oP, mode="in")
+sort(ind_deutscherreporterpreis_2grad_oP)
+
+ag_deutscherreporterpreis <- (E(deutscherreporterpreis_2grad[[1]])$relation == 2)
+sum(ag_deutscherreporterpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -491,6 +607,30 @@ Preisträger
 preistraeger_ernstschneiderpreis <- E(ernstschneiderpreis[[1]])$relation == 1
 sum(preistraeger_ernstschneiderpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_ernstschneiderpreis <- V(ernstschneiderpreis[[1]])$type == 0
+sum(personen_ernstschneiderpreis, na.rm = TRUE)
+beziehungen_ernstschneiderpreis <- (E(ernstschneiderpreis[[1]])$relation == 1) + (E(ernstschneiderpreis[[1]])$relation == 3)
+sum(beziehungen_ernstschneiderpreis, na.rm = TRUE)
+gruppenpreise_ernstschneiderpreis <- (E(ernstschneiderpreis[[1]])$format == 2)
+sum(gruppenpreise_ernstschneiderpreis, na.rm = TRUE)
+
+ernstschneiderpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Ernst-Schneider-Preis"))
+ernstschneiderpreis_2grad
+plot(ernstschneiderpreis_2grad[[1]])
+
+ernstschneiderpreis_2grad_oP <- delete_vertices(ernstschneiderpreis_2grad[[1]], V(ernstschneiderpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(ernstschneiderpreis_2grad_oP)
+
+ind_ernstschneiderpreis_2grad_oP <- degree(ernstschneiderpreis_2grad_oP, mode="in")
+sort(ind_ernstschneiderpreis_2grad_oP)
+
+ag_ernstschneiderpreis <- (E(ernstschneiderpreis_2grad[[1]])$relation == 2)
+sum(ag_ernstschneiderpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -525,6 +665,30 @@ Preisträger
 preistraeger_gvhpreis <- E(gvhpreis[[1]])$relation == 1
 sum(preistraeger_gvhpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_gvhpreis <- V(gvhpreis[[1]])$type == 0
+sum(personen_gvhpreis, na.rm = TRUE)
+beziehungen_gvhpreis <- (E(gvhpreis[[1]])$relation == 1) + (E(gvhpreis[[1]])$relation == 3)
+sum(beziehungen_gvhpreis, na.rm = TRUE)
+gruppenpreise_gvhpreis <- (E(gvhpreis[[1]])$format == 2)
+sum(gruppenpreise_gvhpreis, na.rm = TRUE)
+
+gvhpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"))
+gvhpreis_2grad
+plot(gvhpreis_2grad[[1]])
+
+gvhpreis_2grad_oP <- delete_vertices(gvhpreis_2grad[[1]], V(gvhpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(gvhpreis_2grad_oP)
+
+ind_gvhpreis_2grad_oP <- degree(gvhpreis_2grad_oP, mode="in")
+sort(ind_gvhpreis_2grad_oP)
+
+ag_gvhpreis <- (E(gvhpreis_2grad[[1]])$relation == 2)
+sum(ag_gvhpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -559,6 +723,30 @@ Preisträger
 preistraeger_grimmeonlineaward <- E(grimmeonlineaward[[1]])$relation == 1
 sum(preistraeger_grimmeonlineaward, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_grimmeonlineaward <- V(grimmeonlineaward[[1]])$type == 0
+sum(personen_grimmeonlineaward, na.rm = TRUE)
+beziehungen_grimmeonlineaward <- (E(grimmeonlineaward[[1]])$relation == 1) + (E(grimmeonlineaward[[1]])$relation == 3)
+sum(beziehungen_grimmeonlineaward, na.rm = TRUE)
+gruppenpreise_grimmeonlineaward <- (E(grimmeonlineaward[[1]])$format == 2)
+sum(gruppenpreise_grimmeonlineaward, na.rm = TRUE)
+
+grimmeonlineaward_2grad <- subgraph <- make_ego_graph(g, order=2, c("Grimme Online Award"))
+grimmeonlineaward_2grad
+plot(grimmeonlineaward_2grad[[1]])
+
+grimmeonlineaward_2grad_oP <- delete_vertices(grimmeonlineaward_2grad[[1]], V(grimmeonlineaward_2grad[[1]])[which (institutiontype == 1)])
+plot(grimmeonlineaward_2grad_oP)
+
+ind_grimmeonlineaward_2grad_oP <- degree(grimmeonlineaward_2grad_oP, mode="in")
+sort(ind_grimmeonlineaward_2grad_oP)
+
+ag_grimmeonlineaward <- (E(grimmeonlineaward_2grad[[1]])$relation == 2)
+sum(ag_grimmeonlineaward, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -593,6 +781,30 @@ Preisträger
 preistraeger_helmutschmidtpreis <- E(helmutschmidtpreis[[1]])$relation == 1
 sum(preistraeger_helmutschmidtpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_helmutschmidtpreis <- V(helmutschmidtpreis[[1]])$type == 0
+sum(personen_helmutschmidtpreis, na.rm = TRUE)
+beziehungen_helmutschmidtpreis <- (E(helmutschmidtpreis[[1]])$relation == 1) + (E(helmutschmidtpreis[[1]])$relation == 3)
+sum(beziehungen_helmutschmidtpreis, na.rm = TRUE)
+gruppenpreise_helmutschmidtpreis <- (E(helmutschmidtpreis[[1]])$format == 2)
+sum(gruppenpreise_helmutschmidtpreis, na.rm = TRUE)
+
+helmutschmidtpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Helmut-Schmidt-Journalistenpreis"))
+helmutschmidtpreis_2grad
+plot(helmutschmidtpreis_2grad[[1]])
+
+helmutschmidtpreis_2grad_oP <- delete_vertices(helmutschmidtpreis_2grad[[1]], V(helmutschmidtpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(helmutschmidtpreis_2grad_oP)
+
+ind_helmutschmidtpreis_2grad_oP <- degree(helmutschmidtpreis_2grad_oP, mode="in")
+sort(ind_helmutschmidtpreis_2grad_oP)
+
+ag_helmutschmidtpreis <- (E(helmutschmidtpreis_2grad[[1]])$relation == 2)
+sum(ag_helmutschmidtpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -627,6 +839,30 @@ Preisträger
 preistraeger_herbertquandtpreis <- E(herbertquandtpreis[[1]])$relation == 1
 sum(preistraeger_herbertquandtpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_herbertquandtpreis <- V(herbertquandtpreis[[1]])$type == 0
+sum(personen_herbertquandtpreis, na.rm = TRUE)
+beziehungen_herbertquandtpreis <- (E(herbertquandtpreis[[1]])$relation == 1) + (E(herbertquandtpreis[[1]])$relation == 3)
+sum(beziehungen_herbertquandtpreis, na.rm = TRUE)
+gruppenpreise_herbertquandtpreis <- (E(herbertquandtpreis[[1]])$format == 2)
+sum(gruppenpreise_herbertquandtpreis, na.rm = TRUE)
+
+herbertquandtpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Herbert Quandt Medienpreis"))
+herbertquandtpreis_2grad
+plot(herbertquandtpreis_2grad[[1]])
+
+herbertquandtpreis_2grad_oP <- delete_vertices(herbertquandtpreis_2grad[[1]], V(herbertquandtpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(herbertquandtpreis_2grad_oP)
+
+ind_herbertquandtpreis_2grad_oP <- degree(herbertquandtpreis_2grad_oP, mode="in")
+sort(ind_herbertquandtpreis_2grad_oP)
+
+ag_herbertquandtpreis <- (E(herbertquandtpreis_2grad[[1]])$relation == 2)
+sum(ag_herbertquandtpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -661,6 +897,30 @@ Preisträger
 preistraeger_journalistdesjahres <- E(journalistdesjahres[[1]])$relation == 1
 sum(preistraeger_journalistdesjahres, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_journalistdesjahres <- V(journalistdesjahres[[1]])$type == 0
+sum(personen_journalistdesjahres, na.rm = TRUE)
+beziehungen_journalistdesjahres <- (E(journalistdesjahres[[1]])$relation == 1) + (E(journalistdesjahres[[1]])$relation == 3)
+sum(beziehungen_journalistdesjahres, na.rm = TRUE)
+gruppenpreise_journalistdesjahres <- (E(journalistdesjahres[[1]])$format == 2)
+sum(gruppenpreise_journalistdesjahres, na.rm = TRUE)
+
+journalistdesjahres_2grad <- subgraph <- make_ego_graph(g, order=2, c("Journalist des Jahres"))
+journalistdesjahres_2grad
+plot(journalistdesjahres_2grad[[1]])
+
+journalistdesjahres_2grad_oP <- delete_vertices(journalistdesjahres_2grad[[1]], V(journalistdesjahres_2grad[[1]])[which (institutiontype == 1)])
+plot(journalistdesjahres_2grad_oP)
+
+ind_journalistdesjahres_2grad_oP <- degree(journalistdesjahres_2grad_oP, mode="in")
+sort(ind_journalistdesjahres_2grad_oP)
+
+ag_journalistdesjahres <- (E(journalistdesjahres_2grad[[1]])$relation == 2)
+sum(ag_journalistdesjahres, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -695,6 +955,30 @@ Preisträger
 preistraeger_katholischermedienpreis <- E(katholischermedienpreis[[1]])$relation == 1
 sum(preistraeger_katholischermedienpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_katholischermedienpreis <- V(katholischermedienpreis[[1]])$type == 0
+sum(personen_katholischermedienpreis, na.rm = TRUE)
+beziehungen_katholischermedienpreis <- (E(katholischermedienpreis[[1]])$relation == 1) + (E(katholischermedienpreis[[1]])$relation == 3)
+sum(beziehungen_katholischermedienpreis, na.rm = TRUE)
+gruppenpreise_katholischermedienpreis <- (E(katholischermedienpreis[[1]])$format == 2)
+sum(gruppenpreise_katholischermedienpreis, na.rm = TRUE)
+
+katholischermedienpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Katholischer Medienpreis"))
+katholischermedienpreis_2grad
+plot(katholischermedienpreis_2grad[[1]])
+
+katholischermedienpreis_2grad_oP <- delete_vertices(katholischermedienpreis_2grad[[1]], V(katholischermedienpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(katholischermedienpreis_2grad_oP)
+
+ind_katholischermedienpreis_2grad_oP <- degree(katholischermedienpreis_2grad_oP, mode="in")
+sort(ind_katholischermedienpreis_2grad_oP)
+
+ag_katholischermedienpreis <- (E(katholischermedienpreis_2grad[[1]])$relation == 2)
+sum(ag_katholischermedienpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**   
 Gesamt
 ```
@@ -729,6 +1013,30 @@ Preisträger
 preistraeger_kurttucholskypreis <- E(kurttucholskypreis[[1]])$relation == 1
 sum(preistraeger_kurttucholskypreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_kurttucholskypreis <- V(kurttucholskypreis[[1]])$type == 0
+sum(personen_kurttucholskypreis, na.rm = TRUE)
+beziehungen_kurttucholskypreis <- (E(kurttucholskypreis[[1]])$relation == 1) + (E(kurttucholskypreis[[1]])$relation == 3)
+sum(beziehungen_kurttucholskypreis, na.rm = TRUE)
+gruppenpreise_kurttucholskypreis <- (E(kurttucholskypreis[[1]])$format == 2)
+sum(gruppenpreise_kurttucholskypreis, na.rm = TRUE)
+
+kurttucholskypreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Kurt-Tucholsky-Preis für literarische Publizistik"))
+kurttucholskypreis_2grad
+plot(kurttucholskypreis_2grad[[1]])
+
+kurttucholskypreis_2grad_oP <- delete_vertices(kurttucholskypreis_2grad[[1]], V(kurttucholskypreis_2grad[[1]])[which (institutiontype == 1)])
+plot(kurttucholskypreis_2grad_oP)
+
+ind_kurttucholskypreis_2grad_oP <- degree(kurttucholskypreis_2grad_oP, mode="in")
+sort(ind_kurttucholskypreis_2grad_oP)
+
+ag_kurttucholskypreis <- (E(kurttucholskypreis_2grad[[1]])$relation == 2)
+sum(ag_kurttucholskypreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung** 
 Gesamt
 ```
@@ -763,6 +1071,30 @@ Preisträger
 preistraeger_leuchtturm <- E(leuchtturm[[1]])$relation == 1
 sum(preistraeger_leuchtturm, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_leuchtturm <- V(leuchtturm[[1]])$type == 0
+sum(personen_leuchtturm, na.rm = TRUE)
+beziehungen_leuchtturm <- (E(leuchtturm[[1]])$relation == 1) + (E(leuchtturm[[1]])$relation == 3)
+sum(beziehungen_leuchtturm, na.rm = TRUE)
+gruppenpreise_leuchtturm <- (E(leuchtturm[[1]])$format == 2)
+sum(gruppenpreise_leuchtturm, na.rm = TRUE)
+
+leuchtturm_2grad <- subgraph <- make_ego_graph(g, order=2, c("Leuchtturm für besondere publizistische Leistungen"))
+leuchtturm_2grad
+plot(leuchtturm_2grad[[1]])
+
+leuchtturm_2grad_oP <- delete_vertices(leuchtturm_2grad[[1]], V(leuchtturm_2grad[[1]])[which (institutiontype == 1)])
+plot(leuchtturm_2grad_oP)
+
+ind_leuchtturm_2grad_oP <- degree(leuchtturm_2grad_oP, mode="in")
+sort(ind_leuchtturm_2grad_oP)
+
+ag_leuchtturm <- (E(leuchtturm_2grad[[1]])$relation == 2)
+sum(ag_leuchtturm, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -797,6 +1129,30 @@ Preisträger
 preistraeger_ludwigboernepreis <- E(ludwigboernepreis[[1]])$relation == 1
 sum(preistraeger_ludwigboernepreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_ludwigboernepreis <- V(ludwigboernepreis[[1]])$type == 0
+sum(personen_ludwigboernepreis, na.rm = TRUE)
+beziehungen_ludwigboernepreis <- (E(ludwigboernepreis[[1]])$relation == 1) + (E(ludwigboernepreis[[1]])$relation == 3)
+sum(beziehungen_ludwigboernepreis, na.rm = TRUE)
+gruppenpreise_ludwigboernepreis <- (E(ludwigboernepreis[[1]])$format == 2)
+sum(gruppenpreise_ludwigboernepreis, na.rm = TRUE)
+
+ludwigboernepreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Ludwig-Börne-Preis"))
+ludwigboernepreis_2grad
+plot(ludwigboernepreis_2grad[[1]])
+
+ludwigboernepreis_2grad_oP <- delete_vertices(ludwigboernepreis_2grad[[1]], V(ludwigboernepreis_2grad[[1]])[which (institutiontype == 1)])
+plot(ludwigboernepreis_2grad_oP)
+
+ind_ludwigboernepreis_2grad_oP <- degree(ludwigboernepreis_2grad_oP, mode="in")
+sort(ind_ludwigboernepreis_2grad_oP)
+
+ag_ludwigboernepreis <- (E(ludwigboernepreis_2grad[[1]])$relation == 2)
+sum(ag_ludwigboernepreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -831,6 +1187,30 @@ Preisträger
 preistraeger_ludwigerhardpreis <- E(ludwigerhardpreis[[1]])$relation == 1
 sum(preistraeger_ludwigerhardpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_ludwigerhardpreis <- V(ludwigerhardpreis[[1]])$type == 0
+sum(personen_ludwigerhardpreis, na.rm = TRUE)
+beziehungen_ludwigerhardpreis <- (E(ludwigerhardpreis[[1]])$relation == 1) + (E(ludwigerhardpreis[[1]])$relation == 3)
+sum(beziehungen_ludwigerhardpreis, na.rm = TRUE)
+gruppenpreise_ludwigerhardpreis <- (E(ludwigerhardpreis[[1]])$format == 2)
+sum(gruppenpreise_ludwigerhardpreis, na.rm = TRUE)
+
+ludwigerhardpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Ludwig-Erhard-Preis für Wirtschaftspublizistik"))
+ludwigerhardpreis_2grad
+plot(ludwigerhardpreis_2grad[[1]])
+
+ludwigerhardpreis_2grad_oP <- delete_vertices(ludwigerhardpreis_2grad[[1]], V(ludwigerhardpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(ludwigerhardpreis_2grad_oP)
+
+ind_ludwigerhardpreis_2grad_oP <- degree(ludwigerhardpreis_2grad_oP, mode="in")
+sort(ind_ludwigerhardpreis_2grad_oP)
+
+ag_ludwigerhardpreis <- (E(ludwigerhardpreis_2grad[[1]])$relation == 2)
+sum(ag_ludwigerhardpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -865,6 +1245,30 @@ Preisträger
 preistraeger_nannenpreis <- E(nannenpreis[[1]])$relation == 1
 sum(preistraeger_nannenpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_nannenpreis <- V(nannenpreis[[1]])$type == 0
+sum(personen_nannenpreis, na.rm = TRUE)
+beziehungen_nannenpreis <- (E(nannenpreis[[1]])$relation == 1) + (E(nannenpreis[[1]])$relation == 3)
+sum(beziehungen_nannenpreis, na.rm = TRUE)
+gruppenpreise_nannenpreis <- (E(nannenpreis[[1]])$format == 2)
+sum(gruppenpreise_nannenpreis, na.rm = TRUE)
+
+nannenpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Nannen Preis"))
+nannenpreis_2grad
+plot(nannenpreis_2grad[[1]])
+
+nannenpreis_2grad_oP <- delete_vertices(nannenpreis_2grad[[1]], V(nannenpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(nannenpreis_2grad_oP)
+
+ind_nannenpreis_2grad_oP <- degree(nannenpreis_2grad_oP, mode="in")
+sort(ind_nannenpreis_2grad_oP)
+
+ag_nannenpreis <- (E(nannenpreis_2grad[[1]])$relation == 2)
+sum(ag_nannenpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -899,6 +1303,30 @@ Preisträger
 preistraeger_robertgeisendoerferpreis <- E(robertgeisendoerferpreis[[1]])$relation == 1
 sum(preistraeger_robertgeisendoerferpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_robertgeisendoerferpreis <- V(robertgeisendoerferpreis[[1]])$type == 0
+sum(personen_robertgeisendoerferpreis, na.rm = TRUE)
+beziehungen_robertgeisendoerferpreis <- (E(robertgeisendoerferpreis[[1]])$relation == 1) + (E(robertgeisendoerferpreis[[1]])$relation == 3)
+sum(beziehungen_robertgeisendoerferpreis, na.rm = TRUE)
+gruppenpreise_robertgeisendoerferpreis <- (E(robertgeisendoerferpreis[[1]])$format == 2)
+sum(gruppenpreise_robertgeisendoerferpreis, na.rm = TRUE)
+
+robertgeisendoerferpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Robert Geisendörfer Preis"))
+robertgeisendoerferpreis_2grad
+plot(robertgeisendoerferpreis_2grad[[1]])
+
+robertgeisendoerferpreis_2grad_oP <- delete_vertices(robertgeisendoerferpreis_2grad[[1]], V(robertgeisendoerferpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(robertgeisendoerferpreis_2grad_oP)
+
+ind_robertgeisendoerferpreis_2grad_oP <- degree(robertgeisendoerferpreis_2grad_oP, mode="in")
+sort(ind_robertgeisendoerferpreis_2grad_oP)
+
+ag_robertgeisendoerferpreis <- (E(robertgeisendoerferpreis_2grad[[1]])$relation == 2)
+sum(ag_robertgeisendoerferpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -933,6 +1361,30 @@ Preisträger
 preistraeger_theodorwolffpreis <- E(theodorwolffpreis[[1]])$relation == 1
 sum(preistraeger_theodorwolffpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_theodorwolffpreis <- V(theodorwolffpreis[[1]])$type == 0
+sum(personen_theodorwolffpreis, na.rm = TRUE)
+beziehungen_theodorwolffpreis <- (E(theodorwolffpreis[[1]])$relation == 1) + (E(theodorwolffpreis[[1]])$relation == 3)
+sum(beziehungen_theodorwolffpreis, na.rm = TRUE)
+gruppenpreise_theodorwolffpreis <- (E(theodorwolffpreis[[1]])$format == 2)
+sum(gruppenpreise_theodorwolffpreis, na.rm = TRUE)
+
+theodorwolffpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Theodor-Wolff-Preis"))
+theodorwolffpreis_2grad
+plot(theodorwolffpreis_2grad[[1]])
+
+theodorwolffpreis_2grad_oP <- delete_vertices(theodorwolffpreis_2grad[[1]], V(theodorwolffpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(theodorwolffpreis_2grad_oP)
+
+ind_theodorwolffpreis_2grad_oP <- degree(theodorwolffpreis_2grad_oP, mode="in")
+sort(ind_theodorwolffpreis_2grad_oP)
+
+ag_theodorwolffpreis <- (E(theodorwolffpreis_2grad[[1]])$relation == 2)
+sum(ag_theodorwolffpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -967,6 +1419,30 @@ Preisträger
 preistraeger_waechterpreis <- E(waechterpreis[[1]])$relation == 1
 sum(preistraeger_waechterpreis, na.rm = TRUE)
 ```
+
+**Medienkonzentration**
+```
+personen_waechterpreis <- V(waechterpreis[[1]])$type == 0
+sum(personen_waechterpreis, na.rm = TRUE)
+beziehungen_waechterpreis <- (E(waechterpreis[[1]])$relation == 1) + (E(waechterpreis[[1]])$relation == 3)
+sum(beziehungen_waechterpreis, na.rm = TRUE)
+gruppenpreise_waechterpreis <- (E(waechterpreis[[1]])$format == 2)
+sum(gruppenpreise_waechterpreis, na.rm = TRUE)
+
+waechterpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Wächterpreis der Tagespresse"))
+waechterpreis_2grad
+plot(waechterpreis_2grad[[1]])
+
+waechterpreis_2grad_oP <- delete_vertices(waechterpreis_2grad[[1]], V(waechterpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(waechterpreis_2grad_oP)
+
+ind_waechterpreis_2grad_oP <- degree(waechterpreis_2grad_oP, mode="in")
+sort(ind_waechterpreis_2grad_oP)
+
+ag_waechterpreis <- (E(waechterpreis_2grad[[1]])$relation == 2)
+sum(ag_waechterpreis, na.rm = TRUE)
+```
+
 **Männer-/Frauenverteilung**  
 Gesamt
 ```
@@ -1269,19 +1745,6 @@ maennerpreistraeger2019 <- V(preistraeger2019)$sex == 1
 sum (maennerpreistraeger2019, na.rm = TRUE)
 ```
 
-
-## Homophilie
-
-### Männer/Frauenverteilung
-
-
-
-
-
-
-
-
-
 ### Dominanz einzelner Medienunternehmen nach Jahren
 
 **Wer (Personen) hat die meisten Preise abgeräumt (nach Jahren)? --> daraus auch: Dominanz der Medien unter Personen, die 2 oder mehr Preise gewonnen haben.**
@@ -1442,28 +1905,7 @@ sort(indjury2019)
 
 
 
-_Axel-Springer-Preis_
-```
-personen_axelspringerpreis <- V(axelspringerpreis[[1]])$type == 0
-sum(personen_axelspringerpreis, na.rm = TRUE)
-beziehungen_axelspringerpreis <- (E(axelspringerpreis[[1]])$relation == 1) + (E(axelspringerpreis[[1]])$relation == 3)
-sum(beziehungen_axelspringerpreis, na.rm = TRUE)
-gruppenpreise_axelspringerpreis <- (E(axelspringerpreis[[1]])$format == 2)
-sum(gruppenpreise_axelspringerpreis, na.rm = TRUE)
 
-axelspringerpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Axel-Springer-Preis für junge Journalisten"))
-axelspringerpreis_2grad
-plot(axelspringerpreis_2grad[[1]])
-
-axelspringerpreis_2grad_oP <- delete_vertices(axelspringerpreis_2grad[[1]], V(axelspringerpreis_2grad[[1]])[which (institutiontype == 1)])
-plot(axelspringerpreis_2grad_oP)
-
-ind_axelspringerpreis_2grad_oP <- degree(axelspringerpreis_2grad_oP, mode="in")
-sort(ind_axelspringerpreis_2grad_oP)
-
-ag_axelspringerpreis <- (E(axelspringerpreis_2grad[[1]])$relation == 2)
-sum(ag_axelspringerpreis, na.rm = TRUE)
-```
 
 _Bremer Fernsehpreis_
 ```
