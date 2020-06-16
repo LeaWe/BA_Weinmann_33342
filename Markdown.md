@@ -1,17 +1,17 @@
 # BA (kommentierter Code)
 ## Legende
-*g = Gesamtnetzwerk*
-*g2 = bereinigtes Netzwerk, alle gelöscht mit degree < 3*
-*g3 = Elite in der Elite, alle gelöscht mit degree < 20*
-*preistraegerfinal = Preisträgernetzwerk*
-  *nach Jahren: preistraeger2015, preistraeger2016,...*
-*juryfinal = Jurynetzwerk*
-   *nach Jahren: juryfinal2015, juryfinal2016,...*
-*ind-/outd- = Präfix für In-/Outdegree-Netzwerke*
-*preistraeger_xx = Preisträgernetzwerk eines Teilnetzwerks*
-*jury_xx = Jurynetzwerk eines Teilnetzwerks*
-*gruppenpreise2015, gruppenpreise2016... = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre*
-*einzelpreise2015,... = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre*
+*g = Gesamtnetzwerk*  
+*g2 = bereinigtes Netzwerk, alle gelöscht mit degree < 3*  
+*g3 = Elite in der Elite, alle gelöscht mit degree < 20*  
+*preistraegerfinal = Preisträgernetzwerk*  
+  *nach Jahren: preistraeger2015, preistraeger2016,...*  
+*juryfinal = Jurynetzwerk*  
+   *nach Jahren: juryfinal2015, juryfinal2016,...*  
+*ind-/outd- = Präfix für In-/Outdegree-Netzwerke*  
+*preistraeger_xx = Preisträgernetzwerk eines Teilnetzwerks*  
+*jury_xx = Jurynetzwerk eines Teilnetzwerks*  
+*gruppenpreise2015, gruppenpreise2016... = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre*  
+*einzelpreise2015,... = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre*  
 
 ## Netzwerk laden
 ```
@@ -202,9 +202,10 @@ indjury <- degree(juryfinal, mode="in")
 indjury
 sort(indjury)
 ```
-## Bereinigtes Netzwerk
-**Lösche alle Nodes, die nur eine oder zwei Beziehungen haben**
-(nur einen Preis gewonnen // zwei Preise gewonnen, aber keinen festen Arbeitgeber // nur ein oder zwei Arbeitsverhältnisse)
+
+## Teilnetzwerke
+
+Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 3)
 ```
 g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<3)])
 g2 <- delete_vertices (g2_1, V(g2_1)[degree(g2_1, mode="all")=="0"])
@@ -212,13 +213,13 @@ g2
 plot(g2)
 ```
 
+Schritt 2: **Elite in Elite** (Entferne alle Nodes mit degree < 20)
 ## Elite in Elite
-**Lösche alle Nodes, die nur weniger als 20 Beziehungen haben --> Elitenetzwerk!**
 ```
 g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<20)])
 g3 <- delete_vertices (g3_1, V(g3_1)[degree(g3_1, mode="all")=="0"])
 g3
-plot(g3, edge.arrow.size=.02, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+plot(g3)
 ```
 
 ## Einzelne Preisnetzwerke
@@ -1411,6 +1412,11 @@ sort(indjury2018)
 indjury2019 <- degree(juryfinal2019, mode="in")
 sort(indjury2019)
 ```
+
+## Visualisierungen
+
+### Elite in Elite-Netzwerk
+xxx
 
 ## ab hier: Spielwiese 
 
