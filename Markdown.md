@@ -1416,7 +1416,17 @@ sort(indjury2019)
 ## Visualisierungen
 
 ### Elite in Elite-Netzwerk
-xxx
+(noch nicht schön!)
+```
+plot(g3be,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
 
 ## ab hier: Spielwiese 
 
