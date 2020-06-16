@@ -226,7 +226,7 @@ plot(g3)
 
 Erstellt Teilnetzwerke der einzelnen Preise
 
-**Alternativer Medienpreis**
+### Alternativer Medienpreis
 Gesamt
 ```
 alternativermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Alternativer Medienpreis"))
@@ -243,7 +243,66 @@ Preisträger
 preistraeger_alternativermedienpreis <- E(alternativermedienpreis[[1]])$relation == 1
 sum(preistraeger_alternativermedienpreis, na.rm = TRUE)
 ```
-**Axel-Springer-Preis**
+
+**Medienkonzentration unter einzelnen Preisen**
+Wie viele Personen gibt es (einfach gezählt) im Preisnetzwerk?
+```
+personen_alternativermedienpreis <- V(alternativermedienpreis[[1]])$type == 0
+sum(personen_alternativermedienpreis, na.rm = TRUE)
+```
+Wie viele Beziehungen zum Preis (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
+```
+beziehungen_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$relation == 1) + (E(alternativermedienpreis[[1]])$relation == 3)
+sum(beziehungen_alternativermedienpreis, na.rm = TRUE)
+```
+Wie viele Gruppenpreisverleihungen gibt es im Preisnetzwerk (um _Gruppenpreis-Verzerrung_ zu erkennen)?
+```
+gruppenpreise_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$format == 2)
+sum(gruppenpreise_alternativermedienpreis, na.rm = TRUE)
+```
+Brauche Preisnetzwerk 2. Grades (damit Arbeitgeber auch im Netzwerk sind)
+```
+alternativermedienpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Alternativer Medienpreis"))
+alternativermedienpreis_2grad
+plot(alternativermedienpreis_2grad[[1]])
+```
+Alle Beziehungen zu Preisen rauslöschen (institutiontype = 1)
+```
+alternativermedienpreis_2grad_oP <- delete_vertices(alternativermedienpreis_2grad[[1]], V(alternativermedienpreis_2grad[[1]])[which (institutiontype == 1)])
+plot(alternativermedienpreis_2grad_oP)
+```
+Nach Indegree sortieren:
+```
+ind_alternativermedienpreis_2grad_oP <- degree(alternativermedienpreis_2grad_oP, mode="in")
+sort(ind_alternativermedienpreis_2grad_oP)
+```
+Zähle und summiere alle Arbeitgeberberziehungen (relation = 2) im Preisnetzwerk
+```
+ag_alternativermedienpreis <- (E(alternativermedienpreis_2grad[[1]])$relation == 2)
+sum(ag_alternativermedienpreis, na.rm = TRUE)
+```
+
+**Männer-/Frauenverteilung nach Preisen (Wie viele Frauen waren vertreten?)** 
+  1. Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)	
+```
+frauen_alternativermedienpreis <- delete_vertices(alternativermedienpreis, V(alternativermedienpreis)[which (sex == 1)])
+gsize(frauen_alternativermedienpreis)
+```
+
+2. Zähle alle Frauen, die in der Jury saßen (einzelne Personen werden mehrfach gezählt)
+```
+frauen_jury_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 3
+sum(frauen_jury_alternativermedienpreis, na.rm = TRUE)
+```
+
+3. Zähle alle Frauen, die einen Preis gewonnen haben (einzelne Personen werden mehrfach gezählt)
+```
+frauen_preistraeger_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 1	
+sum(frauen_preistraeger_alternativermedienpreis, na.rm = TRUE)
+```
+
+
+### Axel-Springer-Preis
 Gesamt
 ```
 axelspringerpreis <- subgraph <- make_ego_graph(g, order=1, c("Axel-Springer-Preis für junge Journalisten"))
@@ -262,7 +321,23 @@ preistraeger_axelspringerpreis <- E(axelspringerpreis[[1]])$relation == 1
 sum(preistraeger_axelspringerpreis, na.rm = TRUE)
 ```
 
-**Bremer Fernsehpreis**
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_axelspringerpreis <- delete_vertices(axelspringerpreis[[1]], V(axelspringerpreis[[1]])[which (sex == 1)])
+gsize(frauen_axelspringerpreis)
+```
+Jury
+```
+frauen_jury_axelspringerpreis <- E(frauen_axelspringerpreis)$relation == 3
+sum(frauen_jury_axelspringerpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_axelspringerpreis <- E(frauen_axelspringerpreis)$relation == 1	
+sum(frauen_preistraeger_axelspringerpreis, na.rm = TRUE)
+```
+### Bremer Fernsehpreis
 Gesamt
 ```
 bremerfernsehpreis <- subgraph <- make_ego_graph(g, order=1, c("Bremer Fernsehpreis"))
@@ -280,7 +355,24 @@ preistraeger_bremerfernsehpreis <- E(bremerfernsehpreis[[1]])$relation == 1
 sum(preistraeger_bremerfernsehpreis, na.rm = TRUE)
 ```
 
-**djp**
+**Männer-/Frauenverteilung**  
+  Gesamt
+```
+frauen_bremerfernsehpreis <-  delete_vertices(bremerfernsehpreis[[1]], V(bremerfernsehpreis[[1]])[which (sex == 1)])
+gsize(frauen_bremerfernsehpreis)
+```
+Jury
+```
+frauen_jury_bremerfernsehpreis  <- E(frauen_bremerfernsehpreis)$relation == 3
+sum(frauen_jury_bremerfernsehpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_bremerfernsehpreis <- E(frauen_bremerfernsehpreis)$relation == 1	
+sum(frauen_preistraeger_bremerfernsehpreis, na.rm = TRUE)
+```
+
+### djp  
 Gesamt
 ```
 djp <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
@@ -297,8 +389,24 @@ Preisträger
 preistraeger_djp <- E(djp[[1]])$relation == 1
 sum(preistraeger_djp, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_djp <-  delete_vertices(djp[[1]], V(djp[[1]])[which (sex == 1)])
+gsize(frauen_djp)
+```
+Jury
+```
+frauen_jury_djp  <- E(frauen_djp)$relation == 3
+sum(frauen_jury_djp, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_djp  <- E(frauen_djp)$relation == 1	
+sum(frauen_preistraeger_djp, na.rm = TRUE)
+```
 
-**Deutscher Radiopreis**
+### Deutscher Radiopreis  
 Gesamt
 ```
 deutscherradiopreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Radiopreis"))
@@ -315,8 +423,24 @@ Preisträger
 preistraeger_deutscherradiopreis <- E(deutscherradiopreis[[1]])$relation == 1
 sum(preistraeger_deutscherradiopreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_deutscherradiopreis <-  delete_vertices(deutscherradiopreis[[1]], V(deutscherradiopreis[[1]])[which (sex == 1)])
+gsize(frauen_deutscherradiopreis)
+```
+Jury
+```
+frauen_jury_deutscherradiopreis  <- E(frauen_deutscherradiopreis)$relation == 3
+sum(frauen_jury_deutscherradiopreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_deutscherradiopreis <- E(frauen_deutscherradiopreis)$relation == 1	
+sum(frauen_preistraeger_deutscherradiopreis, na.rm = TRUE)
+```
 
-**Deutscher Reporterpreis**
+### Deutscher Reporterpreis  
 Gesamt
 ```
 deutscherreporterpreis <- subgraph <- make_ego_graph(g, order=1, c("Deutscher Reporterpreis"))
@@ -333,8 +457,24 @@ Preisträger
 preistraeger_deutscherreporterpreis <- E(deutscherreporterpreis[[1]])$relation == 1
 sum(preistraeger_deutscherreporterpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_deutscherreporterpreis <-  delete_vertices(deutscherreporterpreis[[1]], V(deutscherreporterpreis[[1]])[which (sex == 1)])
+gsize(frauen_deutscherreporterpreis)
+```
+Jury
+```
+frauen_jury_deutscherreporterpreis  <- E(frauen_deutscherreporterpreis)$relation == 3
+sum(frauen_jury_deutscherreporterpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_deutscherreporterpreis  <- E(frauen_deutscherreporterpreis)$relation == 1	
+sum(frauen_preistraeger_deutscherreporterpreis, na.rm = TRUE)
+```
 
-**Ernst-Schneider-Preis**
+### Ernst-Schneider-Preis
 Gesamt
 ```
 ernstschneiderpreis <- subgraph <- make_ego_graph(g, order=1, c("Ernst-Schneider-Preis"))
@@ -351,8 +491,24 @@ Preisträger
 preistraeger_ernstschneiderpreis <- E(ernstschneiderpreis[[1]])$relation == 1
 sum(preistraeger_ernstschneiderpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_ernstschneiderpreis <-  delete_vertices(ernstschneiderpreis[[1]], V(ernstschneiderpreis[[1]])[which (sex == 1)])
+gsize(frauen_ernstschneiderpreis)
+```
+Jury
+```
+frauen_jury_ernstschneiderpreis  <- E(frauen_ernstschneiderpreis)$relation == 3
+sum(frauen_jury_ernstschneiderpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_ernstschneiderpreis  <- E(frauen_ernstschneiderpreis)$relation == 1	
+sum(frauen_preistraeger_ernstschneiderpreis, na.rm = TRUE)
+```
 
-**Georg von Holtzbrinck-Preis**
+### Georg von Holtzbrinck-Preis  
 Gesamt
 ```
 gvhpreis <- subgraph <- make_ego_graph(g, order=1, c("Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"))
@@ -369,8 +525,24 @@ Preisträger
 preistraeger_gvhpreis <- E(gvhpreis[[1]])$relation == 1
 sum(preistraeger_gvhpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_gvhpreis <-  delete_vertices(gvhpreis[[1]], V(gvhpreis[[1]])[which (sex == 1)])
+gsize(frauen_gvhpreis)
+```
+Jury
+```
+frauen_jury_gvhpreis <- E(frauen_gvhpreis)$relation == 3
+sum(frauen_jury_gvhpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_gvhpreis <- E(frauen_gvhpreis)$relation == 1	
+sum(frauen_preistraeger_gvhpreis, na.rm = TRUE)
+```
 
-**Grimme Online Award**
+### Grimme Online Award  
 Gesamt
 ```
 grimmeonlineaward <- subgraph <- make_ego_graph(g, order=1, c("Grimme Online Award"))
@@ -387,8 +559,24 @@ Preisträger
 preistraeger_grimmeonlineaward <- E(grimmeonlineaward[[1]])$relation == 1
 sum(preistraeger_grimmeonlineaward, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_grimmeonlineaward <-  delete_vertices(grimmeonlineaward[[1]], V(grimmeonlineaward[[1]])[which (sex == 1)])
+gsize(frauen_grimmeonlineaward)
+```
+Jury
+```
+frauen_jury_grimmeonlineaward <- E(frauen_grimmeonlineaward)$relation == 3
+sum(frauen_jury_grimmeonlineaward, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_grimmeonlineaward <- E(frauen_grimmeonlineaward)$relation == 1	
+sum(frauen_preistraeger_grimmeonlineaward, na.rm = TRUE)
+```
 
-**Helmut-Schmidt-Preis**
+### Helmut-Schmidt-Preis
 Gesamt
 ```
 helmutschmidtpreis <- subgraph <- make_ego_graph(g, order=1, c("Helmut-Schmidt-Journalistenpreis"))
@@ -405,8 +593,24 @@ Preisträger
 preistraeger_helmutschmidtpreis <- E(helmutschmidtpreis[[1]])$relation == 1
 sum(preistraeger_helmutschmidtpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_helmutschmidtpreis <-  delete_vertices(helmutschmidtpreis[[1]], V(helmutschmidtpreis[[1]])[which (sex == 1)])
+gsize(frauen_helmutschmidtpreis)
+```
+Jury
+```
+frauen_jury_helmutschmidtpreis <- E(frauen_helmutschmidtpreis)$relation == 3
+sum(frauen_jury_helmutschmidtpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_helmutschmidtpreis <- E(frauen_helmutschmidtpreis)$relation == 1	
+sum(frauen_preistraeger_helmutschmidtpreis, na.rm = TRUE)
+```
 
-**Herbert-Quandt-Preis**
+### Herbert-Quandt-Preis
 Gesamt
 ```
 herbertquandtpreis <- subgraph <- make_ego_graph(g, order=1, c("Herbert Quandt Medienpreis"))
@@ -423,8 +627,24 @@ Preisträger
 preistraeger_herbertquandtpreis <- E(herbertquandtpreis[[1]])$relation == 1
 sum(preistraeger_herbertquandtpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_herbertquandtpreis <-  delete_vertices(herbertquandtpreis[[1]], V(herbertquandtpreis[[1]])[which (sex == 1)])
+gsize(frauen_herbertquandtpreis)
+```
+Jury
+```
+frauen_jury_herbertquandtpreis <- E(frauen_herbertquandtpreis)$relation == 3
+sum(frauen_jury_herbertquandtpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_herbertquandtpreis <- E(frauen_herbertquandtpreis)$relation == 1	
+sum(frauen_preistraeger_herbertquandtpreis, na.rm = TRUE)
+```
 
-**Journalist des Jahres**
+### Journalist des Jahres
 Gesamt
 ```
 journalistdesjahres <- subgraph <- make_ego_graph(g, order=1, c("Journalist des Jahres"))
@@ -441,8 +661,24 @@ Preisträger
 preistraeger_journalistdesjahres <- E(journalistdesjahres[[1]])$relation == 1
 sum(preistraeger_journalistdesjahres, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_journalistdesjahres <-  delete_vertices(journalistdesjahres[[1]], V(journalistdesjahres[[1]])[which (sex == 1)])
+gsize(frauen_journalistdesjahres)
+```
+Jury
+```
+frauen_jury_journalistdesjahres <- E(frauen_journalistdesjahres)$relation == 3
+sum(frauen_jury_journalistdesjahres, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_journalistdesjahres <- E(frauen_journalistdesjahres)$relation == 1	
+sum(frauen_preistraeger_journalistdesjahres, na.rm = TRUE)
+```
 
-**Katholischer Medienpreis**
+### Katholischer Medienpreis
 Gesamt
 ```
 katholischermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Katholischer Medienpreis"))
@@ -459,8 +695,24 @@ Preisträger
 preistraeger_katholischermedienpreis <- E(katholischermedienpreis[[1]])$relation == 1
 sum(preistraeger_katholischermedienpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**   
+Gesamt
+```
+frauen_katholischermedienpreis <-  delete_vertices(katholischermedienpreis[[1]], V(katholischermedienpreis[[1]])[which (sex == 1)])
+gsize(frauen_katholischermedienpreis)
+```
+Jury
+```
+frauen_jury_katholischermedienpreis <- E(frauen_katholischermedienpreis $relation == 3
+sum(frauen_jury_katholischermedienpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_katholischermedienpreis <- E(frauen_katholischermedienpreis)$relation == 1	
+sum(frauen_preistraeger_katholischermedienpreis, na.rm = TRUE)
+```
 
-**Kurt-Tucholsky-Preis**
+### Kurt-Tucholsky-Preis  
 Gesamt
 ```
 kurttucholskypreis <- subgraph <- make_ego_graph(g, order=1, c("Kurt-Tucholsky-Preis für literarische Publizistik"))
@@ -477,8 +729,24 @@ Preisträger
 preistraeger_kurttucholskypreis <- E(kurttucholskypreis[[1]])$relation == 1
 sum(preistraeger_kurttucholskypreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung** 
+Gesamt
+```
+frauen_kurttucholskypreis <-  delete_vertices(kurttucholskypreis[[1]], V(kurttucholskypreis[[1]])[which (sex == 1)])
+gsize(frauen_kurttucholskypreis)
+```
+Jury
+```
+frauen_jury_kurttucholskypreis <- E(frauen_kurttucholskypreis)$relation == 3
+sum(frauen_jury_kurttucholskypreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_kurttucholskypreis <- E(frauen_kurttucholskypreis)$relation == 1	
+sum(frauen_preistraeger_kurttucholskypreis, na.rm = TRUE)
+```
 
-**Leuchtturm**
+### Leuchtturm  
 Gesamt
 ```
 leuchtturm <- subgraph <- make_ego_graph(g, order=1, c("Leuchtturm für besondere publizistische Leistungen"))
@@ -495,8 +763,24 @@ Preisträger
 preistraeger_leuchtturm <- E(leuchtturm[[1]])$relation == 1
 sum(preistraeger_leuchtturm, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_leuchtturm <- delete_vertices(leuchtturm[[1]], V(leuchtturm[[1]])[which (sex == 1)])
+gsize(frauen_leuchtturm)
+```
+Jury
+```
+frauen_jury_leuchtturm <- E(frauen_leuchtturm)$relation == 3
+sum(frauen_jury_leuchtturm, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_leuchtturm <- E(frauen_leuchtturm)$relation == 1	
+sum(frauen_preistraeger_leuchtturm, na.rm = TRUE)
+```
 
-**Ludwig-Börne-Preis**
+### Ludwig-Börne-Preis  
 Gesamt
 ```
 ludwigboernepreis <- subgraph <- make_ego_graph(g, order=1, c("Ludwig-Börne-Preis"))
@@ -513,8 +797,24 @@ Preisträger
 preistraeger_ludwigboernepreis <- E(ludwigboernepreis[[1]])$relation == 1
 sum(preistraeger_ludwigboernepreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_ludwigboernepreis <- delete_vertices(ludwigboernepreis[[1]], V(ludwigboernepreis[[1]])[which (sex == 1)])
+gsize(frauen_ludwigboernepreis)
+```
+Jury
+```
+frauen_jury_ludwigboernepreis <- E(frauen_ludwigboernepreis)$relation == 3
+sum(frauen_jury_ludwigboernepreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_ludwigboernepreis <- E(frauen_ludwigboernepreis)$relation == 1	
+sum(frauen_preistraeger_ludwigboernepreis, na.rm = TRUE)
+```
 
-**Ludwig-Erhard-Preis**
+### Ludwig-Erhard-Preis  
 Gesamt
 ```
 ludwigerhardpreis <- subgraph <- make_ego_graph(g, order=1, c("Ludwig-Erhard-Preis für Wirtschaftspublizistik"))
@@ -531,8 +831,24 @@ Preisträger
 preistraeger_ludwigerhardpreis <- E(ludwigerhardpreis[[1]])$relation == 1
 sum(preistraeger_ludwigerhardpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_ludwigerhardpreis <-  delete_vertices(ludwigerhardpreis[[1]], V(ludwigerhardpreis[[1]])[which (sex == 1)])
+gsize(frauen_ludwigerhardpreis)
+```
+Jury
+```
+frauen_jury_ludwigerhardpreis <- E(frauen_ludwigerhardpreis)$relation == 3
+sum(frauen_jury_ludwigerhardpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_ludwigerhardpreis <- E(frauen_ludwigerhardpreis)$relation == 1	
+sum(frauen_preistraeger_ludwigerhardpreis, na.rm = TRUE)
+```
 
-**Nannen-Preis**
+### Nannen-Preis  
 Gesamt
 ```
 nannenpreis <- subgraph <- make_ego_graph(g, order=1, c("Nannen Preis"))
@@ -549,8 +865,24 @@ Preisträger
 preistraeger_nannenpreis <- E(nannenpreis[[1]])$relation == 1
 sum(preistraeger_nannenpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_nannenpreis <-  delete_vertices(nannenpreis[[1]], V(nannenpreis[[1]])[which (sex == 1)])
+gsize(frauen_nannenpreis)
+```
+Jury
+```
+frauen_jury_nannenpreis <- E(frauen_nannenpreis)$relation == 3
+sum(frauen_jury_nannenpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_nannenpreis <- E(frauen_nannenpreis)$relation == 1	
+sum(frauen_preistraeger_nannenpreis, na.rm = TRUE)
+```
 
-**Robert-Geisendörfer-Preis**
+### Robert-Geisendörfer-Preis  
 Gesamt
 ```
 robertgeisendoerferpreis <- subgraph <- make_ego_graph(g, order=1, c("Robert Geisendörfer Preis"))
@@ -567,8 +899,24 @@ Preisträger
 preistraeger_robertgeisendoerferpreis <- E(robertgeisendoerferpreis[[1]])$relation == 1
 sum(preistraeger_robertgeisendoerferpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_robertgeisendoerferpreis <-  delete_vertices(robertgeisendoerferpreis[[1]], V(robertgeisendoerferpreis[[1]])[which (sex == 1)])
+gsize(frauen_robertgeisendoerferpreis)
+```
+Jury
+```
+frauen_jury_robertgeisendoerferpreis <- E(frauen_robertgeisendoerferpreis)$relation == 3
+sum(frauen_robertgeisendoerferpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_robertgeisendoerferpreis <- E(frauen_robertgeisendoerferpreis)$relation == 1	
+sum(frauen_preistraeger_robertgeisendoerferpreis, na.rm = TRUE)
+```
 
-**Theodor-Wolff-Preis**
+### Theodor-Wolff-Preis  
 Gesamt
 ```
 theodorwolffpreis <- subgraph <- make_ego_graph(g, order=1, c("Theodor-Wolff-Preis"))
@@ -585,8 +933,24 @@ Preisträger
 preistraeger_theodorwolffpreis <- E(theodorwolffpreis[[1]])$relation == 1
 sum(preistraeger_theodorwolffpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_theodorwolffpreis <-  delete_vertices(theodorwolffpreis[[1]], V(theodorwolffpreis[[1]])[which (sex == 1)])
+gsize(frauen_theodorwolffpreis)
+```
+Jury
+```
+frauen_jury_theodorwolffpreis <- E(theodorwolffpreis)$relation == 3
+sum(frauen_jury_theodorwolffpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_theodorwolffpreis <- E(frauen_theodorwolffpreis)$relation == 1	
+sum(frauen_preistraeger_theodorwolffpreis, na.rm = TRUE)
+```
 
-**Wächterpreis**
+### Wächterpreis  
 Gesamt
 ```
 waechterpreis <- subgraph <- make_ego_graph(g, order=1, c("Wächterpreis der Tagespresse"))
@@ -603,6 +967,23 @@ Preisträger
 preistraeger_waechterpreis <- E(waechterpreis[[1]])$relation == 1
 sum(preistraeger_waechterpreis, na.rm = TRUE)
 ```
+**Männer-/Frauenverteilung**  
+Gesamt
+```
+frauen_waechterpreis <-  delete_vertices(waechterpreis[[1]], V(waechterpreis[[1]])[which (sex == 1)])
+gsize(frauen_waechterpreis)
+```
+Jury
+```
+frauen_jury_waechterpreis <- E(frauen_waechterpreis)$relation == 3
+sum(frauen_jury_waechterpreis, na.rm = TRUE)
+```
+Preisträger
+```
+frauen_preistraeger_waechterpreis <- E(frauen_waechterpreis)$relation == 1
+sum(frauen_preistraeger_waechterpreis, na.rm = TRUE)
+```
+
 ## Auswertung nach Jahren
 
 ### Gesamt
@@ -893,367 +1274,13 @@ sum (maennerpreistraeger2019, na.rm = TRUE)
 
 ### Männer/Frauenverteilung
 
-#### Positiv-/Negativbeispiele nach Preisen (Wie viele Frauen waren vertreten?) 
-
-**Alternativer Medienpreis**
-  1. Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)	
-```
-frauen_alternativermedienpreis <- delete_vertices(alternativermedienpreis, V(alternativermedienpreis)[which (sex == 1)])
-gsize(frauen_alternativermedienpreis)
-```
-
-2. Zähle alle Frauen, die in der Jury saßen (einzelne Personen werden mehrfach gezählt)
-```
-frauen_jury_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 3
-sum(frauen_jury_alternativermedienpreis, na.rm = TRUE)
-```
-
-3. Zähle alle Frauen, die einen Preis gewonnen haben (einzelne Personen werden mehrfach gezählt)
-```
-frauen_preistraeger_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 1	
-sum(frauen_preistraeger_alternativermedienpreis, na.rm = TRUE)
-```
 
 
-**Axel-Springer-Preis**
-  Gesamt
-```
-frauen_axelspringerpreis <- delete_vertices(axelspringerpreis[[1]], V(axelspringerpreis[[1]])[which (sex == 1)])
-gsize(frauen_axelspringerpreis)
-```
-Jury
-```
-frauen_jury_axelspringerpreis <- E(frauen_axelspringerpreis)$relation == 3
-sum(frauen_jury_axelspringerpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_axelspringerpreis <- E(frauen_axelspringerpreis)$relation == 1	
-sum(frauen_preistraeger_axelspringerpreis, na.rm = TRUE)
-```
 
-**Bremer Fernsehpreis**
-  Gesamt
-```
-frauen_bremerfernsehpreis <-  delete_vertices(bremerfernsehpreis[[1]], V(bremerfernsehpreis[[1]])[which (sex == 1)])
-gsize(frauen_bremerfernsehpreis)
-```
-Jury
-```
-frauen_jury_bremerfernsehpreis  <- E(frauen_bremerfernsehpreis)$relation == 3
-sum(frauen_jury_bremerfernsehpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_bremerfernsehpreis <- E(frauen_bremerfernsehpreis)$relation == 1	
-sum(frauen_preistraeger_bremerfernsehpreis, na.rm = TRUE)
-```
 
-**djp**
-  Gesamt
-```
-frauen_djp <-  delete_vertices(djp[[1]], V(djp[[1]])[which (sex == 1)])
-gsize(frauen_djp)
-```
-Jury
-```
-frauen_jury_djp  <- E(frauen_djp)$relation == 3
-sum(frauen_jury_djp, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_djp  <- E(frauen_djp)$relation == 1	
-sum(frauen_preistraeger_djp, na.rm = TRUE)
-```
 
-**Deutscher Radiopreis**
-  Gesamt
-```
-frauen_deutscherradiopreis <-  delete_vertices(deutscherradiopreis[[1]], V(deutscherradiopreis[[1]])[which (sex == 1)])
-gsize(frauen_deutscherradiopreis)
-```
-Jury
-```
-frauen_jury_deutscherradiopreis  <- E(frauen_deutscherradiopreis)$relation == 3
-sum(frauen_jury_deutscherradiopreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_deutscherradiopreis <- E(frauen_deutscherradiopreis)$relation == 1	
-sum(frauen_preistraeger_deutscherradiopreis, na.rm = TRUE)
-```
 
-**Deutscher Reporterpreis**
-  Gesamt
-```
-frauen_deutscherreporterpreis <-  delete_vertices(deutscherreporterpreis[[1]], V(deutscherreporterpreis[[1]])[which (sex == 1)])
-gsize(frauen_deutscherreporterpreis)
-```
-Jury
-```
-frauen_jury_deutscherreporterpreis  <- E(frauen_deutscherreporterpreis)$relation == 3
-sum(frauen_jury_deutscherreporterpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_deutscherreporterpreis  <- E(frauen_deutscherreporterpreis)$relation == 1	
-sum(frauen_preistraeger_deutscherreporterpreis, na.rm = TRUE)
-```
 
-**Ernst-Schneider-Preis**
-  Gesamt
-```
-frauen_ernstschneiderpreis <-  delete_vertices(ernstschneiderpreis[[1]], V(ernstschneiderpreis[[1]])[which (sex == 1)])
-gsize(frauen_ernstschneiderpreis)
-```
-Jury
-```
-frauen_jury_ernstschneiderpreis  <- E(frauen_ernstschneiderpreis)$relation == 3
-sum(frauen_jury_ernstschneiderpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_ernstschneiderpreis  <- E(frauen_ernstschneiderpreis)$relation == 1	
-sum(frauen_preistraeger_ernstschneiderpreis, na.rm = TRUE)
-```
-
-**Georg von Holtzbrinck-Preis**
-  Gesamt
-```
-frauen_gvhpreis <-  delete_vertices(gvhpreis[[1]], V(gvhpreis[[1]])[which (sex == 1)])
-gsize(frauen_gvhpreis)
-```
-Jury
-```
-frauen_jury_gvhpreis <- E(frauen_gvhpreis)$relation == 3
-sum(frauen_jury_gvhpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_gvhpreis <- E(frauen_gvhpreis)$relation == 1	
-sum(frauen_preistraeger_gvhpreis, na.rm = TRUE)
-```
-
-**Grimme Online Award**
-  Gesamt
-```
-frauen_grimmeonlineaward <-  delete_vertices(grimmeonlineaward[[1]], V(grimmeonlineaward[[1]])[which (sex == 1)])
-gsize(frauen_grimmeonlineaward)
-```
-Jury
-```
-frauen_jury_grimmeonlineaward <- E(frauen_grimmeonlineaward)$relation == 3
-sum(frauen_jury_grimmeonlineaward, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_grimmeonlineaward <- E(frauen_grimmeonlineaward)$relation == 1	
-sum(frauen_preistraeger_grimmeonlineaward, na.rm = TRUE)
-```
-
-**Helmut-Schmidt-Preis**
-  Gesamt
-```
-frauen_helmutschmidtpreis <-  delete_vertices(helmutschmidtpreis[[1]], V(helmutschmidtpreis[[1]])[which (sex == 1)])
-gsize(frauen_helmutschmidtpreis)
-```
-Jury
-```
-frauen_jury_helmutschmidtpreis <- E(frauen_helmutschmidtpreis)$relation == 3
-sum(frauen_jury_helmutschmidtpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_helmutschmidtpreis <- E(frauen_helmutschmidtpreis)$relation == 1	
-sum(frauen_preistraeger_helmutschmidtpreis, na.rm = TRUE)
-```
-
-**Herbert-Quandt-Preis**
-  Gesamt
-```
-frauen_herbertquandtpreis <-  delete_vertices(herbertquandtpreis[[1]], V(herbertquandtpreis[[1]])[which (sex == 1)])
-gsize(frauen_herbertquandtpreis)
-```
-Jury
-```
-frauen_jury_herbertquandtpreis <- E(frauen_herbertquandtpreis)$relation == 3
-sum(frauen_jury_herbertquandtpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_herbertquandtpreis <- E(frauen_herbertquandtpreis)$relation == 1	
-sum(frauen_preistraeger_herbertquandtpreis, na.rm = TRUE)
-```
-
-**Journalist des Jahres**
-  Gesamt
-```
-frauen_journalistdesjahres <-  delete_vertices(journalistdesjahres[[1]], V(journalistdesjahres[[1]])[which (sex == 1)])
-gsize(frauen_journalistdesjahres)
-```
-Jury
-```
-frauen_jury_journalistdesjahres <- E(frauen_journalistdesjahres)$relation == 3
-sum(frauen_jury_journalistdesjahres, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_journalistdesjahres <- E(frauen_journalistdesjahres)$relation == 1	
-sum(frauen_preistraeger_journalistdesjahres, na.rm = TRUE)
-```
-
-**Katholischer Medienpreis**
-  Gesamt
-```
-frauen_katholischermedienpreis <-  delete_vertices(katholischermedienpreis[[1]], V(katholischermedienpreis[[1]])[which (sex == 1)])
-gsize(frauen_katholischermedienpreis)
-```
-Jury
-```
-frauen_jury_katholischermedienpreis <- E(frauen_katholischermedienpreis $relation == 3
-sum(frauen_jury_katholischermedienpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_katholischermedienpreis <- E(frauen_katholischermedienpreis)$relation == 1	
-sum(frauen_preistraeger_katholischermedienpreis, na.rm = TRUE)
-```
-
-**Kurt-Tucholsky-Preis**
-  Gesamt
-```
-frauen_kurttucholskypreis <-  delete_vertices(kurttucholskypreis[[1]], V(kurttucholskypreis[[1]])[which (sex == 1)])
-gsize(frauen_kurttucholskypreis)
-```
-Jury
-```
-frauen_jury_kurttucholskypreis <- E(frauen_kurttucholskypreis)$relation == 3
-sum(frauen_jury_kurttucholskypreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_kurttucholskypreis <- E(frauen_kurttucholskypreis)$relation == 1	
-sum(frauen_preistraeger_kurttucholskypreis, na.rm = TRUE)
-```
-
-**Leuchtturm**
-  Gesamt
-```
-frauen_leuchtturm <- delete_vertices(leuchtturm[[1]], V(leuchtturm[[1]])[which (sex == 1)])
-gsize(frauen_leuchtturm)
-```
-Jury
-```
-frauen_jury_leuchtturm <- E(frauen_leuchtturm)$relation == 3
-sum(frauen_jury_leuchtturm, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_leuchtturm <- E(frauen_leuchtturm)$relation == 1	
-sum(frauen_preistraeger_leuchtturm, na.rm = TRUE)
-```
-
-**Ludwig-Börne-Preis**
-  Gesamt
-```
-frauen_ludwigboernepreis <- delete_vertices(ludwigboernepreis[[1]], V(ludwigboernepreis[[1]])[which (sex == 1)])
-gsize(frauen_ludwigboernepreis)
-```
-Jury
-```
-frauen_jury_ludwigboernepreis <- E(frauen_ludwigboernepreis)$relation == 3
-sum(frauen_jury_ludwigboernepreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_ludwigboernepreis <- E(frauen_ludwigboernepreis)$relation == 1	
-sum(frauen_preistraeger_ludwigboernepreis, na.rm = TRUE)
-```
-
-**Ludwig-Erhard-Preis**
-  Gesamt
-```
-frauen_ludwigerhardpreis <-  delete_vertices(ludwigerhardpreis[[1]], V(ludwigerhardpreis[[1]])[which (sex == 1)])
-gsize(frauen_ludwigerhardpreis)
-```
-Jury
-```
-frauen_jury_ludwigerhardpreis <- E(frauen_ludwigerhardpreis)$relation == 3
-sum(frauen_jury_ludwigerhardpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_ludwigerhardpreis <- E(frauen_ludwigerhardpreis)$relation == 1	
-sum(frauen_preistraeger_ludwigerhardpreis, na.rm = TRUE)
-```
-
-**Nannen-Preis**
-  Gesamt
-```
-frauen_nannenpreis <-  delete_vertices(nannenpreis[[1]], V(nannenpreis[[1]])[which (sex == 1)])
-gsize(frauen_nannenpreis)
-```
-Jury
-```
-frauen_jury_nannenpreis <- E(frauen_nannenpreis)$relation == 3
-sum(frauen_jury_nannenpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_nannenpreis <- E(frauen_nannenpreis)$relation == 1	
-sum(frauen_preistraeger_nannenpreis, na.rm = TRUE)
-```
-
-**Robert-Geisendörfer-Preis**
-  Gesamt
-```
-frauen_robertgeisendoerferpreis <-  delete_vertices(robertgeisendoerferpreis[[1]], V(robertgeisendoerferpreis[[1]])[which (sex == 1)])
-gsize(frauen_robertgeisendoerferpreis)
-```
-Jury
-```
-frauen_jury_robertgeisendoerferpreis <- E(frauen_robertgeisendoerferpreis)$relation == 3
-sum(frauen_robertgeisendoerferpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_robertgeisendoerferpreis <- E(frauen_robertgeisendoerferpreis)$relation == 1	
-sum(frauen_preistraeger_robertgeisendoerferpreis, na.rm = TRUE)
-```
-
-**Theodor-Wolff-Preis**
-  Gesamt
-```
-frauen_theodorwolffpreis <-  delete_vertices(theodorwolffpreis[[1]], V(theodorwolffpreis[[1]])[which (sex == 1)])
-gsize(frauen_theodorwolffpreis)
-```
-Jury
-```
-frauen_jury_theodorwolffpreis <- E(theodorwolffpreis)$relation == 3
-sum(frauen_jury_theodorwolffpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_theodorwolffpreis <- E(frauen_theodorwolffpreis)$relation == 1	
-sum(frauen_preistraeger_theodorwolffpreis, na.rm = TRUE)
-```
-
-**Wächterpreis**
-  Gesamt
-```
-frauen_waechterpreis <-  delete_vertices(waechterpreis[[1]], V(waechterpreis[[1]])[which (sex == 1)])
-gsize(frauen_waechterpreis)
-```
-Jury
-```
-frauen_jury_waechterpreis <- E(frauen_waechterpreis)$relation == 3
-sum(frauen_jury_waechterpreis, na.rm = TRUE)
-```
-Preisträger
-```
-frauen_preistraeger_waechterpreis <- E(frauen_waechterpreis)$relation == 1
-sum(frauen_preistraeger_waechterpreis, na.rm = TRUE)
-```
 
 ### Dominanz einzelner Medienunternehmen nach Jahren
 
@@ -1413,44 +1440,7 @@ indjury2019 <- degree(juryfinal2019, mode="in")
 sort(indjury2019)
 ```
 
-**Medienkonzentration unter einzelnen Preisen**
-_Alternativer Medienpreis_
-Wie viele Personen gibt es (einfach gezählt) im Preisnetzwerk?
-```
-personen_alternativermedienpreis <- V(alternativermedienpreis[[1]])$type == 0
-sum(personen_alternativermedienpreis, na.rm = TRUE)
-```
-Wie viele Beziehungen zum Preis (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
-```
-beziehungen_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$relation == 1) + (E(alternativermedienpreis[[1]])$relation == 3)
-sum(beziehungen_alternativermedienpreis, na.rm = TRUE)
-```
-Wie viele Gruppenpreisverleihungen gibt es im Preisnetzwerk (um _Gruppenpreis-Verzerrung_ zu erkennen)?
-```
-gruppenpreise_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$format == 2)
-sum(gruppenpreise_alternativermedienpreis, na.rm = TRUE)
-```
-Brauche Preisnetzwerk 2. Grades (damit Arbeitgeber auch im Netzwerk sind)
-```
-alternativermedienpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Alternativer Medienpreis"))
-alternativermedienpreis_2grad
-plot(alternativermedienpreis_2grad[[1]])
-```
-Alle Beziehungen zu Preisen rauslöschen (institutiontype = 1)
-```
-alternativermedienpreis_2grad_oP <- delete_vertices(alternativermedienpreis_2grad[[1]], V(alternativermedienpreis_2grad[[1]])[which (institutiontype == 1)])
-plot(alternativermedienpreis_2grad_oP)
-```
-Nach Indegree sortieren:
-```
-ind_alternativermedienpreis_2grad_oP <- degree(alternativermedienpreis_2grad_oP, mode="in")
-sort(ind_alternativermedienpreis_2grad_oP)
-```
-Zähle und summiere alle Arbeitgeberberziehungen (relation = 2) im Preisnetzwerk
-```
-ag_alternativermedienpreis <- (E(alternativermedienpreis_2grad[[1]])$relation == 2)
-sum(ag_alternativermedienpreis, na.rm = TRUE)
-```
+
 
 _Axel-Springer-Preis_
 ```
