@@ -1,17 +1,17 @@
 # BA (kommentierter Code)
 ## Legende
-*g = Gesamtnetzwerk*  
-*g2 = bereinigtes Netzwerk, alle gelöscht mit degree < 3*  
-*g3 = Elite in der Elite, alle gelöscht mit degree < 20*  
-*preistraegerfinal = Preisträgernetzwerk*  
-  *nach Jahren: preistraeger2015, preistraeger2016,...*  
-*juryfinal = Jurynetzwerk*  
-   *nach Jahren: juryfinal2015, juryfinal2016,...*  
-*ind-/outd- = Präfix für In-/Outdegree-Netzwerke*  
-*preistraeger_xx = Preisträgernetzwerk eines Teilnetzwerks*  
-*jury_xx = Jurynetzwerk eines Teilnetzwerks*  
-*gruppenpreise2015, gruppenpreise2016... = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre*  
-*einzelpreise2015,... = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre*  
+*g* = Gesamtnetzwerk  
+*g2* = bereinigtes Netzwerk, alle gelöscht mit degree < 3  
+*g3* = Elite in der Elite, alle gelöscht mit degree < 20  
+*preistraegerfinal* = Preisträgernetzwerk  
+  nach Jahren: *preistraeger2015, preistraeger2016,...*  
+*juryfinal* = Jurynetzwerk  
+   nach Jahren: *juryfinal2015, juryfinal2016,...*  
+*ind-/outd-* = Präfix für In-/Outdegree-Netzwerke  
+*preistraeger_xx* = Preisträgernetzwerk eines Teilnetzwerks  
+*jury_xx* = Jurynetzwerk eines Teilnetzwerks  
+*gruppenpreise2015, gruppenpreise2016...* = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre  
+*einzelpreise2015,...* = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre  
 
 ## Netzwerk laden
 ```
@@ -1425,6 +1425,11 @@ Wie viele Beziehungen zum Preis (über Jurymitgliedschaft oder Preisträgerschaf
 beziehungen_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$relation == 1) + (E(alternativermedienpreis[[1]])$relation == 3)
 sum(beziehungen_alternativermedienpreis, na.rm = TRUE)
 ```
+Wie viele Gruppenpreisverleihungen gibt es im Preisnetzwerk (um _Gruppenpreis-Verzerrung_ zu erkennen)?
+```
+gruppenpreise_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$format == 2)
+sum(gruppenpreise_alternativermedienpreis, na.rm = TRUE)
+```
 Brauche Preisnetzwerk 2. Grades (damit Arbeitgeber auch im Netzwerk sind)
 ```
 alternativermedienpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Alternativer Medienpreis"))
@@ -1448,6 +1453,8 @@ personen_axelspringerpreis <- V(axelspringerpreis[[1]])$type == 0
 sum(personen_axelspringerpreis, na.rm = TRUE)
 beziehungen_axelspringerpreis <- (E(axelspringerpreis[[1]])$relation == 1) + (E(axelspringerpreis[[1]])$relation == 3)
 sum(beziehungen_axelspringerpreis, na.rm = TRUE)
+gruppenpreise_axelspringerpreis <- (E(axelspringerpreis[[1]])$format == 2)
+sum(gruppenpreise_axelspringerpreis, na.rm = TRUE)
 
 axelspringerpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Axel-Springer-Preis für junge Journalisten"))
 axelspringerpreis_2grad
@@ -1466,6 +1473,8 @@ personen_bremerfernsehpreis <- V(bremerfernsehpreis[[1]])$type == 0
 sum(personen_bremerfernsehpreis, na.rm = TRUE)
 beziehungen_bremerfernsehpreis <- (E(bremerfernsehpreis[[1]])$relation == 1) + (E(bremerfernsehpreis[[1]])$relation == 3)
 sum(beziehungen_bremerfernsehpreis, na.rm = TRUE)
+gruppenpreise_bremerfernsehpreis <- (E(bremerfernsehpreis[[1]])$format == 2)
+sum(gruppenpreise_bremerfernsehpreis, na.rm = TRUE)
 
 bremerfernsehpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Bremer Fernsehpreis"))
 bremerfernsehpreis_2grad
@@ -1484,6 +1493,8 @@ personen_djp <- V(djp[[1]])$type == 0
 sum(personen_djp, na.rm = TRUE)
 beziehungen_djp <- (E(djp[[1]])$relation == 1) + (E(djp[[1]])$relation == 3)
 sum(beziehungen_djp, na.rm = TRUE)
+gruppenpreise_djp <- (E(djp[[1]])$format == 2)
+sum(gruppenpreise_djp, na.rm = TRUE)
 
 djp_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
 djp_2grad
@@ -1502,6 +1513,8 @@ personen_deutscherradiopreis <- V(deutscherradiopreis[[1]])$type == 0
 sum(personen_deutscherradiopreis, na.rm = TRUE)
 beziehungen_deutscherradiopreis <- (E(deutscherradiopreis[[1]])$relation == 1) + (E(deutscherradiopreis[[1]])$relation == 3)
 sum(beziehungen_deutscherradiopreis, na.rm = TRUE)
+gruppenpreise_deutscherradiopreis <- (E(deutscherradiopreis[[1]])$format == 2)
+sum(gruppenpreise_deutscherradiopreis, na.rm = TRUE)
 
 deutscherradiopreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Radiopreis"))
 deutscherradiopreis_2grad
@@ -1520,6 +1533,8 @@ personen_deutscherreporterpreis <- V(deutscherreporterpreis[[1]])$type == 0
 sum(personen_deutscherreporterpreis, na.rm = TRUE)
 beziehungen_deutscherreporterpreis <- (E(deutscherreporterpreis[[1]])$relation == 1) + (E(deutscherreporterpreis[[1]])$relation == 3)
 sum(beziehungen_deutscherreporterpreis, na.rm = TRUE)
+gruppenpreise_deutscherreporterpreis <- (E(deutscherreporterpreis[[1]])$format == 2)
+sum(gruppenpreise_deutscherreporterpreis, na.rm = TRUE)
 
 deutscherreporterpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Reporterpreis"))
 deutscherreporterpreis_2grad
@@ -1538,6 +1553,8 @@ personen_ernstschneiderpreis <- V(ernstschneiderpreis[[1]])$type == 0
 sum(personen_ernstschneiderpreis, na.rm = TRUE)
 beziehungen_ernstschneiderpreis <- (E(ernstschneiderpreis[[1]])$relation == 1) + (E(ernstschneiderpreis[[1]])$relation == 3)
 sum(beziehungen_ernstschneiderpreis, na.rm = TRUE)
+gruppenpreise_ernstschneiderpreis <- (E(ernstschneiderpreis[[1]])$format == 2)
+sum(gruppenpreise_ernstschneiderpreis, na.rm = TRUE)
 
 ernstschneiderpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Ernst-Schneider-Preis"))
 ernstschneiderpreis_2grad
@@ -1556,6 +1573,8 @@ personen_gvhpreis <- V(gvhpreis[[1]])$type == 0
 sum(personen_gvhpreis, na.rm = TRUE)
 beziehungen_gvhpreis <- (E(gvhpreis[[1]])$relation == 1) + (E(gvhpreis[[1]])$relation == 3)
 sum(beziehungen_gvhpreis, na.rm = TRUE)
+gruppenpreise_gvhpreis <- (E(gvhpreis[[1]])$format == 2)
+sum(gruppenpreise_gvhpreis, na.rm = TRUE)
 
 gvhpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"))
 gvhpreis_2grad
@@ -1574,6 +1593,8 @@ personen_grimmeonlineaward <- V(grimmeonlineaward[[1]])$type == 0
 sum(personen_grimmeonlineaward, na.rm = TRUE)
 beziehungen_grimmeonlineaward <- (E(grimmeonlineaward[[1]])$relation == 1) + (E(grimmeonlineaward[[1]])$relation == 3)
 sum(beziehungen_grimmeonlineaward, na.rm = TRUE)
+gruppenpreise_grimmeonlineaward <- (E(grimmeonlineaward[[1]])$format == 2)
+sum(gruppenpreise_grimmeonlineaward, na.rm = TRUE)
 
 grimmeonlineaward_2grad <- subgraph <- make_ego_graph(g, order=2, c("Grimme Online Award"))
 grimmeonlineaward_2grad
@@ -1592,6 +1613,8 @@ personen_helmutschmidtpreis <- V(helmutschmidtpreis[[1]])$type == 0
 sum(personen_helmutschmidtpreis, na.rm = TRUE)
 beziehungen_helmutschmidtpreis <- (E(helmutschmidtpreis[[1]])$relation == 1) + (E(helmutschmidtpreis[[1]])$relation == 3)
 sum(beziehungen_helmutschmidtpreis, na.rm = TRUE)
+gruppenpreise_helmutschmidtpreis <- (E(helmutschmidtpreis[[1]])$format == 2)
+sum(gruppenpreise_helmutschmidtpreis, na.rm = TRUE)
 
 helmutschmidtpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Helmut-Schmidt-Journalistenpreis"))
 helmutschmidtpreis_2grad
@@ -1610,6 +1633,8 @@ personen_herbertquandtpreis <- V(herbertquandtpreis[[1]])$type == 0
 sum(personen_herbertquandtpreis, na.rm = TRUE)
 beziehungen_herbertquandtpreis <- (E(herbertquandtpreis[[1]])$relation == 1) + (E(herbertquandtpreis[[1]])$relation == 3)
 sum(beziehungen_herbertquandtpreis, na.rm = TRUE)
+gruppenpreise_herbertquandtpreis <- (E(herbertquandtpreis[[1]])$format == 2)
+sum(gruppenpreise_herbertquandtpreis, na.rm = TRUE)
 
 herbertquandtpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Herbert Quandt Medienpreis"))
 herbertquandtpreis_2grad
@@ -1628,6 +1653,8 @@ personen_journalistdesjahres <- V(journalistdesjahres[[1]])$type == 0
 sum(personen_journalistdesjahres, na.rm = TRUE)
 beziehungen_journalistdesjahres <- (E(journalistdesjahres[[1]])$relation == 1) + (E(journalistdesjahres[[1]])$relation == 3)
 sum(beziehungen_journalistdesjahres, na.rm = TRUE)
+gruppenpreise_journalistdesjahres <- (E(journalistdesjahres[[1]])$format == 2)
+sum(gruppenpreise_journalistdesjahres, na.rm = TRUE)
 
 journalistdesjahres_2grad <- subgraph <- make_ego_graph(g, order=2, c("Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"))
 journalistdesjahres_2grad
@@ -1646,6 +1673,8 @@ personen_katholischermedienpreis <- V(katholischermedienpreis[[1]])$type == 0
 sum(personen_katholischermedienpreis, na.rm = TRUE)
 beziehungen_katholischermedienpreis <- (E(katholischermedienpreis[[1]])$relation == 1) + (E(katholischermedienpreis[[1]])$relation == 3)
 sum(beziehungen_katholischermedienpreis, na.rm = TRUE)
+gruppenpreise_katholischermedienpreis <- (E(katholischermedienpreis[[1]])$format == 2)
+sum(gruppenpreise_katholischermedienpreis, na.rm = TRUE)
 
 katholischermedienpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Katholischer Medienpreis"))
 katholischermedienpreis_2grad
@@ -1664,6 +1693,8 @@ personen_kurttucholskypreis <- V(kurttucholskypreis[[1]])$type == 0
 sum(personen_kurttucholskypreis, na.rm = TRUE)
 beziehungen_kurttucholskypreis <- (E(kurttucholskypreis[[1]])$relation == 1) + (E(kurttucholskypreis[[1]])$relation == 3)
 sum(beziehungen_kurttucholskypreis, na.rm = TRUE)
+gruppenpreise_kurttucholskypreis <- (E(kurttucholskypreis[[1]])$format == 2)
+sum(gruppenpreise_kurttucholskypreis, na.rm = TRUE)
 
 kurttucholskypreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Kurt-Tucholsky-Preis für literarische Publizistik"))
 kurttucholskypreis_2grad
@@ -1682,6 +1713,8 @@ personen_leuchtturm <- V(leuchtturm[[1]])$type == 0
 sum(personen_leuchtturm, na.rm = TRUE)
 beziehungen_leuchtturm <- (E(leuchtturm[[1]])$relation == 1) + (E(leuchtturm[[1]])$relation == 3)
 sum(beziehungen_leuchtturm, na.rm = TRUE)
+gruppenpreise_leuchtturm <- (E(leuchtturm[[1]])$format == 2)
+sum(gruppenpreise_leuchtturm, na.rm = TRUE)
 
 leuchtturm_2grad <- subgraph <- make_ego_graph(g, order=2, c("Leuchtturm für besondere publizistische Leistungen"))
 leuchtturm_2grad
@@ -1700,6 +1733,8 @@ personen_ludwigboernepreis <- V(ludwigboernepreis[[1]])$type == 0
 sum(personen_ludwigboernepreis, na.rm = TRUE)
 beziehungen_ludwigboernepreis <- (E(ludwigboernepreis[[1]])$relation == 1) + (E(ludwigboernepreis[[1]])$relation == 3)
 sum(beziehungen_ludwigboernepreis, na.rm = TRUE)
+gruppenpreise_ludwigboernepreis <- (E(ludwigboernepreis[[1]])$format == 2)
+sum(gruppenpreise_ludwigboernepreis, na.rm = TRUE)
 
 ludwigboernepreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Ludwig-Börne-Preis"))
 ludwigboernepreis_2grad
@@ -1718,6 +1753,8 @@ personen_ludwigerhardpreis <- V(ludwigerhardpreis[[1]])$type == 0
 sum(personen_ludwigerhardpreis, na.rm = TRUE)
 beziehungen_ludwigerhardpreis <- (E(ludwigerhardpreis[[1]])$relation == 1) + (E(ludwigerhardpreis[[1]])$relation == 3)
 sum(beziehungen_ludwigerhardpreis, na.rm = TRUE)
+gruppenpreise_ludwigerhardpreis <- (E(ludwigerhardpreis[[1]])$format == 2)
+sum(gruppenpreise_ludwigerhardpreis, na.rm = TRUE)
 
 ludwigerhardpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Ludwig-Erhard-Preis für Wirtschaftspublizistik"))
 ludwigerhardpreis_2grad
@@ -1736,6 +1773,8 @@ personen_nannenpreis <- V(nannenpreis[[1]])$type == 0
 sum(personen_nannenpreis, na.rm = TRUE)
 beziehungen_nannenpreis <- (E(nannenpreis[[1]])$relation == 1) + (E(nannenpreis[[1]])$relation == 3)
 sum(beziehungen_nannenpreis, na.rm = TRUE)
+gruppenpreise_nannenpreis <- (E(nannenpreis[[1]])$format == 2)
+sum(gruppenpreise_nannenpreis, na.rm = TRUE)
 
 nannenpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Nannen Preis"))
 nannenpreis_2grad
@@ -1754,6 +1793,8 @@ personen_robertgeisendoerferpreis <- V(robertgeisendoerferpreis[[1]])$type == 0
 sum(personen_robertgeisendoerferpreis, na.rm = TRUE)
 beziehungen_robertgeisendoerferpreis <- (E(robertgeisendoerferpreis[[1]])$relation == 1) + (E(robertgeisendoerferpreis[[1]])$relation == 3)
 sum(beziehungen_robertgeisendoerferpreis, na.rm = TRUE)
+gruppenpreise_robertgeisendoerferpreis <- (E(robertgeisendoerferpreis[[1]])$format == 2)
+sum(gruppenpreise_robertgeisendoerferpreis, na.rm = TRUE)
 
 robertgeisendoerferpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Robert Geisendörfer Preis"))
 robertgeisendoerferpreis_2grad
@@ -1772,6 +1813,8 @@ personen_theodorwolffpreis <- V(theodorwolffpreis[[1]])$type == 0
 sum(personen_theodorwolffpreis, na.rm = TRUE)
 beziehungen_theodorwolffpreis <- (E(theodorwolffpreis[[1]])$relation == 1) + (E(theodorwolffpreis[[1]])$relation == 3)
 sum(beziehungen_theodorwolffpreis, na.rm = TRUE)
+gruppenpreise_theodorwolffpreis <- (E(theodorwolffpreis[[1]])$format == 2)
+sum(gruppenpreise_theodorwolffpreis, na.rm = TRUE)
 
 theodorwolffpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Theodor-Wolff-Preis"))
 theodorwolffpreis_2grad
@@ -1790,6 +1833,8 @@ personen_waechterpreis <- V(waechterpreis[[1]])$type == 0
 sum(personen_waechterpreis, na.rm = TRUE)
 beziehungen_waechterpreis <- (E(waechterpreis[[1]])$relation == 1) + (E(waechterpreis[[1]])$relation == 3)
 sum(beziehungen_waechterpreis, na.rm = TRUE)
+gruppenpreise_waechterpreis <- (E(waechterpreis[[1]])$format == 2)
+sum(gruppenpreise_waechterpreis, na.rm = TRUE)
 
 waechterpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Wächterpreis der Tagespresse"))
 waechterpreis_2grad
