@@ -281,6 +281,21 @@ Zähle und summiere alle Arbeitgeberberziehungen (relation = 2) im Preisnetzwerk
 ag_alternativermedienpreis <- (E(alternativermedienpreis_2grad[[1]])$relation == 2)
 sum(ag_alternativermedienpreis, na.rm = TRUE)
 ```
+Konzentration unter Preisträgern (Jurymitglieder (workinmedia != NA) löschen) im Preisnetzwerk
+```
+alternativermedienpreis_2grad_pt <- delete_vertices(alternativermedienpreis_2grad[[1]], V(alternativermedienpreis_2grad[[1]])[!is.na(workinmedia)])
+alternativermedienpreis_2grad_pt
+```
+Zähle alle Arbeitgeberbeziehungen unter Preisträgern im Preisnetzwerk
+```
+ag_alternativermedienpreis_pt <- (E(alternativermedienpreis_pt$relation == 2)
+sum(ag_alternativermedienpreis_pt, na.rm = TRUE)
+```
+Nach Indegree sortieren:
+```
+ind_alternativermedienpreis_2grad_oP_pt <- degree(alternativermedienpreis_2grad_oP, mode="in")
+sort(ind_alternativermedienpreis_2grad_oP)
+```
 
 **Männer-/Frauenverteilung nach Preisen (Wie viele Frauen waren vertreten?)** 
   1. Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)	
