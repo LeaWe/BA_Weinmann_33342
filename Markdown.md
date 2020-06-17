@@ -1461,14 +1461,14 @@ sum(ag_nannenpreis, na.rm = TRUE)
 ```
 Unter Preisträgern:
 ```
-djp_2grad_pt <- delete_vertices(djp_2grad[[1]], V(djp_2grad[[1]])[!is.na(workinmedia)])
-djp_2grad_pt
+nannenpreis_2grad_pt <- delete_vertices(nannenpreis_2grad[[1]], V(nannenpreis_2grad[[1]])[!is.na(workinmedia)])
+nannenpreis_2grad_pt
 
-ag_djp_pt <- (E(djp_pt$relation == 2)
-sum(ag_djp_pt, na.rm = TRUE)
+ag_nannenpreis_pt <- (E(nannenpreis_2grad_pt)$relation == 2)
+sum(ag_nannenpreis_pt, na.rm = TRUE)
 
-ind_djp_2grad_oP_pt <- degree(djp_2grad_oP, mode="in")
-sort(ind_djp_2grad_oP)
+ind_nannenpreis_pt <- degree(nannenpreis_2grad_pt, mode="in")
+sort(ind_nannenpreis_pt)
 ```
 
 **Männer-/Frauenverteilung**  
@@ -1530,14 +1530,14 @@ sum(ag_robertgeisendoerferpreis, na.rm = TRUE)
 ```
 Unter Preisträgern:
 ```
-djp_2grad_pt <- delete_vertices(djp_2grad[[1]], V(djp_2grad[[1]])[!is.na(workinmedia)])
-djp_2grad_pt
+robertgeisendoerferpreis_2grad_pt <- delete_vertices(robertgeisendoerferpreis_2grad[[1]], V(robertgeisendoerferpreis_2grad[[1]])[!is.na(workinmedia)])
+robertgeisendoerferpreis_2grad_pt
 
-ag_djp_pt <- (E(djp_pt$relation == 2)
-sum(ag_djp_pt, na.rm = TRUE)
+ag_robertgeisendoerferpreis_pt <- (E(robertgeisendoerferpreis_2grad_pt)$relation == 2)
+sum(ag_robertgeisendoerferpreis_pt, na.rm = TRUE)
 
-ind_djp_2grad_oP_pt <- degree(djp_2grad_oP, mode="in")
-sort(ind_djp_2grad_oP)
+ind_robertgeisendoerferpreis_pt <- degree(robertgeisendoerferpreis_2grad_pt, mode="in")
+sort(ind_robertgeisendoerferpreis_pt)
 ```
 
 **Männer-/Frauenverteilung**  
@@ -1599,14 +1599,14 @@ sum(ag_theodorwolffpreis, na.rm = TRUE)
 ```
 Unter Preisträgern:
 ```
-djp_2grad_pt <- delete_vertices(djp_2grad[[1]], V(djp_2grad[[1]])[!is.na(workinmedia)])
-djp_2grad_pt
+theodorwolffpreis_2grad_pt <- delete_vertices(theodorwolffpreis_2grad[[1]], V(theodorwolffpreis_2grad[[1]])[!is.na(workinmedia)])
+theodorwolffpreis_2grad_pt
 
-ag_djp_pt <- (E(djp_pt$relation == 2)
-sum(ag_djp_pt, na.rm = TRUE)
+theodorwolffpreis_pt <- (E(theodorwolffpreis_2grad_pt)$relation == 2)
+sum(ag_theodorwolffpreis_pt, na.rm = TRUE)
 
-ind_djp_2grad_oP_pt <- degree(djp_2grad_oP, mode="in")
-sort(ind_djp_2grad_oP)
+ind_theodorwolffpreis_pt <- degree(theodorwolffpreis_2grad_pt, mode="in")
+sort(ind_theodorwolffpreis_pt)
 ```
 
 **Männer-/Frauenverteilung**  
@@ -1668,14 +1668,14 @@ sum(ag_waechterpreis, na.rm = TRUE)
 ```
 Unter Preisträgern:
 ```
-djp_2grad_pt <- delete_vertices(djp_2grad[[1]], V(djp_2grad[[1]])[!is.na(workinmedia)])
-djp_2grad_pt
+waechterpreis_2grad_pt <- delete_vertices(waechterpreis_2grad[[1]], V(waechterpreis_2grad[[1]])[!is.na(workinmedia)])
+waechterpreis_2grad_pt
 
-ag_djp_pt <- (E(djp_pt$relation == 2)
-sum(ag_djp_pt, na.rm = TRUE)
+waechterpreis_pt <- (E(waechterpreis_2grad_pt)$relation == 2)
+sum(ag_waechterpreis_pt, na.rm = TRUE)
 
-ind_djp_2grad_oP_pt <- degree(djp_2grad_oP, mode="in")
-sort(ind_djp_2grad_oP)
+ind_waechterpreis_pt <- degree(waechterpreis_2grad_pt, mode="in")
+sort(ind_waechterpreis_pt)
 ```
 
 **Männer-/Frauenverteilung**  
