@@ -11,7 +11,12 @@
 *preistraeger_xx* = Preisträgernetzwerk eines Teilnetzwerks  
 *jury_xx* = Jurynetzwerk eines Teilnetzwerks  
 *gruppenpreise2015, gruppenpreise2016...* = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre  
-*einzelpreise2015,...* = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre  
+*einzelpreise2015,...* = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre 
+
+Standard-Visualisierung zum Kopieren:
+```
+plot(xx, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
 
 ## Netzwerk laden
 ```
@@ -636,11 +641,11 @@ Unter Preisträgern:
 deutscherreporterpreis_2grad_pt <- delete_vertices(deutscherreporterpreis_2grad[[1]], V(deutscherreporterpreis_2grad[[1]])[!is.na(workinmedia)])
 deutscherreporterpreis_2grad_pt
 
-ag_deutscherreporterpreis_pt <- (E(deutscherreporterpreis_2grad_pt)$relation == 2)
-sum(ag_deutscherreporterpreis_pt, na.rm = TRUE)
-
 ind_deutscherreporterpreis_pt <- degree(deutscherreporterpreis_2grad_pt, mode="in")
 sort(ind_deutscherreporterpreis_pt)
+
+ag_deutscherreporterpreis_pt <- (E(deutscherreporterpreis_2grad_pt)$relation == 2)
+sum(ag_deutscherreporterpreis_pt, na.rm = TRUE)
 ```
 
 **Männer-/Frauenverteilung**  
@@ -981,7 +986,7 @@ Unter Preisträgern:
 herbertquandtpreis_2grad_pt <- delete_vertices(herbertquandtpreis_2grad[[1]], V(herbertquandtpreis_2grad[[1]])[!is.na(workinmedia)])
 herbertquandtpreis_2grad_pt
 
-ag_herbertquandtpreis_pt <- (E(herbertquandtpreis_2grad_pt$relation == 2)
+ag_herbertquandtpreis_pt <- (E(herbertquandtpreis_2grad_pt)$relation == 2)
 sum(ag_herbertquandtpreis_pt, na.rm = TRUE)
 
 ind_herbertquandtpreis_pt <- degree(herbertquandtpreis_2grad_pt, mode="in")
