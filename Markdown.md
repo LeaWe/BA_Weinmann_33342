@@ -231,6 +231,129 @@ plot(g3)
 
 Erstellt Teilnetzwerke der einzelnen Preise
 
+### Preisauswahl
+Zuweisung des einzelnen Preisnamen (Bsp. "Alternativer Medienpreis", siehe Legende), dann run der Befehle
+
+```
+name <- "Alternativer Medienpreis"
+```
+Erzeugt Preisnetzwerk 1. Grades
+```
+x <- subgraph <- make_ego_graph(g, order=1, name)
+x
+```
+Erzeugt Preisnetzwerk 2. Grades (mit Arbeitgebern und anderen Preisen)
+```
+x2 <- subgraph <- make_ego_graph(g, order=2, name)
+x2
+```
+Einfacher Plot des Preisnetzwerks
+```
+plot(x[[1]],
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Einfacher Plot des Netzwerks 2. Grades (mit Arbeitgebern)
+```
+plot(x2[[1]],
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Alle Preise aus Netzwerk 2. Grades löschen (**op = ohne Preise**), nur noch Arbeitsverhältnisse
+```
+x2_oP <- delete_vertices(x2[[1]], V(x2[[1]])[which (institutiontype == 1)])
+plot(x2_oP,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Nach **Indegree** sortieren (Welcher Arbeitgeber taucht am Häufigsten auf?)
+```
+ind_x2_oP <- degree(x2_oP, mode="in")
+sort(ind_x2_oP)
+```
+
+### Umfang Preisnetzwerk
+Anzahl Jurymitglieder im Preisnetzwerk
+```
+jury_x <- E(x[[1]])$relation == 3
+sum(jury_x, na.rm = TRUE)
+```
+Anzahl Preisträger im Preisnetzwerk
+```
+preistraeger_x <- E(x[[1]])$relation == 1
+sum(preistraeger_x, na.rm = TRUE)
+```
+Wie viele Personen gibt es (jede/r nur einfach gezählt) im Preisnetzwerk?
+```
+personen_x <- V(x[[1]])$type == 0
+sum(personen_x, na.rm = TRUE)
+```
+Anzahl Gruppenpreise im Preisnetzwerk
+```
+gruppenpreise_x <- (E(x[[1]])$format == 2)
+sum(gruppenpreise_x, na.rm = TRUE)
+```
+
+Wie viele **Beziehungen zum Preis** (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
+```
+beziehungen_x <- (E(x[[1]])$relation == 1) + (E(x[[1]])$relation == 3)
+sum(beziehungen_x, na.rm = TRUE)
+```
+Wie viele **Arbeitgeberbeziehungen** gibt es im Preisnetzwerk?
+```
+ag_x <- (E(x2[[1]])$relation == 2)
+sum(ag_x, na.rm = TRUE)
+```
+
+### Preisträgernetzwerke einzelner Preise
+
+Lösche alle Jurymitglieder
+```
+x2_pt <- delete_vertices(x2[[1]], V(x2[[1]])[!is.na(workinmedia)])
+x2_pt
+```
+Anzahl Arbeitgeberbeziehungen allein unter Preisträgern
+```
+ag_x_pt <- (E(x2_pt)$relation == 2)
+sum(ag_x_pt, na.rm = TRUE)
+```
+Ergebnis nach **Indegree** sortieren
+```
+ind_x_pt <- degree(x2_pt, mode="in")
+sort(ind_x_pt)
+```
+
+### Männer-/Frauenverteilung
+Anzahl Frauen gesamt
+```
+frauen_x <- delete.vertices(x[[1]], V(x[[1]])[which (sex == 1)])
+gsize(frauen_x)
+```
+Anzahl Frauen in der Jury
+```
+frauen_jury_x <- E(frauen_x)$relation == 3
+sum(frauen_jury_x, na.rm = TRUE)
+```
+Anzahl Frauen unter den Preisträgern
+```
+frauen_preistraeger_x <- E(frauen_x)$relation == 1	
+sum(frauen_preistraeger_x, na.rm = TRUE)
+```
 ### Alternativer Medienpreis
 Gesamt
 ```
