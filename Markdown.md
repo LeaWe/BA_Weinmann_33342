@@ -174,10 +174,6 @@ vertex_attr(g)
 
 ## Beschreibung Gesamtnetzwerk
 
-Zeigt Attribute an, die "institutiontype" = 1 haben (= Medienunternehmen)
-```
-vertex_attr(g, ("institutiontype" == 1), index=V(g))
-```
 Erzeugt Teilnetzwerk mit ausschließlich Preisen (Frage: Wie viele Preise im Gesamtnetzwerk?)
 ```
 preise <- induced_subgraph(g, V(g)[which (institutiontype == 1)])
