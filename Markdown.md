@@ -153,6 +153,7 @@ V(g)[V(g)$type == 1]$shape <- "square"
 V(g)[V(g)$type == 0]$shape <- "circle"
 V(g)[V(g)$type == 0]$color <- "cornflowerblue"
 V(g)[V(g)$type == 1]$color <- "aquamarine2"
+V(g)[(V(g)$type == 1) & (institutiontype == 2)]$color <- "grey"
 ```
 
 Färbt verschiedene relations unterschiedlich ein
@@ -160,6 +161,7 @@ Färbt verschiedene relations unterschiedlich ein
 E(g)[relation == 3]$color <- "green"
 E(g)[relation == 2]$color <- "orange"
 E(g)[relation == 1]$color <- "blue"
+E(g)[(relation == 1) & (format == 2)]$color <- "red"
 
 plot(g)
 ```
@@ -592,7 +594,7 @@ Teilnetzwerk, nur weibliche Nodes im Preisträgernetzwerk (und ihre Summe)
 frauenpreistraeger <- V(preistraegerfinal)$sex == 2
 sum (frauenpreistraeger, na.rm = TRUE)
 ```
-#### ...gesamt
+**...gesamt**
 Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2015 (und ihre Summe):
 ```
 maenner2015 <- V(year2015)$sex == 1
@@ -645,7 +647,8 @@ frauen2019 <- V(year2019)$sex == 2
 sum (frauen2019, na.rm = TRUE)
 ```
 
-#### ...in Jury
+**...in Jury**
+
 **2015:**
 1. Erstelle Teilnetzwerk aus Jurynetzwerk, ausschließlich mit Verbindungen aus 2015
 ```
@@ -697,7 +700,7 @@ maennerjury2019 <- V(juryfinal2019)$sex == 1
 sum (maennerjury2019, na.rm = TRUE)
 ```
 
-#### ...unter Preisträgern
+**...unter Preisträgern**
 1. Erstelle Teilnetzwerk um alle Preisträger des Jahres **2015**
 ```
 preistraeger2015 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2015"])
@@ -759,7 +762,7 @@ Für **2015**:
 preistraeger2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
 nur_preistraeger2015 <- subgraph.edges(preistraeger2015, E(preistraeger2015)[relation == 1]) 
 ```
-weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbetsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
+weil: Wenn man Outdegree von gesamtem Preisträgernetzwerk sortiert, werden alle Preisträger, die mehrere Arbeitsverhältnisse haben, auch doppelt und dreifach gezählt --> will nur Anzahl der Preis-Relations!! 
 ```
 outd_nur_preistraeger2015 <- degree(nur_preistraeger2015, mode="out")
 sort(outd_nur_preistraeger2015)
@@ -816,8 +819,10 @@ sort(ind2019)
 
 **größter Indegree (unter PT, nach Jahren)**
 ```
-indpreistraeger2015 <- degree(preistraeger2015, mode="in")
-sort(indpreistraeger2015)
+ptyear <- [preistraeger2015]
+
+ind_nur_preistraeger2015 <- degree(preistraeger2015, mode="in")
+sort(ind_nur_preistraeger2015)
 
 indpreistraeger2016 <- degree(preistraeger2016, mode="in")
 sort(indpreistraeger2016)
