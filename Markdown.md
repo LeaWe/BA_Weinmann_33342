@@ -456,100 +456,6 @@ Anzahl Frauen unter den Preisträgern
 frauen_preistraeger_x <- E(frauen_x)$relation == 1	
 sum(frauen_preistraeger_x, na.rm = TRUE)
 ```
-### Alternativer Medienpreis
-Gesamt
-```
-alternativermedienpreis <- subgraph <- make_ego_graph(g, order=1, c("Alternativer Medienpreis"))
-alternativermedienpreis
-plot(alternativermedienpreis[[1]])
-```
-Jury
-```
-jury_alternativermedienpreis <- E(alternativermedienpreis[[1]])$relation == 3
-sum(jury_alternativermedienpreis, na.rm = TRUE)
-```
-Preisträger
-```
-preistraeger_alternativermedienpreis <- E(alternativermedienpreis[[1]])$relation == 1
-sum(preistraeger_alternativermedienpreis, na.rm = TRUE)
-```
-
-**Medienkonzentration unter einzelnen Preisen**
-Wie viele Personen gibt es (einfach gezählt) im Preisnetzwerk?
-```
-personen_alternativermedienpreis <- V(alternativermedienpreis[[1]])$type == 0
-sum(personen_alternativermedienpreis, na.rm = TRUE)
-```
-Wie viele Beziehungen zum Preis (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
-```
-beziehungen_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$relation == 1) + (E(alternativermedienpreis[[1]])$relation == 3)
-sum(beziehungen_alternativermedienpreis, na.rm = TRUE)
-```
-Wie viele Gruppenpreisverleihungen gibt es im Preisnetzwerk (um _Gruppenpreis-Verzerrung_ zu erkennen)?
-```
-gruppenpreise_alternativermedienpreis <- (E(alternativermedienpreis[[1]])$format == 2)
-sum(gruppenpreise_alternativermedienpreis, na.rm = TRUE)
-```
-Brauche Preisnetzwerk 2. Grades (damit Arbeitgeber auch im Netzwerk sind)
-```
-alternativermedienpreis_2grad <- subgraph <- make_ego_graph(g, order=2, c("Alternativer Medienpreis"))
-alternativermedienpreis_2grad
-plot(alternativermedienpreis_2grad[[1]])
-```
-Alle Beziehungen zu Preisen rauslöschen (institutiontype = 1)
-```
-alternativermedienpreis_2grad_oP <- delete_vertices(alternativermedienpreis_2grad[[1]], V(alternativermedienpreis_2grad[[1]])[which (institutiontype == 1)])
-plot(alternativermedienpreis_2grad_oP)
-```
-Nach Indegree sortieren:
-```
-ind_alternativermedienpreis_2grad_oP <- degree(alternativermedienpreis_2grad_oP, mode="in")
-sort(ind_alternativermedienpreis_2grad_oP)
-```
-Zähle und summiere alle Arbeitgeberberziehungen (relation = 2) im Preisnetzwerk
-```
-ag_alternativermedienpreis <- (E(alternativermedienpreis_2grad[[1]])$relation == 2)
-sum(ag_alternativermedienpreis, na.rm = TRUE)
-```
-Konzentration unter Preisträgern (Jurymitglieder (workinmedia != NA) löschen) im Preisnetzwerk
-```
-alternativermedienpreis_2grad_pt <- delete_vertices(alternativermedienpreis_2grad[[1]], V(alternativermedienpreis_2grad[[1]])[!is.na(workinmedia)])
-alternativermedienpreis_2grad_pt
-```
-Zähle alle Arbeitgeberbeziehungen unter _Preisträgern_ im Preisnetzwerk
-```
-ag_alternativermedienpreis_pt <- (E(alternativermedienpreis_2grad_pt)$relation == 2)
-sum(ag_alternativermedienpreis_pt, na.rm = TRUE)
-```
-Nach Indegree sortieren:
-```
-ind_alternativermedienpreis_pt <- degree(alternativermedienpreis_2grad_pt, mode="in")
-sort(ind_alternativermedienpreis_pt)
-```
-
-**Männer-/Frauenverteilung nach Preisen (Wie viele Frauen waren vertreten?)** 
-  1. Zähle, wie oft eine Frau am Preis beteiligt war (Preisträger & Jury, einzelne Personen werden mehrfach gezählt)	
-```
-frauen_alternativermedienpreis <- delete_vertices(alternativermedienpreis, V(alternativermedienpreis)[which (sex == 1)])
-gsize(frauen_alternativermedienpreis)
-```
-
-2. Zähle alle Frauen, die in der Jury saßen (einzelne Personen werden mehrfach gezählt)
-```
-frauen_jury_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 3
-sum(frauen_jury_alternativermedienpreis, na.rm = TRUE)
-```
-
-3. Zähle alle Frauen, die einen Preis gewonnen haben (einzelne Personen werden mehrfach gezählt)
-```
-frauen_preistraeger_alternativermedienpreis <- E(frauen_alternativermedienpreis)$relation == 1	
-sum(frauen_preistraeger_alternativermedienpreis, na.rm = TRUE)
-```
-
-
-### Axel-Springer-Preis
-Gesamt
-
 
 ## Auswertung nach Jahren
 
@@ -561,7 +467,6 @@ Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2019
 year2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
 year2019
 plot (year2019)
-indyear2019 <- 
 ```
 
 #### 2018
@@ -677,7 +582,16 @@ Teilnetzwerk, nur weibliche Nodes im Jurynetzwerk (und ihre Summe)
 frauenjury <- V(juryfinal)$sex == 2
 sum (frauenjury, na.rm = TRUE)
 ```
-
+Teilnetzwerk, nur männliche Nodes im Preisträgernetzwerk (und ihre Summe)
+```
+maennerpreistraeger <- V(preistraegerfinal)$sex == 1
+sum (maennerpreistraeger, na.rm = TRUE)
+```
+Teilnetzwerk, nur weibliche Nodes im Preisträgernetzwerk (und ihre Summe)
+```
+frauenpreistraeger <- V(preistraegerfinal)$sex == 2
+sum (frauenpreistraeger, na.rm = TRUE)
+```
 #### ...gesamt
 Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2015 (und ihre Summe):
 ```
@@ -993,9 +907,6 @@ sort(indjury2018)
 indjury2019 <- degree(juryfinal2019, mode="in")
 sort(indjury2019)
 ```
-
-
-
 
 
 _Bremer Fernsehpreis_
