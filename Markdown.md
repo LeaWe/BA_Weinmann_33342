@@ -49,7 +49,7 @@ Ernst-Schneider-Preis:
 id: ernstschneiderpreis 
 name: "Ernst-Schneider-Preis"
 ```
-Georg v- Holtzbrinck-Preis:  
+Georg v. Holtzbrinck-Preis:  
 ```
 id: gvhpreis
 name: "Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"
@@ -242,7 +242,7 @@ betw <- betweenness(g, directed=TRUE) # Betweenness
 bet <- betweenness(g, directed = TRUE)
 
 ```
-## Preisträger-Netzwerk
+## PREISTRÄGER-NETZWERK
 
 1. Entfernt alle Nodes, die bei "workinmedia" _nicht_ NA haben (trifft auf alle Nodes außer Jurymitgliedern zu)
 ```
@@ -275,7 +275,7 @@ indpreistraeger <- degree(preistraegerfinal, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
-## Jury-Netzwerk
+## JURY-NETZWERK
 
 1. Entfernt alle Preisträger-Beziehungen aus edgelist
 ```
@@ -312,7 +312,7 @@ indjury
 sort(indjury)
 ```
 
-## Teilnetzwerke
+## TEILNETZWERKE
 
 Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 3)
 ```
@@ -331,29 +331,19 @@ g3
 plot(g3)
 ```
 
-## Einzelne Preisnetzwerke
+## PREISSPEZIFISCHE NETZWERKE
 
 Erstellt Teilnetzwerke der einzelnen Preise
 
-### Preisauswahl
-
+#### Preisauswahl
 Zuweisung des einzelnen Preisnamen (Bsp. "Alternativer Medienpreis", siehe Legende), dann run der Befehle
 ```
-name <- "Alternativer Medienpreis"
+Preis <- "Leuchtturm für besondere publizistische Leistungen"
 ```
-Erzeugt Preisnetzwerk 1. Grades
+Erzeuge Preisnetzwerk **ersten Grades** (keine Bereinigung notwendig)
 ```
-x <- subgraph <- make_ego_graph(g, order=1, name)
-x
-```
-Erzeugt Preisnetzwerk 2. Grades (mit Arbeitgebern und anderen Preisen)
-```
-x2 <- subgraph <- make_ego_graph(g, order=2, name)
-x2
-```
-Einfacher Plot des Preisnetzwerks
-```
-plot(x[[1]],
+x1 <- subgraph <- make_ego_graph(g, order=1, Preis)
+plot(x1[[1]],
      edge.arrow.size=.02,
      edge.label.degree=0.1,
      vertex.frame.color="white",
@@ -362,20 +352,97 @@ plot(x[[1]],
      vertex.label.cex=.6,
      layout = layout_with_kk)
 ```
-Einfacher Plot des Netzwerks 2. Grades (mit Arbeitgebern)
+Erzeuge unbereinigtes Preisnetzwerk **zweiten Grades**
 ```
-plot(x2[[1]],
-     edge.arrow.size=.02,
-     edge.label.degree=0.1,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_kk)
+x2 <- subgraph <- make_ego_graph(g, order=2, Preis)
+plot(x2[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
-Alle Preise aus Netzwerk 2. Grades löschen (**op = ohne Preise**), nur noch Arbeitsverhältnisse
+
+#### Bereinigung
+
+Erzeuge unbereinigte Preisnetzwerke 2. Grades **nach Jahren**
 ```
-x2_oP <- delete_vertices(x2[[1]], V(x2[[1]])[which (institutiontype == 1)])
+x15 <- subgraph <- make_ego_graph(year2015, order=2, Preis)
+x15 <- delete_vertices(x15[[1]], V(x15[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x15, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x16 <- subgraph <- make_ego_graph(year2016, order=2, Preis)
+x16 <- delete_vertices(x16[[1]], V(x16[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x16, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x17 <- subgraph <- make_ego_graph(year2017, order=2, Preis)
+x17 <- delete_vertices(x17[[1]], V(x17[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x17, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x18 <- subgraph <- make_ego_graph(year2018, order=2, Preis)
+x18 <- delete_vertices(x18[[1]], V(x18[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x18, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x19 <- subgraph <- make_ego_graph(year2019, order=2, Preis)
+x19 <- delete_vertices(x19[[1]], V(x19[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x19, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+Alle nicht zugehörigen Arbeitsverhältnisse löschen
+```
+x2 <- x2[[1]] - (x2[[1]] - x15 - x16 - x17 - x18 - x19)
+```
+Ausnahme für Kurt-Tucholsky-Preis (keine Preisträger in den Jahren 2016 und 2018):
+```
+x <- x[[1]] - (x[[1]] - x15 - x17 - x19)
+```
+Alle freistehende Nodes löschen
+```
+x2 <- delete_vertices (x2, V(x2)[degree(x2, mode="all")=="0"])
+```
+Bereinigtes Preisnetzwerk
+```
+plot(x2, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+#### Auswertung
+Wie viele Personen gibt es (einfach gezählt) im Preisnetzwerk?
+```
+personen_x <- V(x1[[1]])$type == 0
+sum(personen_x, na.rm = TRUE)
+```
+davon Jurymitglieder (einfach gezählt):
+```
+jury_x <- V(personen_x)$type == 0
+sum(personen_x, na.rm = TRUE)
+```
+davon Preisträger (einfach gezählt):
+```
+personen_x <- V(x[[1]])$type == 0
+sum(personen_x, na.rm = TRUE)
+```
+
+Wie viele Beziehungen zum Preis (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
+```
+beziehungen_x <- (E(x1[[1]])$relation == 1) + (E(x1[[1]])$relation == 3)
+sum(beziehungen_x, na.rm = TRUE)
+```
+Anzahl Jurymitglieder-Beziehungen (alle gezählt)
+```
+jury_relations_x <- E(x1[[1]])$relation == 3
+sum(jury_relations_x, na.rm = TRUE)
+```
+Anzahl Preisträger-Beziehungen (alle gezählt)
+```
+preistraeger_relations_x <- E(x1[[1]])$relation == 1
+sum(preistraeger_relations_x, na.rm = TRUE)
+```
+
+Anzahl Gruppenpreise
+```
+gruppenpreise_x <- (E(x1[[1]])$format == 2)
+sum(gruppenpreise_x, na.rm = TRUE)
+```
+
+#### Netzwerke ohne Beziehung zu anderen Preisen
+Alle Beziehungen zu Preisen rauslöschen (institutiontype = 1)
+```
+x2_oP <- delete_vertices(x2, V(x2)[which (institutiontype == 1)])
 plot(x2_oP,
      edge.arrow.size=.02,
      edge.label.degree=0.1,
@@ -384,76 +451,45 @@ plot(x2_oP,
      vertex.label.dist=0.5,
      vertex.label.cex=.6,
      layout = layout_with_kk)
-```
-Nach **Indegree** sortieren (Welcher Arbeitgeber taucht am Häufigsten auf?)
+```` 
+Nach Indegree sortieren:
 ```
 ind_x2_oP <- degree(x2_oP, mode="in")
 sort(ind_x2_oP)
 ```
-
-### Umfang Preisnetzwerk
-Anzahl Jurymitglieder im Preisnetzwerk
+Anzahl Arbeitgeberbeziehungen
 ```
-jury_x <- E(x[[1]])$relation == 3
-sum(jury_x, na.rm = TRUE)
-```
-Anzahl Preisträger im Preisnetzwerk
-```
-preistraeger_x <- E(x[[1]])$relation == 1
-sum(preistraeger_x, na.rm = TRUE)
-```
-Wie viele Personen gibt es (jede/r nur einfach gezählt) im Preisnetzwerk?
-```
-personen_x <- V(x[[1]])$type == 0
-sum(personen_x, na.rm = TRUE)
-```
-Anzahl Gruppenpreise im Preisnetzwerk
-```
-gruppenpreise_x <- (E(x[[1]])$format == 2)
-sum(gruppenpreise_x, na.rm = TRUE)
-```
-
-Wie viele **Beziehungen zum Preis** (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
-```
-beziehungen_x <- (E(x[[1]])$relation == 1) + (E(x[[1]])$relation == 3)
-sum(beziehungen_x, na.rm = TRUE)
-```
-Wie viele **Arbeitgeberbeziehungen** gibt es im Preisnetzwerk?
-```
-ag_x <- (E(x2[[1]])$relation == 2)
+ag_x <- (E(x2)$relation == 2)
 sum(ag_x, na.rm = TRUE)
 ```
-
-### Preisträgernetzwerke einzelner Preise
-
-Lösche alle Jurymitglieder
+Lösche Jurymitglieder
 ```
-x2_pt <- delete_vertices(x2[[1]], V(x2[[1]])[!is.na(workinmedia)])
+x2_pt <- delete_vertices(x2, V(x2)[!is.na(workinmedia)])
 x2_pt
 ```
-Anzahl Arbeitgeberverhältnisse (av) allein unter Preisträgern
+Anzahl Arbeitgeberbeziehungen unter Preisträgern
 ```
-av_x_pt <- (E(x2_pt)$relation == 2)
-sum(av_x_pt, na.rm = TRUE)
+ag_x_pt <- (E(x2_pt)$relation == 2)
+sum(ag_x_pt, na.rm = TRUE)
 ```
-Ergebnis nach **Indegree** sortieren
+Nach Indegree sortieren
 ```
 ind_x_pt <- degree(x2_pt, mode="in")
 sort(ind_x_pt)
 ```
 
-### Männer-/Frauenverteilung
-Anzahl Frauen gesamt
+#### Männer-/Frauenverteilung in Teilnetzwerken der Preise
+Frauen gesamt
 ```
-frauen_x <- delete.vertices(x[[1]], V(x[[1]])[which (sex == 1)])
+frauen_x <- delete_vertices(x1[[1]], V(x1[[1]])[which (sex == 1)])
 gsize(frauen_x)
 ```
-Anzahl Frauen in der Jury
+Anzahl Frauen in Jury (alle einzeln gezählt)
 ```
 frauen_jury_x <- E(frauen_x)$relation == 3
 sum(frauen_jury_x, na.rm = TRUE)
 ```
-Anzahl Frauen unter den Preisträgern
+Anzahl Frauen unter Preisträgern
 ```
 frauen_preistraeger_x <- E(frauen_x)$relation == 1	
 sum(frauen_preistraeger_x, na.rm = TRUE)
