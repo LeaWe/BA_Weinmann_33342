@@ -338,7 +338,7 @@ Erstellt Teilnetzwerke der einzelnen Preise
 #### Preisauswahl
 Zuweisung des einzelnen Preisnamen (Bsp. "Alternativer Medienpreis", siehe Legende), dann run der Befehle
 ```
-Preis <- "Leuchtturm für besondere publizistische Leistungen"
+Preis <- "Alternativer Medienpreis"
 ```
 Erzeuge Preisnetzwerk **ersten Grades** (keine Bereinigung notwendig)
 ```
@@ -401,7 +401,7 @@ plot(x2, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", ve
 ```
 
 #### Auswertung
-Wie viele Personen gibt es (einfach gezählt) im Preisnetzwerk?
+Wie viele **Personen** gibt es (einfach gezählt) im Preisnetzwerk?
 ```
 personen_x <- V(x1[[1]])$type == 0
 sum(personen_x, na.rm = TRUE)
@@ -417,47 +417,34 @@ personen_x <- V(x[[1]])$type == 0
 sum(personen_x, na.rm = TRUE)
 ```
 
-Wie viele Beziehungen zum Preis (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
+Wie viele **Beziehungen zum Preis** (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
 ```
 beziehungen_x <- (E(x1[[1]])$relation == 1) + (E(x1[[1]])$relation == 3)
 sum(beziehungen_x, na.rm = TRUE)
 ```
-Anzahl Jurymitglieder-Beziehungen (alle gezählt)
+Anzahl **Jurymitglieder-Beziehungen** (alle gezählt)
 ```
 jury_relations_x <- E(x1[[1]])$relation == 3
 sum(jury_relations_x, na.rm = TRUE)
 ```
-Anzahl Preisträger-Beziehungen (alle gezählt)
+Anzahl **Preisträger-Beziehungen** (alle gezählt)
 ```
 preistraeger_relations_x <- E(x1[[1]])$relation == 1
 sum(preistraeger_relations_x, na.rm = TRUE)
 ```
 
-Anzahl Gruppenpreise
+Anzahl **Gruppenpreise**
 ```
 gruppenpreise_x <- (E(x1[[1]])$format == 2)
 sum(gruppenpreise_x, na.rm = TRUE)
 ```
 
-#### Netzwerke ohne Beziehung zu anderen Preisen
-Alle Beziehungen zu Preisen rauslöschen (institutiontype = 1)
+Nach Indegree sortieren (**häufigster Arbeitgeber**):
 ```
-x2_oP <- delete_vertices(x2, V(x2)[which (institutiontype == 1)])
-plot(x2_oP,
-     edge.arrow.size=.02,
-     edge.label.degree=0.1,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_kk)
-```` 
-Nach Indegree sortieren:
+ind_x2 <- degree(x2, mode="in")
+sort(ind_x2)
 ```
-ind_x2_oP <- degree(x2_oP, mode="in")
-sort(ind_x2_oP)
-```
-Anzahl Arbeitgeberbeziehungen
+Anzahl **Arbeitgeberbeziehungen**
 ```
 ag_x <- (E(x2)$relation == 2)
 sum(ag_x, na.rm = TRUE)
@@ -467,12 +454,12 @@ Lösche Jurymitglieder
 x2_pt <- delete_vertices(x2, V(x2)[!is.na(workinmedia)])
 x2_pt
 ```
-Anzahl Arbeitgeberbeziehungen unter Preisträgern
+Anzahl **Arbeitgeberbeziehungen unter Preisträgern**
 ```
 ag_x_pt <- (E(x2_pt)$relation == 2)
 sum(ag_x_pt, na.rm = TRUE)
 ```
-Nach Indegree sortieren
+Nach Indegree sortieren (**häufigster Arbeitgeber unter Preisträgern**):
 ```
 ind_x_pt <- degree(x2_pt, mode="in")
 sort(ind_x_pt)
@@ -855,22 +842,21 @@ sort(ind2019)
 
 **größter Indegree (unter PT, nach Jahren)**
 ```
-ptyear <- [preistraeger2015]
+year <- year2015 [an dieser Stelle jew. Jahr einsetzen]
 
-ind_nur_preistraeger2015 <- degree(preistraeger2015, mode="in")
-sort(ind_nur_preistraeger2015)
+pt_year <- delete_vertices(year, V(year)[!is.na(workinmedia)])
+ind_pt_year <- degree(pt_year, mode="in")
+sort(ind_pt_year)
+plot(ind_pt_year)
+```
+**größter Indegree (in Jurys, nach Jahren)**
+```
+year <- year2015 [an dieser Stelle jew. Jahr einsetzen]
 
-indpreistraeger2016 <- degree(preistraeger2016, mode="in")
-sort(indpreistraeger2016)
-
-indpreistraeger2017 <- degree(year2017, mode="in")
-sort(indpreistraeger2017)
-
-indpreistraeger2018 <- degree(preistraeger2018, mode="in")
-sort(indpreistraeger2018)
-
-indpreistraeger2019 <- degree(preistraeger2019, mode="in")
-sort(indpreistraeger2019)
+jury_year <- delete_vertices(year, V(year)[(type == 0) &(is.na(workinmedia))])
+ind_jury_year <- degree(jury_year, mode="in")
+sort(ind_jury_year)
+plot(ind_jury_year)
 ```
 
 _Zusatz: Indegree von Gruppen- & Einzelpreisnetzwerken:_
