@@ -691,6 +691,8 @@ unternehmen_preise
 
 ## Ressorts
 
+#### Gesamt
+
 Ressort auswählen
 ```
 taskx <- E(g)$task == 1 (Zahl von Ressort einfügen)
@@ -699,6 +701,29 @@ taskx
 Was war häufigstes Ressort?
 ```
 sum(taskx, na.rm = TRUE)
+```
+
+#### unter Preisträgern
+Dafür: Aus g alle Jurymitglieder löschen
+```
+task_pt <- delete_vertices(g, V(g)[(type == 0) & (!is.na(workinmedia))])
+task_pt
+```
+Dann auswerten:
+```
+taskx_pt <- E(task_pt)$task == 15
+sum(taskx_pt, na.rm = TRUE)
+```
+#### unter Jury
+Alle Preisträger löschen
+```
+task_jury <- delete_vertices(g, V(g)[(type == 0) & (is.na(workinmedia))])
+task_jury
+```
+Dann auswerten:
+```
+taskx_jury <- E(task_jury)$task == 6
+sum(taskx_jury, na.rm = TRUE)
 ```
 
 
