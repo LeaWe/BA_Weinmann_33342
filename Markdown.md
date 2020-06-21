@@ -328,9 +328,9 @@ g2
 plot(g2)
 ```
 
-Schritt 2: **Elite in Elite** (Entferne alle Nodes mit degree < 20)
+Schritt 2: **Elite in Elite** (Entferne alle Nodes mit degree < 15)
 ```
-g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<20)])
+g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<15)])
 g3 <- delete_vertices (g3_1, V(g3_1)[degree(g3_1, mode="all")=="0"])
 g3
 plot(g3)
