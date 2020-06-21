@@ -651,7 +651,17 @@ einzelpreise20xx_einzeln <- E(year2016)$format == 1
 einzelpreise20xx_einzeln
 sum(einzelpreise20xx_einzeln, na.rm = TRUE)
 ```
-
+## Netzwerke von Medienunternehmen
+Unternehmen auswählen (z.B. Zeit)
+```
+Unternehmen <- "Die ZEIT"
+```
+Ego-Netzwerk (zweiten Grades) erstellen
+```
+unternehmen <- subgraph <- make_ego_graph(g, order=2, Unternehmen)
+unternehmen
+plot(unternehmen[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
 
 ## Visualisierungen
 
@@ -666,6 +676,24 @@ plot(g3be,
      vertex.label.dist=0.5,
      vertex.label.cex=.6,
      layout = layout_with_kk)
+```
+
+### Ego-Netzwerke
+
+Auswahl der Person
+```
+Person <- "Bastian Obermayer"
+```
+Erzeuge Ego-Netzwerk 1. Grades
+```
+ego <- subgraph <- make_ego_graph(g, order=1, Person)
+ego
+```
+Edges gewichten
+```
+E(ego[[1]])$width <- count.multiple(ego[[1]])
+
+plot(ego[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
 
 ## ab hier: Spielwiese 
