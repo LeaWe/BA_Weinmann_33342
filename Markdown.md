@@ -320,6 +320,8 @@ sort(indjury)
 
 ## TEILNETZWERKE
 
+### Elite-Netzwerke
+
 Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 3)
 ```
 g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<3)])
@@ -336,8 +338,40 @@ g3
 plot(g3)
 ```
 
+### Männer- & Frauennetzwerk
+Frauen:
+```
+frauen <- delete_vertices(g, V(g)[which (sex == 1)])
+frauen
+```
+weibliche PT
+```
+preistraeger_frauen <- subgraph.edges(frauen, E(frauen)[relation == 1])
+preistraeger_frauen
+```
+Jurorinnen
+```
+jury_frauen <- subgraph.edges(frauen, E(frauen)[relation == 3])
+jury_frauen
+```
+Männer:
+```
+maenner <- delete_vertices(g, V(g)[which (sex == 2)])
+maenner
+```
+männliche PT
+```
+preistraeger_maenner <- subgraph.edges(maenner, E(maenner)[relation == 1])
+preistraeger_maenner
+```
+Juroren
+```
+jury_maenner <- subgraph.edges(maenner, E(maenner)[relation == 3])
+jury_maenner
+```
 
-## PREISSPEZIFISCHE NETZWERKE
+
+### PREISSPEZIFISCHE NETZWERKE
 
 Erstellt Teilnetzwerke der einzelnen Preise
 
@@ -490,7 +524,7 @@ sum(frauen_preistraeger_x, na.rm = TRUE)
 ```
 
 
-## Gruppenpreis- und Einzelnetzwerke
+### Gruppenpreis- und Einzelnetzwerke
 
 **Gruppenpreisnetzwerk** erstellen
 ```
