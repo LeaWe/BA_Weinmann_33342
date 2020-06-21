@@ -218,6 +218,7 @@ verleihung <- delete_edges(verleihung1, E(verleihung1)[relation == 2])
 verleihung
 ```
 
+
 ## Netzwerkmaße
 
 **Out-Degree im Gesamtnetzwerk**
@@ -242,6 +243,8 @@ betw <- betweenness(g, directed=TRUE) # Betweenness
 bet <- betweenness(g, directed = TRUE)
 
 ```
+
+
 ## PREISTRÄGER-NETZWERK
 
 1. Entfernt alle Nodes, die bei "workinmedia" _nicht_ NA haben (trifft auf alle Nodes außer Jurymitgliedern zu)
@@ -275,6 +278,8 @@ indpreistraeger <- degree(preistraegerfinal, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
+
+
 ## JURY-NETZWERK
 
 1. Entfernt alle Preisträger-Beziehungen aus edgelist
@@ -312,6 +317,7 @@ indjury
 sort(indjury)
 ```
 
+
 ## TEILNETZWERKE
 
 Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 3)
@@ -323,13 +329,13 @@ plot(g2)
 ```
 
 Schritt 2: **Elite in Elite** (Entferne alle Nodes mit degree < 20)
-## Elite in Elite
 ```
 g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<20)])
 g3 <- delete_vertices (g3_1, V(g3_1)[degree(g3_1, mode="all")=="0"])
 g3
 plot(g3)
 ```
+
 
 ## PREISSPEZIFISCHE NETZWERKE
 
@@ -444,6 +450,7 @@ Nach Indegree sortieren (**häufigster Arbeitgeber**):
 ind_x2 <- degree(x2, mode="in")
 sort(ind_x2)
 ```
+
 Anzahl **Arbeitgeberbeziehungen**
 ```
 ag_x <- (E(x2)$relation == 2)
@@ -482,298 +489,167 @@ frauen_preistraeger_x <- E(frauen_x)$relation == 1
 sum(frauen_preistraeger_x, na.rm = TRUE)
 ```
 
+
+## Gruppenpreis- und Einzelnetzwerke
+
+**Gruppenpreisnetzwerk** erstellen
+```
+gruppenpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 1)])
+gruppenpreise2 <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[(degree(gruppenpreise1, mode="out")=="1") & (type == 0)])
+gruppenpreise <- delete_vertices (gruppenpreise2, V(gruppenpreise2)[degree(gruppenpreise2, mode="all")=="0"])
+```
+Indegree von Gruppenpreisen  
+(Frage: Welches Unternehmen hat die meisten Gruppenpreisträger & welcher Preis vergibt die meisten Gruppenpreise?
+```
+indgruppenpreise <- degree(gruppenpreise, mode="in")
+sort(indgruppenpreise)
+```
+**Einzelpreisnetzwerk** erstellen
+```
+einzelpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 2)])
+einzelpreise2 <- delete_vertices (einzelpreise1, V(einzelpreise1)[(degree(einzelpreise1, mode="out")=="1") & (type == 0)])
+einzelpreise <- delete_vertices (einzelpreise2, V(einzelpreise2)[degree(einzelpreise2, mode="all")=="0"])
+```
+Indegree von Einzelpreisen  
+(Frage: Welches Unternehmen hat die meisten Einzelpreisträger & welcher Preis vergibt die meisten Einzelpreise?
+```
+indeinzelpreise <- degree(einzelpreise, mode="in")
+sort(indeinzelpreise)
+```
+
+
 ## Auswertung nach Jahren
 
-### Gesamt
-
-#### 2019
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2019
+Jahresauswahl
 ```
-year2019 <- subgraph.edges(g, E(g)[year == "2019"]) 
-year2019
-plot (year2019)
+Jahr <- "2019"
 ```
-
-#### 2018
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2018
+Jahresnetzwerk erzeugen
 ```
-year2018 <- subgraph.edges(g, E(g)[year == "2018"]) 
-year2018
-plot (year2018)
-```
-
-#### 2017
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2017
-```
-year2017 <- subgraph.edges(g, E(g)[year == "2017"]) 
-year2017
-plot (year2017)
+year20xx <- subgraph.edges(g, E(g)[year == Jahr]) 
+year20xx
+plot(year20xx,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
 ```
 
-#### 2016
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2016
+#### Auswertung
+
+**Geschlecht** nach Jahren zählen
 ```
-year2016 <- subgraph.edges(g, E(g)[year == "2016"]) 
-year2016
-plot (year2016)
+maenner20xx <- V(year20xx)$sex == 1
+sum (maenner20xx, na.rm = TRUE)
+
+frauen20xx <- V(year20xx)$sex == 2
+sum (frauen20xx, na.rm = TRUE)
+```
+**Jury** nach Jahren zählen
+```
+juryfinal20xx <- subgraph.edges(juryfinal, E(juryfinal)[year == Jahr])
+plot(juryfinal20xx,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Geschlechter in Jury nach Jahren
+```
+frauenjury20xx <- V(juryfinal20xx)$sex == 2
+sum (frauenjury20xx, na.rm = TRUE)
+maennerjury20xx <- V(juryfinal20xx)$sex == 1
+sum (maennerjury20xx, na.rm = TRUE)
+
+```
+**Preisträger** nach Jahren zählen
+```
+preistraeger20xx <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == Jahr])
+plot(preistraeger20xx,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Geschlechter unter Preisträgern nach Jahren
+```
+frauenpreistraeger20xx <- V(preistraeger20xx)$sex == 2
+sum (frauenpreistraeger20xx, na.rm = TRUE)
+maennerpreistraeger20xx <- V(preistraeger20xx)$sex == 1
+sum (maennerpreistraeger20xx, na.rm = TRUE)
 ```
 
-#### 2015
-Erzeugt Teilnetzwerk mit allen edges aus dem Jahr 2015
+**Dominanz einzelner Personen** nach Jahren
+Frage: Wer hat die meisten Preise gewonnen?
+(Entspricht: preisträger20xx ohne Arbeitsverhältnisse)
 ```
-year2015 <- subgraph.edges(g, E(g)[year == "2015"]) 
-year2015
-plot (year2015)
+nur_preistraeger20xx <- subgraph.edges(year20xx, E(year20xx)[relation == 1]) 
+plot(nur_preistraeger20xx,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
 ```
-
-### Gruppenpreise
-Wirft alle edges aus, die eine Gruppenpreis-Verleihung im Jahr 2015 erfasst haben
+Größter Outdegree Preisträger
 ```
-gruppenpreise2015_einzeln <- E(year2015)$format == 2
-gruppenpreise2015_einzeln
-```
-Summiert alle Gruppenpreisverleihungen, die es im Jahr 2015 gab
-```
-sum(gruppenpreise2015_einzeln, na.rm = TRUE)
-```
-Für 2016:
-```
-gruppenpreise2016_einzeln <- E(year2016)$format == 2
-gruppenpreise2016_einzeln
-sum(gruppenpreise2016_einzeln, na.rm = TRUE)
-```
-Für 2017:
-```
-gruppenpreise2017_einzeln <- E(year2017)$format == 2
-gruppenpreise2017_einzeln
-sum(gruppenpreise2017_einzeln, na.rm = TRUE)
-```
-Für 2018:
-```
-gruppenpreise2018_einzeln <- E(year2018)$format == 2
-gruppenpreise2018_einzeln
-sum(gruppenpreise2018_einzeln, na.rm = TRUE)
-```
-Für 2019:
-```
-gruppenpreise2019_einzeln <- E(year2019)$format == 2
-gruppenpreise2019_einzeln
-sum(gruppenpreise2019_einzeln, na.rm = TRUE)
+outd_nur_preistraeger20xx <- degree(nur_preistraeger20xx, mode="out")
+sort(outd_nur_preistraeger20xx)
 ```
 
-### Einzelpreise
-Wirft alle edges aus, die eine Einzelpreis-Verleihung im Jahr 2015 erfasst haben
+**Dominanz einzelner Medienunternehmen** nach Jahren
+
+Größten Indegree (_gesamt_) nach Jahren berechnen:
 ```
-einzelpreise2015_einzeln <- E(year2015)$format == 1
-einzelpreise2015_einzeln
+ind20xx <- degree(year20xx, mode="in")
+sort(ind20xx)
 ```
-Summiert alle Einzelpreisverleihungen, die es im Jahr 2015 gab
+Größten Indegree (_unter PT_) nach Jahren berechnen:
 ```
-sum(einzelpreise2015_einzeln, na.rm = TRUE)
+indpreistraeger20xx <- degree(preistraeger20xx, mode="in")
+sort(indpreistraeger20xx)
 ```
-Für 2016:
+Größten Indegree (_unter Jury_) nach Jahren berechnen:
 ```
-einzelpreise2016_einzeln <- E(year2016)$format == 1
-einzelpreise2016_einzeln
-sum(einzelpreise2016_einzeln, na.rm = TRUE)
-```
-Für 2017:
-```
-einzelpreise2017_einzeln <- E(year2017)$format == 1
-einzelpreise2017_einzeln
-sum(einzelpreise2017_einzeln, na.rm = TRUE)
-```
-Für 2018:
-```
-einzelpreise2018_einzeln <- E(year2018)$format == 1
-einzelpreise2018_einzeln
-sum(einzelpreise2018_einzeln, na.rm = TRUE)
-```
-Für 2019:
-```
-einzelpreise2019_einzeln <- E(year2019)$format == 1
-einzelpreise2019_einzeln
-sum(einzelpreise2019_einzeln, na.rm = TRUE)
+indjury20xx <- degree(juryfinal20xx, mode="in")
+sort(indjury20xx)
 ```
 
-### Männer/Frauen
-Teilnetzwerk, nur männliche Nodes im Jurynetzwerk (und ihre Summe)
+Auswertung der **Gruppen- und Einzelpreise** nach Jahren
+Für **Gruppenpreisnetzwerk**:
 ```
-maennerjury <- V(juryfinal)$sex == 1
-sum (maennerjury, na.rm = TRUE)
+gruppenpreise20xx <- subgraph.edges(gruppenpreise, E(gruppenpreise)[year == Jahr]) 
+indgruppenpreise20xx <- degree(gruppenpreise20xx, mode="in")
+sort(indgruppenpreise20xx)
 ```
-Teilnetzwerk, nur weibliche Nodes im Jurynetzwerk (und ihre Summe)
+Für **Einzelpreisnetzwerk**:
 ```
-frauenjury <- V(juryfinal)$sex == 2
-sum (frauenjury, na.rm = TRUE)
+einzelpreise20xx <- subgraph.edges(einzelpreise, E(einzelpreise)[year == Jahr]) 
+indeinzelpreise20xx <- degree(einzelpreise20xx, mode="in")
+sort(indeinzelpreise20xx)
 ```
-Teilnetzwerk, nur männliche Nodes im Preisträgernetzwerk (und ihre Summe)
+Gruppenpreise nach Jahren zählen (**Summe**)
 ```
-maennerpreistraeger <- V(preistraegerfinal)$sex == 1
-sum (maennerpreistraeger, na.rm = TRUE)
+gruppenpreise20xx_einzeln <- E(year20xx)$format == 2
+gruppenpreise20xx_einzeln
+sum(gruppenpreise20xx_einzeln, na.rm = TRUE)
 ```
-Teilnetzwerk, nur weibliche Nodes im Preisträgernetzwerk (und ihre Summe)
+Einzelpreise nach Jahren zählen (**Summe**)
 ```
-frauenpreistraeger <- V(preistraegerfinal)$sex == 2
-sum (frauenpreistraeger, na.rm = TRUE)
-```
-**...gesamt**
-Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2015 (und ihre Summe):
-```
-maenner2015 <- V(year2015)$sex == 1
-sum (maenner2015, na.rm = TRUE)
-```
-Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2016 (und ihre Summe):
-```
-maenner2016 <- V(year2016)$sex == 1
-sum (maenner2016, na.rm = TRUE)
-```
-Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2017 (und ihre Summe):
-```
-maenner2017<- V(year2017)$sex == 1
-sum (maenner2017, na.rm = TRUE)
-```
-Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2018 (und ihre Summe):
-```
-maenner2018 <- V(year2018)$sex == 1
-sum (maenner2018, na.rm = TRUE)
-```
-Teilnetzwerk, nur männliche Nodes im Gesamtnetzwerk 2019 (und ihre Summe):
-```
-maenner2019 <- V(year2019)$sex == 1
-sum (maenner2019, na.rm = TRUE)
-```
-
-Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2015 (und ihre Summe):
-```
-frauen2015 <- V(year2015)$sex == 2
-sum (frauen2015, na.rm = TRUE)
-```
-Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2016 (und ihre Summe):
-```
-frauen2016 <- V(year2016)$sex == 2
-sum (frauen2016, na.rm = TRUE)
-```
-Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2017 (und ihre Summe):
-```
-frauen2017 <- V(year2017)$sex == 2
-sum (frauen2017, na.rm = TRUE)
-```
-Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2018 (und ihre Summe):
-```
-frauen2018 <- V(year2018)$sex == 2
-sum (frauen2018, na.rm = TRUE)
-```
-Teilnetzwerk, nur weibliche Nodes im Gesamtnetzwerk 2019 (und ihre Summe):
-```
-frauen2019 <- V(year2019)$sex == 2
-sum (frauen2019, na.rm = TRUE)
-```
-
-**...in Jury**
-
-**2015:**
-1. Erstelle Teilnetzwerk aus Jurynetzwerk, ausschließlich mit Verbindungen aus 2015
-```
-juryfinal2015 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2015"])
-```
-2. Filtere alle Frauen aus dem oberen Netzwerk
-```
-frauenjury2015 <- V(juryfinal2015)$sex == 2
-```
-3. Summiere alle Frauen aus dem Netzwerk
-```
-sum (frauenjury2015, na.rm = TRUE)
-```
-4. Filtere alle Männer aus dem Netzwerk und summiere alle Männer
-```
-maennerjury2015 <- V(juryfinal2015)$sex == 1
-sum (maennerjury2015, na.rm = TRUE)
-```
-**2016:**
-```
-juryfinal2016 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2016"])
-frauenjury2016 <- V(juryfinal2016)$sex == 2
-sum (frauenjury2016, na.rm = TRUE)
-maennerjury2016 <- V(juryfinal2016)$sex == 1
-sum (maennerjury2016, na.rm = TRUE)
-```
-**2017:**
-```
-juryfinal2017 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2017"])
-frauenjury2017 <- V(juryfinal2017)$sex == 2
-sum (frauenjury2017, na.rm = TRUE)
-maennerjury2017 <- V(juryfinal2017)$sex == 1
-sum (maennerjury2017, na.rm = TRUE)
-```
-**2018:**
-```
-juryfinal2018 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2018"])
-frauenjury2018 <- V(juryfinal2018)$sex == 2
-sum (frauenjury2018, na.rm = TRUE)
-maennerjury2018 <- V(juryfinal2018)$sex == 1
-sum (maennerjury2018, na.rm = TRUE)
-```
-**2019:**
-```
-juryfinal2019 <- subgraph.edges(juryfinal, E(juryfinal)[year == "2019"])
-frauenjury2019 <- V(juryfinal2019)$sex == 2
-sum (frauenjury2019, na.rm = TRUE)
-maennerjury2019 <- V(juryfinal2019)$sex == 1
-sum (maennerjury2019, na.rm = TRUE)
-```
-
-**...unter Preisträgern**
-1. Erstelle Teilnetzwerk um alle Preisträger des Jahres **2015**
-```
-preistraeger2015 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2015"])
-```
-2. Filtere alle weiblichen Nodes heraus
-```
-frauenpreistraeger2015 <- V(preistraeger2015)$sex == 2
-```
-3. Summiere alle weiblichen Nodes
-```
-sum (frauenpreistraeger2015, na.rm = TRUE)
-```
-4. Ebenso für alle männlichen Nodes
-```
-maennerpreistraeger2015 <- V(preistraeger2015)$sex == 1
-sum (maennerpreistraeger2015, na.rm = TRUE)
-```
-
-Für **2016**:
-```
-preistraeger2016 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2016"])
-frauenpreistraeger2016 <- V(preistraeger2016)$sex == 2
-preistraeger2016
-sum (frauenpreistraeger2016, na.rm = TRUE)
-maennerpreistraeger2016 <- V(preistraeger2016)$sex == 1
-sum (maennerpreistraeger2016, na.rm = TRUE)
-```
-Für **2017**:
-```
-preistraeger2017 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2017"])
-frauenpreistraeger2017 <- V(preistraeger2017)$sex == 2
-sum (frauenpreistraeger2017, na.rm = TRUE)
-maennerpreistraeger2017 <- V(preistraeger2017)$sex == 1
-sum (maennerpreistraeger2017, na.rm = TRUE)
-```
-Für **2018**:
-```
-preistraeger2018 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2018"])
-frauenpreistraeger2018 <- V(preistraeger2018)$sex == 2
-sum (frauenpreistraeger2018, na.rm = TRUE)
-maennerpreistraeger2018 <- V(preistraeger2018)$sex == 1
-sum (maennerpreistraeger2018, na.rm = TRUE)
-```
-Für **2019**:
-```
-preistraeger2019 <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == "2019"])
-frauenpreistraeger2019 <- V(preistraeger2019)$sex == 2
-sum (frauenpreistraeger2019, na.rm = TRUE)
-maennerpreistraeger2019 <- V(preistraeger2019)$sex == 1
-sum (maennerpreistraeger2019, na.rm = TRUE)
+einzelpreise20xx_einzeln <- E(year2016)$format == 1
+einzelpreise20xx_einzeln
+sum(einzelpreise20xx_einzeln, na.rm = TRUE)
 ```
 
 ### Dominanz einzelner Medienunternehmen nach Jahren
@@ -917,23 +793,6 @@ indeinzelpreise2019 <- degree(einzelpreise2019, mode="in")
 sort(indeinzelpreise2019)
 ```
 
-**größter Indegree (unter Jury, nach Jahren)**
-```
-indjury2015 <- degree(juryfinal2015, mode="in")
-sort(indjury2015)
-
-indjury2016 <- degree(juryfinal2016, mode="in")
-sort(indjury2016)
-
-indjury2017 <- degree(juryfinal2017, mode="in")
-sort(indjury2017)
-
-indjury2018 <- degree(juryfinal2018, mode="in")
-sort(indjury2018)
-
-indjury2019 <- degree(juryfinal2019, mode="in")
-sort(indjury2019)
-```
 
 ## Visualisierungen
 
