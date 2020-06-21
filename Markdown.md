@@ -651,6 +651,8 @@ einzelpreise20xx_einzeln <- E(year2016)$format == 1
 einzelpreise20xx_einzeln
 sum(einzelpreise20xx_einzeln, na.rm = TRUE)
 ```
+
+
 ## Netzwerke von Medienunternehmen
 Unternehmen auswählen (z.B. Zeit)
 ```
@@ -662,6 +664,30 @@ unternehmen <- subgraph <- make_ego_graph(g, order=2, Unternehmen)
 unternehmen
 plot(unternehmen[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
+Auswertung der Netzwerke:
+```
+preistraeger_relations_unternehmen <- E(unternehmen[[1]])$relation == 1
+sum(preistraeger_relations_unternehmen, na.rm = TRUE)
+
+jury_relations_unternehmen <- E(unternehmen[[1]])$relation == 3
+sum(jury_relations_unternehmen, na.rm = TRUE)
+
+unternehmen_personen <- induced_subgraph(unternehmen[[1]], V(unternehmen[[1]])[which (type == 0)])
+unternehmen_personen
+
+unternehmen_preistraeger <- induced_subgraph(unternehmen_personen, V(unternehmen_personen)[which (is.na(workinmedia))])
+unternehmen_preistraeger
+
+unternehmen_juroren <- induced_subgraph(unternehmen_personen, V(unternehmen_personen)[which (!is.na(workinmedia))])
+unternehmen_juroren
+
+gruppenpreise_unternehmen <- (E(unternehmen[[1]])$format == 2)
+sum(gruppenpreise_unternehmen, na.rm = TRUE)
+
+unternehmen_preise <- induced_subgraph(unternehmen[[1]], V(unternehmen[[1]])[which (institutiontype == 1)])
+unternehmen_preise
+```
+
 
 ## Visualisierungen
 
