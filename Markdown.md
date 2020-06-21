@@ -689,6 +689,19 @@ unternehmen_preise
 ```
 
 
+## Ressorts
+
+Ressort auswählen
+```
+taskx <- E(g)$task == 1 (Zahl von Ressort einfügen)
+taskx
+```
+Was war häufigstes Ressort?
+```
+sum(taskx, na.rm = TRUE)
+```
+
+
 ## Visualisierungen
 
 ### Elite in Elite-Netzwerk
