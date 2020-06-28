@@ -236,22 +236,49 @@ ind
 sort(ind)
 ```
 
-**andere Netzwerkmaße**
-Dichte
+**Dichte**
 ```
 edge_density(g)
 ```
-Betweenness-Zentralität und Betweenness
+
+**Betweenness-Zentralität und Betweenness**
 ```
-centr_betw(g, directed=TRUE) # Betweenness-Zentralität
-betw <- betweenness(g, directed=TRUE) # Betweenness
-bet <- betweenness(g, directed = TRUE)
+centr_betw(g, directed=TRUE)
+betw <- betweenness(g, directed=TRUE)
+betw <- betweenness(g, directed = TRUE)
 ```
-Degree-Zentralität
+
+**Degree-Zentralität**
 ```
 centralization.degree(g, mode = "all")
 centralization.degree(g, mode = "in")
 centralization.degree(g, mode = "out")
+```
+
+**Closeness-Zentralität**
+(Closeness centrality measures how many steps is required to access every other vertex from a given vertex)
+```
+clo <- closeness(g)
+sort(clo)
+```
+
+**Zentralisierter Closeness-Wert (wie dicht die Knoten zusammenstehen)**
+```
+centr_clo(g, mode = "all")$centralization
+```
+
+**Pfaddistanz**
+Durchschnittliche Pfaddistanz:
+```
+mean_distance(g, directed = FALSE) 
+```
+Längste Pfaddistanz im Netzwerk:
+```
+diameter(g, directed = FALSE)
+```
+Von wo nach wo führt die längste Pfaddistanz im Netzwerk?
+```
+farthest_vertices(g, directed = FALSE)
 ```
 
 ## PREISTRÄGER-NETZWERK
@@ -332,20 +359,27 @@ sort(indjury)
 
 ### Elite-Netzwerke
 
-Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 10)
+Schritt 1: **Bereinigtes Netzwerk (Stufe 1)** (Entferne alle Nodes mit degree < 5)
 ```
-g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<10)])
+g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<5)])
 g2 <- delete_vertices (g2_1, V(g2_1)[degree(g2_1, mode="all")=="0"])
 g2
 plot(g2)
 ```
-
-Schritt 2: **Elite in Elite** (Entferne alle Nodes mit degree < 15)
+Schritt 2: **Bereinigtes Netzwerk (Stufe 2)** (Entferne alle Nodes mit degree < 10)
 ```
-g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<15)])
+g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<10)])
 g3 <- delete_vertices (g3_1, V(g3_1)[degree(g3_1, mode="all")=="0"])
 g3
 plot(g3)
+```
+
+Schritt 3: **Elite in Elite** (Entferne alle Nodes mit degree < 15)
+```
+g4_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<15)])
+g4 <- delete_vertices (g4_1, V(g4_1)[degree(g4_1, mode="all")=="0"])
+g4
+plot(g4)
 ```
 
 ### Männer- & Frauennetzwerk
