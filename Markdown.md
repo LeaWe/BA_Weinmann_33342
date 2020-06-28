@@ -250,6 +250,8 @@ bet <- betweenness(g, directed = TRUE)
 Degree-Zentralität
 ```
 centralization.degree(g, mode = "all")
+centralization.degree(g, mode = "in")
+centralization.degree(g, mode = "out")
 ```
 
 ## PREISTRÄGER-NETZWERK
