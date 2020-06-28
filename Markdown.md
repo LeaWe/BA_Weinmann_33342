@@ -193,13 +193,15 @@ personen
 ```
 Erzeugt Teilnetzwerk mit ausschließlich Preisträgern (Frage: Wie viele Preisträger im Gesamtnetzwerk?)
 ```
-preistraeger <- induced_subgraph(personen, V(personen)[which (is.na(workinmedia))])
-preistraeger
+preistraeger <- subgraph.edges(g, E(g)[which (relation == 1)])
+preistraeger_personen <- induced.subgraph(preistraeger, V(preistraeger)[type == 0])
+preistraeger_personen
 ```
 Erzeugt Teilnetzwerk mit ausschließlich Juroren (Frage: Wie viele Juroren im Gesamtnetzwerk?)
 ```
-juroren <- induced_subgraph(personen, V(personen)[which (!is.na(workinmedia))])
-juroren
+juroren <- subgraph.edges(g, E(g)[which (relation == 3)])
+juroren_personen <- induced.subgraph(juroren, V(juroren)[type == 0])
+juroren_personen
 ```
 Erzeugt Teilnetzwerk mit ausschließlich Männern (Frage: Wie viele Männer im Gesamtnetzwerk?)
 ```
@@ -213,8 +215,7 @@ frauen
 ```
 Erzeugt Teilnetzwerk mit ausschließlich Preisverleihungen (Frage: Wie viele Preisverleihungen an Einzelpersonen gab es?)
 ```
-verleihung1 <- delete_edges(g, E(g)[relation == 3])
-verleihung <- delete_edges(verleihung1, E(verleihung1)[relation == 2])
+verleihung <- subgraph.edges(g, E(g)[relation == 1])
 verleihung
 ```
 
@@ -236,14 +237,20 @@ sort(ind)
 ```
 
 **andere Netzwerkmaße**
+Dichte
 ```
-edge_density(g) # Dichte
+edge_density(g)
+```
+Betweenness-Zentralität und Betweenness
+```
 centr_betw(g, directed=TRUE) # Betweenness-Zentralität
 betw <- betweenness(g, directed=TRUE) # Betweenness
 bet <- betweenness(g, directed = TRUE)
-
 ```
-
+Degree-Zentralität
+```
+centralization.degree(g, mode = "all")
+```
 
 ## PREISTRÄGER-NETZWERK
 
@@ -320,11 +327,12 @@ sort(indjury)
 
 ## TEILNETZWERKE
 
+
 ### Elite-Netzwerke
 
-Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 3)
+Schritt 1: **Bereinigtes Netzwerk** (Entferne alle Nodes mit degree < 10)
 ```
-g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<3)])
+g2_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<10)])
 g2 <- delete_vertices (g2_1, V(g2_1)[degree(g2_1, mode="all")=="0"])
 g2
 plot(g2)
