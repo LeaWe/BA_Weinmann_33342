@@ -803,7 +803,46 @@ Dann auswerten:
 taskx_jury <- E(task_jury)$task == 6
 sum(taskx_jury, na.rm = TRUE)
 ```
+## SONSTIGES GESAMTNETZWERK
 
+#### Preisgeld
+
+**Summe aller Preisgelder**
+```
+preise <- subgraph.edges(g,E(g)[relation ==1])
+preise2 <- delete.edges(preise, E(preise)[is.na(money)])
+money_all <- E(preise2)$money
+
+length(money_all)
+a <- money_all[1]
+a
+
+summe <- 0
+for(i in (1:(length(money_all)))){
+  a <- as.numeric(money_all[i])
+  summe <- summe + a
+}
+summe
+```
+
+**Preisgelder, die nur an Einzelpreisträger gingen**
+```
+preise <- subgraph.edges(g,E(g)[relation ==1])
+preise2 <- delete.edges(preise, E(preise)[is.na(money)])
+preise3 <- subgraph.edges(preise2, E(preise2)[format == 1])
+money_all <- E(preise3)$money
+
+length(money_all)
+a <- money_all[1]
+a
+
+summe <- 0
+for(i in (1:(length(money_all)))){
+  a <- as.numeric(money_all[i])
+  summe <- summe + a
+}
+summe
+```
 
 ## Visualisierungen
 
