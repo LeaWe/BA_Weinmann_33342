@@ -595,6 +595,31 @@ indeinzelpreise <- degree(einzelpreise, mode="in")
 sort(indeinzelpreise)
 ```
 
+### ARD-Netzwerk
+
+1. Ego-Netzwerke aller ÖR-Sender erstellen
+```
+swr <- subgraph <- make_ego_graph(g, order = 1,  c("Südwestrundfunk (SWR)"))
+wdr <- subgraph <- make_ego_graph(g, order = 1,  c("Westdeutscher Rundfunk (WDR)"))
+radiobremen <- subgraph <- make_ego_graph(g, order = 1,  c("Radio Bremen"))
+br <- subgraph <- make_ego_graph(g, order = 1,  c("Bayerischer Rundfunk (BR)"))
+hr <- subgraph <- make_ego_graph(g, order = 1,  c("Hessischer Rundfunk (HR)"))
+mdr <- subgraph <- make_ego_graph(g, order = 1,  c("Mitteldeutscher Rundfunk (MDR)"))
+ndr <- subgraph <- make_ego_graph(g, order = 1,  c("Norddeutscher Rundfunk (NDR)"))
+sr <- subgraph <- make_ego_graph(g, order = 1,  c("Saarländischer Rundfunk (SR)"))
+funk <- subgraph <- make_ego_graph(g, order = 1,  c("Funk (ARD)"))
+rbb <- subgraph <- make_ego_graph(g, order = 1,  c("Radio Berlin Brandeburg (rbb)"))
+ard1 <- subgraph <- make_ego_graph(g, order = 1,  c("ARD"))
+```
+2. Von Gesamtnetzwerk doppelt subtrahieren (= addieren):
+```
+ard <- g - (g - swr[[1]] - wdr[[1]] - radiobremen[[1]] - br[[1]] - hr[[1]])
+```
+3. Nodes ohne Beziehungen löschen und plotten:
+```
+ard <- delete_vertices (ard, V(ard)[degree(ard, mode="all")=="0"])
+plot(ard)
+```
 
 ## Auswertung nach Jahren
 
