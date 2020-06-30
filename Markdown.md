@@ -610,10 +610,11 @@ sr <- subgraph <- make_ego_graph(g, order = 1,  c("Saarländischer Rundfunk (SR)
 funk <- subgraph <- make_ego_graph(g, order = 1,  c("Funk (ARD)"))
 rbb <- subgraph <- make_ego_graph(g, order = 1,  c("Radio Berlin Brandeburg (rbb)"))
 ard1 <- subgraph <- make_ego_graph(g, order = 1,  c("ARD"))
+dlr <- subgraph <- make_ego_graph(g, order = 1,  c("Deutschlandradio"))
 ```
 2. Von Gesamtnetzwerk doppelt subtrahieren (= addieren):
 ```
-ard <- g - (g - swr[[1]] - wdr[[1]] - radiobremen[[1]] - br[[1]] - hr[[1]])
+ard <- g - (g - swr[[1]] - wdr[[1]] - radiobremen[[1]] - br[[1]] - hr[[1]] - mdr[[1]] - ndr[[1]] - sr[[1]] - funk[[1]] - rbb[[1]] - ard1[[1]] - dlr[[1]]) 
 ```
 3. Nodes ohne Beziehungen löschen und plotten:
 ```
