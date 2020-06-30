@@ -846,6 +846,17 @@ summe
 
 ## Visualisierungen
 
+### Ideensammlung
+nach Degree-Größen visualisieren:  
+```
+deg <- degree(net, mode="all")
+plot(net, vertex.size=deg*3)
+```
+bestimmte Hubs visualisieren:
+```
+hs <- hub_score(g4, weights=NA)$vector
+plot(g4, vertex_size=hs*50....)
+```
 ### Elite in Elite-Netzwerk
 (noch nicht schön!)
 ```
