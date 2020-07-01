@@ -831,14 +831,23 @@ sum(taskx_jury, na.rm = TRUE)
 ```
 ## SONSTIGES GESAMTNETZWERK
 
-#### Preisgeld
+#### Preisgeld  
 
-**Summe aller Preisgelder**
+**Summe aller Preisgelder**  
+nur Preisträgerbeziehungen selektieren:  
 ```
 preise <- subgraph.edges(g,E(g)[relation ==1])
+```
+alle NA löschen:
+```
 preise2 <- delete.edges(preise, E(preise)[is.na(money)])
+```
+Selektion des edge-Attributs "money":
+```
 money_all <- E(preise2)$money
-
+```
+Durchschleifen der Preisgelder, dabei numerischen Wert zuweisen und aufaddieren:
+```
 length(money_all)
 a <- money_all[1]
 a
@@ -851,11 +860,13 @@ for(i in (1:(length(money_all)))){
 summe
 ```
 
-**Preisgelder, die nur an Einzelpreisträger gingen**
+**Preisgelder, die nur an Einzelpreisträger gingen**  
+Nur Preisverleihungen selektieren, die an Einzelpreisträger gingen:
 ```
-preise <- subgraph.edges(g,E(g)[relation ==1])
-preise2 <- delete.edges(preise, E(preise)[is.na(money)])
 preise3 <- subgraph.edges(preise2, E(preise2)[format == 1])
+```
+Dann wieder Durchschleifen und addieren:
+```
 money_all <- E(preise3)$money
 
 length(money_all)
@@ -869,6 +880,69 @@ for(i in (1:(length(money_all)))){
 }
 summe
 ```
+
+**Wer hat am meisten Geld abgeräumt in den letzten fünf Jahren?**  
+Alle Preise löschen, die nicht dotiert sind:
+```
+preise3 <- delete.edges(preise2, E(preise2)[money == 0])
+```
+Alle freistehenden Nodes löschen:
+```
+preise4 <- delete.vertices(preise3, V(preise3)[degree(preise3, mode="all")==0])
+```
+Edge-Attribut "Money" selektieren und wieder durchschleifen: 
+```
+money_all <- E(preise4)$money
+money_all <- as.numeric(money_all)
+money_all
+
+sum(money_all)
+plot(preise4)
+```
+Anzahl der Personen (Nodes), die Preisgeld bekommen haben:
+```
+anzahl_personen_preisgeld <- V(preise4)$type == 0
+anzahl_personen_preisgeld
+sum(anzahl_personen_preisgeld)
+```
+Die Namen aller Personen im Netzwerk selektieren und Begriff "Namen" zuweisen:
+```
+Personen <- delete.vertices(preise4, V(preise4)[type!=0])
+Namen <- V(Personen)$name
+Namen
+length(Namen)
+```
+Erzeuge Tabelle, die alle Preisträger und zusammengerechnete Preisgelder enthalten kann
+```
+Preisgelder <- c(1:length(Namen))
+Preisgelder
+Preistraeger <- c(1:length(Namen))
+matrix <- cbind(Preisgelder, Preistraeger)
+matrix
+```
+Alle Preisträger durchschleifen (und in erste Spalte der Tabelle eintragen)...
+```
+for (i in (1:length(Namen))){
+  Name <- Namen[i]
+  PT <- subgraph <- make_ego_graph(preise4, order=1, Namen[i])
+  matrix[i, 1] <- Namen[i]
+  money <- E(PT[[1]])$money
+```
+... und ihre Preisgelder aufaddieren (und in zweite Spalte der Tabelle eintragen):
+```
+  summe <- 0
+  for(j in (1:(length(money)))){
+    summe <- summe + money[j]
+  }
+  matrix[i, 2] <- summe     
+}
+```
+Zeige Matrix mit Werten von oben:
+```
+matrix
+length(matrix)
+```
+! Werte sind unsortiert, muss nun händisch nach größten Werten (+ Preisträger dazu) durchsucht werden, weil sort() nicht funktioniert.
 
 ## Visualisierungen
 
