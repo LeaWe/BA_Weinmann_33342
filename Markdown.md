@@ -1071,8 +1071,6 @@ zum Plotten der Einzelnetzwerke bei mehreren Fällen
 ```
 AGtest <- subgraph <- make_ego_graph(x19, order=2, AGlist[10])
 plot(AGtest[[1]], vertex.size = 5, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-
-tbl_graph(AGtest)
 ```
 
 #### Preisgeld  
