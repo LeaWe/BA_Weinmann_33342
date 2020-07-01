@@ -831,6 +831,250 @@ sum(taskx_jury, na.rm = TRUE)
 ```
 ## SONSTIGES GESAMTNETZWERK
 
+#### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:
+
+**2015**  
+```
+x15 <- subgraph <- make_ego_graph(year2015, order=2, Preis)
+x15 <- delete_vertices(x15[[1]], V(x15[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x15, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+#Test: Jurymitglied und Preisträger bei gleichem Arbeitgeber?
+AGlist <- V(x15)[(V(x15)$type == 1) & (institutiontype == 2)]
+countcases <- 0
+
+anzahl_jurymitglieder <- E(x15)$relation == 3
+anzahl_preistraeger <- E(x15)$relation == 1
+
+for(i in 1:length(AGlist)) {
+  AG <- subgraph <- make_ego_graph(x15, order=2, AGlist[i])
+  anzahl_jurymitgliederAG <- E(AG[[1]])$relation == 3       
+  anzahl_preistraegerAG <- E(AG[[1]])$relation == 1    
+  
+  if ((sum(anzahl_jurymitgliederAG) > 0) & (sum(anzahl_preistraegerAG) > 0)) 
+  {
+    print(AGlist[i])
+    print("Nummer in AGlist:")
+    print(i)
+    print("Anzahl Preisträger absolut:")
+    print(sum(anzahl_preistraegerAG))
+    print("Anzahl Jurymitglieder absolut:")
+    print(sum(anzahl_jurymitgliederAG))
+    print("Anteil an Preisträgern:")
+    print((sum(anzahl_preistraegerAG) / sum(anzahl_preistraeger)))
+    print("Anteil an Jurymitgliedern")
+    print((sum(anzahl_jurymitgliederAG) / sum(anzahl_jurymitglieder)))
+    
+    countcases <- countcases + 1
+    plot(AG[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+  } 
+  
+  else
+  {
+    print("OK")
+  }
+}
+print(countcases)
+
+#zum Plotten der Einzelnetzwerke bei mehreren Fällen
+AGtest <- subgraph <- make_ego_graph(x15, order=2, AGlist[9])
+plot(AGtest[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+**2016**  
+```
+x16 <- subgraph <- make_ego_graph(year2016, order=2, Preis)
+x16 <- delete_vertices(x16[[1]], V(x16[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x16, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+#Test: Jurymitglied und Preisträger bei gleichem Arbeitgeber?
+AGlist <- V(x16)[(V(x16)$type == 1) & (institutiontype == 2)]
+countcases <- 0
+
+anzahl_jurymitglieder <- E(x16)$relation == 3
+anzahl_preistraeger <- E(x16)$relation == 1
+
+for(i in 1:length(AGlist)) {
+  AG <- subgraph <- make_ego_graph(x16, order=2, AGlist[i])
+  anzahl_jurymitgliederAG <- E(AG[[1]])$relation == 3       
+  anzahl_preistraegerAG <- E(AG[[1]])$relation == 1    
+  
+  if ((sum(anzahl_jurymitgliederAG) > 0) & (sum(anzahl_preistraegerAG) > 0)) 
+  {
+    print(AGlist[i])
+    print("Nummer in AGlist:")
+    print(i)
+    print("Anzahl Preisträger absolut:")
+    print(sum(anzahl_preistraegerAG))
+    print("Anzahl Jurymitglieder absolut:")
+    print(sum(anzahl_jurymitgliederAG))
+    print("Anteil an Preisträgern:")
+    print((sum(anzahl_preistraegerAG) / sum(anzahl_preistraeger)))
+    print("Anteil an Jurymitgliedern")
+    print((sum(anzahl_jurymitgliederAG) / sum(anzahl_jurymitglieder)))
+    
+    countcases <- countcases + 1
+    plot(AG[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+  } 
+  
+  else
+  {
+    print("OK")
+  }
+}
+print(countcases)
+
+#zum Plotten der Einzelnetzwerke bei mehreren Fällen
+AGtest <- subgraph <- make_ego_graph(x16, order=2, AGlist[i])
+plot(AGtest[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+**2017**  
+
+x17 <- subgraph <- make_ego_graph(year2017, order=2, Preis)
+x17 <- delete_vertices(x17[[1]], V(x17[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x17, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+#Test: Jurymitglied und Preisträger bei gleichem Arbeitgeber?
+AGlist <- V(x17)[(V(x17)$type == 1) & (institutiontype == 2)]
+countcases <- 0
+
+anzahl_jurymitglieder <- E(x17)$relation == 3
+anzahl_preistraeger <- E(x17)$relation == 1
+
+for(i in 1:length(AGlist)) {
+  AG <- subgraph <- make_ego_graph(x17, order=2, AGlist[i])
+  anzahl_jurymitgliederAG <- E(AG[[1]])$relation == 3       
+  anzahl_preistraegerAG <- E(AG[[1]])$relation == 1    
+  
+  if ((sum(anzahl_jurymitgliederAG) > 0) & (sum(anzahl_preistraegerAG) > 0)) 
+  {
+    print(AGlist[i])
+    print("Nummer in AGlist:")
+    print(i)
+    print("Anzahl Preisträger absolut:")
+    print(sum(anzahl_preistraegerAG))
+    print("Anzahl Jurymitglieder absolut:")
+    print(sum(anzahl_jurymitgliederAG))
+    print("Anteil an Preisträgern:")
+    print((sum(anzahl_preistraegerAG) / sum(anzahl_preistraeger)))
+    print("Anteil an Jurymitgliedern")
+    print((sum(anzahl_jurymitgliederAG) / sum(anzahl_jurymitglieder)))
+    
+    countcases <- countcases + 1
+    plot(AG[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+  } 
+  
+  else
+  {
+    print("OK")
+  }
+}
+print(countcases)
+
+#zum Plotten der Einzelnetzwerke bei mehreren Fällen
+AGtest <- subgraph <- make_ego_graph(x17, order=2, AGlist[i])
+plot(AGtest[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+**2018**  
+```
+x18 <- subgraph <- make_ego_graph(year2018, order=2, Preis)
+x18 <- delete_vertices(x18[[1]], V(x18[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x18, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+#Test: Jurymitglied und Preisträger bei gleichem Arbeitgeber?
+AGlist <- V(x18)[(V(x18)$type == 1) & (institutiontype == 2)]
+countcases <- 0
+
+anzahl_jurymitglieder <- E(x18)$relation == 3
+anzahl_preistraeger <- E(x18)$relation == 1
+
+for(i in 1:length(AGlist)) {
+  AG <- subgraph <- make_ego_graph(x18, order=2, AGlist[i])
+  anzahl_jurymitgliederAG <- E(AG[[1]])$relation == 3       
+  anzahl_preistraegerAG <- E(AG[[1]])$relation == 1    
+  
+  if ((sum(anzahl_jurymitgliederAG) > 0) & (sum(anzahl_preistraegerAG) > 0)) 
+  {
+    print(AGlist[i])
+    print("Nummer in AGlist:")
+    print(i)
+    print("Anzahl Preisträger absolut:")
+    print(sum(anzahl_preistraegerAG))
+    print("Anzahl Jurymitglieder absolut:")
+    print(sum(anzahl_jurymitgliederAG))
+    print("Anteil an Preisträgern:")
+    print((sum(anzahl_preistraegerAG) / sum(anzahl_preistraeger)))
+    print("Anteil an Jurymitgliedern")
+    print((sum(anzahl_jurymitgliederAG) / sum(anzahl_jurymitglieder)))
+    
+    countcases <- countcases + 1
+    plot(AG[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+  } 
+  
+  else
+  {
+    print("OK")
+  }
+}
+print(countcases)
+
+#zum Plotten der Einzelnetzwerke bei mehreren Fällen
+AGtest <- subgraph <- make_ego_graph(x18, order=2, AGlist[i])
+plot(AGtest[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+**2019**  
+```
+x19 <- subgraph <- make_ego_graph(year2019, order=2, Preis)
+x19 <- delete_vertices(x19[[1]], V(x19[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+plot(x19, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+#Test: Jurymitglied und Preisträger bei gleichem Arbeitgeber?
+AGlist <- V(x19)[(V(x19)$type == 1) & (institutiontype == 2)]
+countcases <- 0
+
+anzahl_jurymitglieder <- E(x19)$relation == 3
+anzahl_preistraeger <- E(x19)$relation == 1
+
+for(i in 1:length(AGlist)) {
+  AG <- subgraph <- make_ego_graph(x19, order=2, AGlist[i])
+  anzahl_jurymitgliederAG <- E(AG[[1]])$relation == 3       
+  anzahl_preistraegerAG <- E(AG[[1]])$relation == 1    
+  
+  if ((sum(anzahl_jurymitgliederAG) > 0) & (sum(anzahl_preistraegerAG) > 0)) 
+  {
+    print(AGlist[i])
+    print("Nummer in AGlist:")
+    print(i)
+    print("Anzahl Preisträger absolut:")
+    print(sum(anzahl_preistraegerAG))
+    print("Anzahl Jurymitglieder absolut:")
+    print(sum(anzahl_jurymitgliederAG))
+    print("Anteil an Preisträgern:")
+    print((sum(anzahl_preistraegerAG) / sum(anzahl_preistraeger)))
+    print("Anteil an Jurymitgliedern")
+    print((sum(anzahl_jurymitgliederAG) / sum(anzahl_jurymitglieder)))
+    
+    countcases <- countcases + 1
+    plot(AG[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+  } 
+  
+  else
+  {
+    print("OK")
+  }
+}
+print(countcases)
+```
+zum Plotten der Einzelnetzwerke bei mehreren Fällen  
+```
+AGtest <- subgraph <- make_ego_graph(x19, order=2, AGlist[10])
+plot(AGtest[[1]], vertex.size = 5, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+tbl_graph(AGtest)
+```
+
 #### Preisgeld  
 
 **Summe aller Preisgelder**  
