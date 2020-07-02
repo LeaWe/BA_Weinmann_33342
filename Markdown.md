@@ -686,7 +686,7 @@ Bereinigtes Preisnetzwerk
 ```
 plot(ludwigerhardpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
-**Theodor-Wolff-Preis**
+**2. Theodor-Wolff-Preis**
 ```
 Preis <- "Theodor-Wolff-Preis"
 ```
@@ -1411,6 +1411,27 @@ plot(g4, vertex_size=hs*50....)
 ```
 
 #### Die konservativen Preise
+```
+group_media <- c("Handelsblatt", "Frankfurter Allgemeine Zeitung (FAZ)", "Frankfurter Allgemeine Sonntagszeitung (FAS)", "Welt", "Wirtschaftswoche")
+
+V(konservativ)[which(institutiontype == 2)]$size <- deg*1.2
+# Bereinigtes Preisnetzwerk
+par(mfrow=c(1,1), mar=c(0,0,1,2))
+l <- layout.fruchterman.reingold(konservativ)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+plot(konservativ, 
+     edge.arrow.size=.1,
+     mark.groups = group_media,
+     vertex.size=5,
+     edge.label.degree=0,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_fr,
+     rescale=T,
+     layout = l*0.6)
+```
 #### Die linkeren Preise
 (Preisnetzwerke zusammenfassen oder nebneinander plotten, wenn erstes nicht geht)
 
