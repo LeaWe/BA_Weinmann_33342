@@ -1216,11 +1216,11 @@ plot(g3be,
 
 Auswahl des Objekts (Person, Unternehmen, Preis)
 ```
-Person <- "Bastian Obermayer"
+Objekt <- "Bastian Obermayer"
 ```
 Erzeuge Ego-Netzwerk 1. Grades
 ```
-ego <- subgraph <- make_ego_graph(g, order=1, Person)
+ego <- subgraph <- make_ego_graph(g, order=1, Objekt)
 ego
 ```
 Edges gewichten
