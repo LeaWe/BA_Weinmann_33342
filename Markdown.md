@@ -203,6 +203,18 @@ juroren <- subgraph.edges(g, E(g)[which (relation == 3)])
 juroren_personen <- induced.subgraph(juroren, V(juroren)[type == 0])
 juroren_personen
 ```
+Wie viele Juroren arbeiten nicht in den Medien?  
+```
+notinmedia <- V(juroren_personen)$workinmedia == 2
+sum(notinmedia, na.rm = T)
+```
+Wie viele Jury-Beziehungen gibt es im Netzwerk und wie viele davon zu Personen, die nicht in den Medien arbeiten?  
+```
+juroren
+juroren_notinmedia <- delete.vertices(juroren, V(juroren)[which(workinmedia == 1)])
+juroren_notinmedia <- delete_vertices (juroren_notinmedia, V(juroren_notinmedia)[degree(juroren_notinmedia, mode="all")=="0"])
+juroren_notinmedia
+```
 Erzeugt Teilnetzwerk mit ausschließlich Männern (Frage: Wie viele Männer im Gesamtnetzwerk?)
 ```
 maenner <- induced_subgraph(personen, V(personen)[which (sex == 1)])
