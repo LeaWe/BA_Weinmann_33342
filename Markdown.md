@@ -356,7 +356,6 @@ sort(indjury)
 
 ## TEILNETZWERKE
 
-
 ### Elite-Netzwerke
 
 Schritt 1: **Bereinigtes Netzwerk (Stufe 1)** (Entferne alle Nodes mit degree < 5)
@@ -621,6 +620,217 @@ ard <- g - (g - swr[[1]] - wdr[[1]] - radiobremen[[1]] - br[[1]] - hr[[1]] - mdr
 ard <- delete_vertices (ard, V(ard)[degree(ard, mode="all")=="0"])
 plot(ard)
 ```
+
+### Das KONSERVATIVE Netzwerk
+(besteht aus: Theodor-Wolff-Preis, Herbert-Quandt-Preis, Ludwig-Erhard-Preis --> größter Anteil konservativer Medien unter PT & Jury)
+
+**1. Ludwig-Erhard-Preis**
+```
+Preis <- "Ludwig-Erhard-Preis für Wirtschaftspublizistik"
+```
+Erzeuge Preisnetzwerk ersten Grades (keine Bereinigung notwendig)
+```
+x1 <- subgraph <- make_ego_graph(g, order=1, Preis)
+plot(x1[[1]],
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Erzeuge unbereinigtes Preisnetzwerk zweiten Grades
+```
+x2 <- subgraph <- make_ego_graph(g, order=2, Preis)
+plot(x2[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+Bereinigung
+Erzeuge unbereinigte Preisnetzwerke 2. Grades nach Jahren
+  ```
+x15 <- subgraph <- make_ego_graph(year2015, order=2, Preis)
+x15 <- delete_vertices(x15[[1]], V(x15[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x15
+plot(x15, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x16 <- subgraph <- make_ego_graph(year2016, order=2, Preis)
+x16 <- delete_vertices(x16[[1]], V(x16[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x16
+plot(x16, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x17 <- subgraph <- make_ego_graph(year2017, order=2, Preis)
+x17 <- delete_vertices(x17[[1]], V(x17[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x17
+plot(x17, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x18 <- subgraph <- make_ego_graph(year2018, order=2, Preis)
+x18 <- delete_vertices(x18[[1]], V(x18[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x18
+plot(x18, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x19 <- subgraph <- make_ego_graph(year2019, order=2, Preis)
+x19 <- delete_vertices(x19[[1]], V(x19[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x19
+plot(x19, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+Alle nicht zugehörigen Arbeitsverhältnisse löschen
+```
+x2 <- x2[[1]] - (x2[[1]] - x15 - x16 - x17 - x18 - x19)
+```
+Alle freistehende Nodes löschen
+```
+ludwigerhardpreis <- delete_vertices (x2, V(x2)[degree(x2, mode="all")=="0"])
+```
+Bereinigtes Preisnetzwerk
+```
+plot(ludwigerhardpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+**Theodor-Wolff-Preis**
+```
+Preis <- "Theodor-Wolff-Preis"
+```
+Erzeuge Preisnetzwerk ersten Grades (keine Bereinigung notwendig)
+```
+x1 <- subgraph <- make_ego_graph(g, order=1, Preis)
+plot(x1[[1]],
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Erzeuge unbereinigtes Preisnetzwerk zweiten Grades
+  ```
+x2 <- subgraph <- make_ego_graph(g, order=2, Preis)
+plot(x2[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+Bereinigung
+Erzeuge unbereinigte Preisnetzwerke 2. Grades nach Jahren
+  ```
+x15 <- subgraph <- make_ego_graph(year2015, order=2, Preis)
+x15 <- delete_vertices(x15[[1]], V(x15[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x15
+plot(x15, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x16 <- subgraph <- make_ego_graph(year2016, order=2, Preis)
+x16 <- delete_vertices(x16[[1]], V(x16[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x16
+plot(x16, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x17 <- subgraph <- make_ego_graph(year2017, order=2, Preis)
+x17 <- delete_vertices(x17[[1]], V(x17[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x17
+plot(x17, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x18 <- subgraph <- make_ego_graph(year2018, order=2, Preis)
+x18 <- delete_vertices(x18[[1]], V(x18[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x18
+plot(x18, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x19 <- subgraph <- make_ego_graph(year2019, order=2, Preis)
+x19 <- delete_vertices(x19[[1]], V(x19[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x19
+plot(x19, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+Alle nicht zugehörigen Arbeitsverhältnisse löschen
+```
+x2 <- x2[[1]] - (x2[[1]] - x15 - x16 - x17 - x18 - x19)
+```
+Alle freistehende Nodes löschen
+```
+theodorwolffpreis <- delete_vertices (x2, V(x2)[degree(x2, mode="all")=="0"])
+```
+Bereinigtes Preisnetzwerk
+```
+plot(theodorwolffpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+**3. Herbert-Quandt-Preis**
+```
+Preis <- "Herbert Quandt Medienpreis"
+```
+Erzeuge Preisnetzwerk ersten Grades (keine Bereinigung notwendig)
+```
+x1 <- subgraph <- make_ego_graph(g, order=1, Preis)
+plot(x1[[1]],
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Erzeuge unbereinigtes Preisnetzwerk zweiten Grades
+  ```
+x2 <- subgraph <- make_ego_graph(g, order=2, Preis)
+plot(x2[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+Bereinigung:
+Erzeuge unbereinigte Preisnetzwerke 2. Grades nach Jahren
+  ```
+x15 <- subgraph <- make_ego_graph(year2015, order=2, Preis)
+x15 <- delete_vertices(x15[[1]], V(x15[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x15
+plot(x15, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x16 <- subgraph <- make_ego_graph(year2016, order=2, Preis)
+x16 <- delete_vertices(x16[[1]], V(x16[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x16
+plot(x16, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x17 <- subgraph <- make_ego_graph(year2017, order=2, Preis)
+x17 <- delete_vertices(x17[[1]], V(x17[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x17
+plot(x17, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x18 <- subgraph <- make_ego_graph(year2018, order=2, Preis)
+x18 <- delete_vertices(x18[[1]], V(x18[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x18
+plot(x18, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
+x19 <- subgraph <- make_ego_graph(year2019, order=2, Preis)
+x19 <- delete_vertices(x19[[1]], V(x19[[1]])[which ((institutiontype == 1)  & (name != Preis))])
+x19
+plot(x19, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+Alle nicht zugehörigen Arbeitsverhältnisse löschen
+```
+x2 <- x2[[1]] - (x2[[1]] - x15 - x16 - x17 - x18 - x19)
+```
+Alle freistehende Nodes löschen
+```
+herbertquandtpreis <- delete_vertices (x2, V(x2)[degree(x2, mode="all")=="0"])
+```
+Bereinigtes Preisnetzwerk
+```
+plot(herbertquandtpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+**Einzelnetzwerke zusammenfassen**
+Alle nicht zugehörigen Arbeitsverhältnisse löschen
+```
+ludwigerhardpreis
+theodorwolffpreis
+herbertquandtpreis
+
+konservativ <- g - (g - ludwigerhardpreis - theodorwolffpreis - herbertquandtpreis)
+konservativ
+```
+Alle freistehende Nodes löschen
+```
+konservativ <- delete_vertices (konservativ, V(konservativ)[degree(konservativ, mode="all")=="0"])
+```
+Bereinigtes Preisnetzwerk
+```
+plot(konservativ, edge.arrow.size=.1, vertex.size=5, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_fr)
+```
+
+### Das LINKE Netzwerk
+(besteht aus Leuchtturm, Dt. Reporterpreis und Robert-Geisendörfer-Preis, weil dort sehr geringer Anteil konservativerer Medien)
+Aufbau: wie oben, nur mit drei linkeren Preisen...
+
 
 ## Auswertung nach Jahren
 
