@@ -1214,7 +1214,7 @@ plot(g3be,
 
 ### Ego-Netzwerke
 
-Auswahl der Person
+Auswahl des Objekts (Person, Unternehmen, Preis)
 ```
 Person <- "Bastian Obermayer"
 ```
