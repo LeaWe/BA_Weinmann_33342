@@ -1199,6 +1199,11 @@ bestimmte Hubs visualisieren:
 hs <- hub_score(g4, weights=NA)$vector
 plot(g4, vertex_size=hs*50....)
 ```
+
+#### Die konservativen Preise
+#### Die linkeren Preise
+(Preisnetzwerke zusammenfassen oder nebneinander plotten, wenn erstes nicht geht)
+
 ### Elite in Elite-Netzwerk
 (noch nicht schön!)
 ```
