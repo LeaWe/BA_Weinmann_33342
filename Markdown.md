@@ -16,17 +16,17 @@
 ### Bezeichnungen der Preise  
 Alternativer Medienpreis:  
 ```
-id: alternativermedienpreis
+id: alternativer_medienpreis
 name: "Alternativer Medienpreis"
 ```
 Axel-Springer-Preis:  
 ```
-id: axelspringerpreis 
+id: axel_springer_preis 
 name: "Axel-Springer-Preis für junge Journalisten"
 ```
 Bremer Fernsehpreis:  
 ```
-id: bremerfernsehpreis
+id: bremer_fernsehpreis
 name: "Bremer Fernsehpreis"
 ```
 Deutscher Journalistenpreis Wirtschaft:  
@@ -36,48 +36,53 @@ name: "Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"
 ```
 Deutscher Radiopreis:  
 ```
-id: deutscherradiopreis
+id: deutscher_radiopreis
 name: "Deutscher Radiopreis"
 ```
 Deutscher Reporterpreis:  
 ```
-id: deutscherreporterpreis
+id: deutscher_reporterpreis
 name: "Deutscher Reporterpreis"
 ```
 Ernst-Schneider-Preis:  
 ```
-id: ernstschneiderpreis 
+id: ernst_schneider_preis
 name: "Ernst-Schneider-Preis"
 ```
 Georg v. Holtzbrinck-Preis:  
 ```
-id: gvhpreis
+id: georg_von_holtzbrinck_preis_fuer_wirtschaftspublizistik
 name: "Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"
 ```
 Grimme Online Award:  
 ```
-id: grimmeonlineaward
+id: grimme_online_award
 name: "Grimme Online Award"
 ```
 Helmut-Schmidt-Preis:  
 ```
-id: helmutschmidtpreis
+id: helmut_schmidt_journalistenpreis
 name: "Helmut-Schmidt-Journalistenpreis"
 ```
 Herbert-Quandt-Preis:  
 ```
-id: herbertquandtpreis
+id: herbert_quandt_medienpreis
 name: "Herbert Quandt Medienpreis"
 ```
 Journalist des Jahres:  
 ```
-id: journalistdesjahres
+id: journalist_des_jahres
 name: "Journalist des Jahres"
 ```
 Katholischer Medienpreis:  
 ```
-id: katholischermedienpreis
+id: katholischer_medienpreis
 name: "Katholischer Medienpreis"
+```
+Kurt-Magnus-Preis:
+```
+id: kurtmagnuspreis
+name: "Kurt-Magnus-Preis"
 ```
 Kurt-Tucholsky-Preis:  
 ```
@@ -91,12 +96,12 @@ name: "Leuchtturm für besondere publizistische Leistungen"
 ```
 Ludwig-Börne-Preis:  
 ```
-id: ludwigboernepreis
+id: ludwig_boerne_preis
 name: "Ludwig-Börne-Preis"
 ```
 Ludwig-Erhard-Preis:  
 ```
-id: ludwigerhardpreis
+id: ludwig_erhard_preis
 name: "Ludwig-Erhard-Preis für Wirtschaftspublizistik"
 ```
 Nannenpreis:  
@@ -104,14 +109,24 @@ Nannenpreis:
 id: nannenpreis
 name: "Nannen Preis"
 ```
+Otto Brenner Preis:
+```
+id: otto_brenner_preis
+name: "Otto Brenner Preis"
+```
+Preis für die Freiheit und die Zukunft der Medien:
+```
+id: preis_fuer_freiheit
+name: "Preis für die Freiheit und die Zukunft der Medien"
+```
 Robert-Geisendörfer-Preis: 
 ```
-id: robertgeisendoerferpreis
+id: robert_geisendoerfer_preis
 name: "Robert Geisendörfer Preis"
 ```
 Theodor-Wolff-Preis:  
 ```
-id: theodorwolffpreis
+id: theodor_wolff_preis
 name: "Theodor-Wolff-Preis"
 ```
 Wächterpreis:  
