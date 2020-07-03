@@ -609,12 +609,19 @@ einzelpreise17 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2017])
 einzelpreise18 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2018])
 einzelpreise19 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2019])
 ```
+alternativ: siehe unten --> Auswertung nach Jahren
 
-Indegree von Einzelpreisen  
+**Indegree** von Einzelpreisen  
 ```
 indeinzelpreise <- degree(einzelpreise, mode="in")
 sort(indeinzelpreise)
 ```
+**Outdegree** von Einzelpreisen  
+```
+outdeinzelpreise <- degree(einzelpreise, mode="out")
+sort(outdeinzelpreise)
+```
+
 
 #### Gruppenpreisnetzwerk  
 
