@@ -310,72 +310,80 @@ farthest_vertices(g, directed = FALSE)
 
 ## PREISTRÄGER-NETZWERK
 
-1. Entfernt alle Nodes, die bei "workinmedia" _nicht_ NA haben (trifft auf alle Nodes außer Jurymitgliedern zu)
+1. Entfernt alle Jury-relations (relation = 3)
 ```
-preistraeger1 <- delete_vertices(g, V(g)[!is.na(workinmedia)])
-preistraeger1
+preistraeger <- delete_edges (g, E(g)[relation == 3])
 ```
-2. Entfernt aus oberem Netzwerk alle Jury-Beziehungen ("relation" = 3)
+2. Namen extrahieren
 ```
-preistraeger2 <- delete_edges (preistraeger1, E(preistraeger1)[relation==3])
-preistraeger2
+Personen <- delete.vertices(preistraeger, V(preistraeger)[type!=0])
+Namen <- V(Personen)$name
+Namen
 ```
-3. Entfernt aus oberem Netzwerk alle Institutionen, die keine Verbindung zu Preisträgern haben (Degree-Wert = 0)
+3. Schleife: Alle Namen durchschleifen: Hat eine Person keine relation = 1? --> Dann: Löschen.
 ```
-preistraegerfinal <- delete_vertices (preistraeger2, V(preistraeger2)[degree(preistraeger2, mode="all")=="0"])
-preistraegerfinal
+for (i in (1:length(Namen))){
+  ego <- delete_vertices(preistraeger, V(preistraeger)[(name != Namen[i]) & (type == 0)])
+  preistraegerbeziehungen <- E(ego)[relation ==1]
+  if (sum(preistraegerbeziehungen) == 0){
+    preistraeger <- delete_vertices(preistraeger, V(preistraeger)[name == Namen[i]])
+  }
+}
 ```
-4. Wirft das Preisträgernetzwerk aus
+4. Löscht alleinstehende Nodes und wirft das Preisträgernetzwerk aus
 ```
-plot (preistraegerfinal, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+preistrager <- delete_vertices (preistraeger, V(preistraeger)[degree(preistraeger, mode="all")=="0"]) 
+preistraeger
 ```
 Berechnet Out-Degree von Preisträgernetzwerk 
 ```
-outdpreistraeger <- degree(preistraegerfinal, mode="out")
+outdpreistraeger <- degree(preistraeger, mode="out")
 outdpreistraeger
 sort(outdpreistraeger)
 ```
 Berechnet In-Degree von Preisträgernetzwerk 
 ```
-indpreistraeger <- degree(preistraegerfinal, mode="in")
+indpreistraeger <- degree(preistraeger, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
-
 
 ## JURY-NETZWERK
 
 1. Entfernt alle Preisträger-Beziehungen aus edgelist
 ```
-jury1 <- delete_edges (g, E(g)[relation==1])
-jury1
+jury <- delete_edges (g, E(g)[relation == 1])
 ```
-*V(jury1)$workinmedia=="1"
-V(jury1)$workinmedia=="2"*
-
-2. Entfernt aus oberem Netzwerk alle Personen (type = 0), die bei "workinmedia" = NA haben (also alle Preisträger)
+2. Namen extrahieren
 ```
-jury2 <- delete_vertices(jury1, V(jury1)[(is.na(workinmedia)) & (type == 0)])
-jury2
+Personen <- delete.vertices(jury, V(jury)[type!=0])
+Namen <- V(Personen)$name
+Namen
 ```
-3. Entfernt aus oberem Netzwerk alle Institutionen, die keine Verbindung zu Jurymitgliedern haben (Degree-Wert = 0)
+3. Schleife: Alle Namen durchschleifen: Hat eine Person keine relation = 1? --> Dann: Löschen.
 ```
-juryfinal <- delete_vertices (jury2, V(jury2)[degree(jury2, mode="all")=="0"])
-juryfinal
+for (i in (1:length(Namen))){
+  ego <- delete_vertices(jury, V(jury)[(name != Namen[i]) & (type == 0)])
+  jurybeziehungen <- E(ego)[relation == 3]
+  if (sum(jurybeziehungen) == 0){
+    jury <- delete_vertices(jury, V(jury)[name == Namen[i]])
+  }
+}
 ```
-4. Wirft das Jurynetzwerk aus
+4. Löscht alleinstehende Nodes und wirft das Jurynetzwerk aus
 ```
-plot (juryfinal, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+jury <- delete_vertices (jury, V(jury)[degree(jury, mode="all")=="0"]) 
+jury
 ```
 Berechnet Out-Degree von Jurynetzwerk
 ```
-outdjury <- degree(juryfinal, mode="out")
+outdjury <- degree(jury, mode="out")
 outdjury
 sort(outdjury)
 ```
 Berechnet In-Degree von Jurynetzwerk
 ```
-indjury <- degree(juryfinal, mode="in")
+indjury <- degree(jury, mode="in")
 indjury
 sort(indjury)
 ```
