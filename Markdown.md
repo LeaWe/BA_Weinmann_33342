@@ -1057,12 +1057,22 @@ unternehmen_preise
 
 Ressort auswählen
 ```
-taskx <- E(g)$task == 1 (Zahl von Ressort einfügen)
-taskx
-```
-Was war häufigstes Ressort?
-```
-sum(taskx, na.rm = TRUE)
+task_ber <- delete.edges(x2, E(x2)[relation != 2])
+task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
+task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
+task_ber
+
+tasks <- c("leader", "investigative", "data", "economics", "digital", "local", "freelancer", "former", "reporter", "trainee", "presenter", "politics", "empty", "empty", "others")
+
+for (i in (1:15)){
+  summe <- 0
+  taskx <- E(task_ber)$task == i
+  summe <- sum(taskx, na.rm = TRUE)
+  print(tasks[i])
+  print(summe)
+  }
+
+length(taskx)
 ```
 
 #### unter Preisträgern
