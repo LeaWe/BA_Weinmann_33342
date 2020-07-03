@@ -532,12 +532,6 @@ preistraeger_relations_x <- E(x1[[1]])$relation == 1
 sum(preistraeger_relations_x, na.rm = TRUE)
 ```
 
-Anzahl **Gruppenpreise**
-```
-preise_x <- (E(x1[[1]])$format == 2)
-sum(gruppenpreise_x, na.rm = TRUE)
-```
-
 Nach Indegree sortieren (**häufigster Arbeitgeber**):
 ```
 ind_x2 <- degree(x2, mode="in")
@@ -592,27 +586,6 @@ gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
 gsize(gruppenpreise_count)
 ```
 
-**Gruppenpreisnetzwerk** erstellen
-Netzwerk erstellen:
-```
-gruppenpreise1 <- delete_edges(g, E(g)[which(format == 1)])
-gruppenpreise <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[degree(gruppenpreise1, mode="all")=="0"])
-gruppenpreise
-```
-Indegree von Gruppenpreisen  
-(Frage: Welches Unternehmen hat die meisten Gruppenpreisträger & welcher Preis vergibt die meisten Gruppenpreise?
-```
-indgruppenpreise <- degree(gruppenpreise, mode="in")
-sort(indgruppenpreise)
-```
-
-Netzwerk GP im reinen Preisträgernetzwerk:
-```
-gruppenpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 1)])
-gruppenpreise2 <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[(degree(gruppenpreise1, mode="out")=="1") & (type == 0)])
-gruppenpreise <- delete_vertices (gruppenpreise2, V(gruppenpreise2)[degree(gruppenpreise2, mode="all")=="0"])
-```
-
 **Einzelpreisnetzwerk** erstellen
 Netzwerk erstellen:  
 ```
@@ -620,19 +593,27 @@ einzelpreise1 <- delete_edges(g, E(g)[which(format == 2)])
 einzelpreise <- delete_vertices (einzelpreise1, V(einzelpreise1)[degree(einzelpreise1, mode="all")=="0"])
 einzelpreise
 ```
+Netzwerk ohne Jurymitglieder (nur PT & Arbeitsbeziehungen):
+```
+einzelpreise_nurpt <- delete_edges(einzelpreise, E(einzelpreise)[which(relation == 3)])
+einzelpreise_nurpt <- delete_vertices (einzelpreise_nurpt, V(einzelpreise_nurpt)[degree(einzelpreise_nurpt, mode="all")=="0"])
+einzelpreise_nurpt
+```
 Indegree von Einzelpreisen  
-(Frage: Welches Unternehmen hat die meisten Einzelpreisträger & welcher Preis vergibt die meisten Einzelpreise?
 ```
 indeinzelpreise <- degree(einzelpreise, mode="in")
 sort(indeinzelpreise)
 ```
 
-Einzelpreise speziell in PT-Netzwerk  
+
+**Gruppenpreisnetzwerk** erstellen
+Netzwerk erstellen:
 ```
-einzelpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 2)])
-einzelpreise2 <- delete_vertices (einzelpreise1, V(einzelpreise1)[(degree(einzelpreise1, mode="out")=="1") & (type == 0)])
-einzelpreise <- delete_vertices (einzelpreise2, V(einzelpreise2)[degree(einzelpreise2, mode="all")=="0"])
+gruppenpreise1 <- delete_edges(g, E(g)[which(format == 1)])
+gruppenpreise <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[degree(gruppenpreise1, mode="all")=="0"])
+gruppenpreise
 ```
+sonst: Auswertung wie Einzelpreise (s.o.), graph ersetzen!
 
 ### ARD-Netzwerk
 
