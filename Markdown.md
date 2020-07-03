@@ -534,7 +534,7 @@ sum(preistraeger_relations_x, na.rm = TRUE)
 
 Anzahl **Gruppenpreise**
 ```
-gruppenpreise_x <- (E(x1[[1]])$format == 2)
+preise_x <- (E(x1[[1]])$format == 2)
 sum(gruppenpreise_x, na.rm = TRUE)
 ```
 
@@ -598,16 +598,23 @@ indgruppenpreise <- degree(gruppenpreise, mode="in")
 sort(indgruppenpreise)
 ```
 **Einzelpreisnetzwerk** erstellen
+Netzwerk erstellen:  
 ```
-einzelpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 2)])
-einzelpreise2 <- delete_vertices (einzelpreise1, V(einzelpreise1)[(degree(einzelpreise1, mode="out")=="1") & (type == 0)])
-einzelpreise <- delete_vertices (einzelpreise2, V(einzelpreise2)[degree(einzelpreise2, mode="all")=="0"])
+einzelpreise1 <- delete_edges(g, E(g)[which(format == 2)])
+einzelpreise <- delete_vertices (einzelpreise1, V(einzelpreise1)[degree(einzelpreise1, mode="all")=="0"])
+einzelpreise
 ```
 Indegree von Einzelpreisen  
 (Frage: Welches Unternehmen hat die meisten Einzelpreisträger & welcher Preis vergibt die meisten Einzelpreise?
 ```
 indeinzelpreise <- degree(einzelpreise, mode="in")
 sort(indeinzelpreise)
+```
+Einzelpreise speziell in PT-Netzwerk  
+```
+einzelpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 2)])
+einzelpreise2 <- delete_vertices (einzelpreise1, V(einzelpreise1)[(degree(einzelpreise1, mode="out")=="1") & (type == 0)])
+einzelpreise <- delete_vertices (einzelpreise2, V(einzelpreise2)[degree(einzelpreise2, mode="all")=="0"])
 ```
 
 ### ARD-Netzwerk
