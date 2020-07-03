@@ -347,6 +347,14 @@ indpreistraeger <- degree(preistraeger, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
+Wer hat die meisten Preise abgeräumt? (Netzwerk mit nur Preisträgern, relation == 1, sort nach Outdegree)
+```
+preistraeger_ohneag <- delete.edges(preistraeger, E(preistraeger)[which(relation == 2)])
+preistraeger_ohneag <- delete_vertices (preistraeger_ohneag, V(preistraeger_ohneag)[degree(preistraeger_ohneag, mode="all")=="0"]) 
+outdpreistraeger_ohneag <- degree(preistraeger_ohneag, mode="out")
+sort(outdpreistraeger_ohneag)
+```
+
 
 ## JURY-NETZWERK
 
