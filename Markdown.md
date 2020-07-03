@@ -543,19 +543,28 @@ Anzahl **Arbeitgeberbeziehungen**
 ag_x <- (E(x2)$relation == 2)
 sum(ag_x, na.rm = TRUE)
 ```
-Lösche Jurymitglieder
-```
-x2_pt <- delete_vertices(x2, V(x2)[!is.na(workinmedia)])
-x2_pt
-```
 Anzahl **Arbeitgeberbeziehungen unter Preisträgern**
+1. Lösche Jury-Beziehungen
 ```
-ag_x_pt <- (E(x2_pt)$relation == 2)
-sum(ag_x_pt, na.rm = TRUE)
+x2_pt <- delete.edges(x2, E(x2)[which(relation == 3)])
+```
+2. Lösche alleinstehende Nodes
+```
+x2_pt <- delete.vertices(x2_pt, V(x2_pt)[degree(x2_pt, mode="all")==0])
+```
+3. Bilde neuen ego-graph 2. Grades um Preis
+```
+x2_pt <- subgraph <- make_ego_graph(x2_pt, order=2, Preis)
+plot(x2_pt[[1]], vertex.size=4, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+Selektiere Arbeitsbeziehungen (wie oben)
+```
+ag_x2_pt <- (E(x2_pt[[1]])$relation == 2)
+sum(ag_x2_pt, na.rm = TRUE)
 ```
 Nach Indegree sortieren (**häufigster Arbeitgeber unter Preisträgern**):
 ```
-ind_x_pt <- degree(x2_pt, mode="in")
+ind_x_pt <- degree(x2_pt[[1]], mode="in")
 sort(ind_x_pt)
 ```
 
