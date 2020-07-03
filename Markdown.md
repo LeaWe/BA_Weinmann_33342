@@ -584,12 +584,20 @@ sum(frauen_preistraeger_x, na.rm = TRUE)
 
 
 ### Gruppenpreis- und Einzelnetzwerke
+**Wie viele Einzel- und Gruppenpreise wurden verliehen?**
+```
+einzelpreise_count <- subgraph.edges(g, E(g)[which(format == 1)])
+gsize(einzelpreise_count)
+gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
+gsize(gruppenpreise_count)
+```
 
 **Gruppenpreisnetzwerk** erstellen
+Netzwerk erstellen:
 ```
-gruppenpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 1)])
-gruppenpreise2 <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[(degree(gruppenpreise1, mode="out")=="1") & (type == 0)])
-gruppenpreise <- delete_vertices (gruppenpreise2, V(gruppenpreise2)[degree(gruppenpreise2, mode="all")=="0"])
+gruppenpreise1 <- delete_edges(g, E(g)[which(format == 1)])
+gruppenpreise <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[degree(gruppenpreise1, mode="all")=="0"])
+gruppenpreise
 ```
 Indegree von Gruppenpreisen  
 (Frage: Welches Unternehmen hat die meisten Gruppenpreisträger & welcher Preis vergibt die meisten Gruppenpreise?
@@ -597,6 +605,14 @@ Indegree von Gruppenpreisen
 indgruppenpreise <- degree(gruppenpreise, mode="in")
 sort(indgruppenpreise)
 ```
+
+Netzwerk GP im reinen Preisträgernetzwerk:
+```
+gruppenpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 1)])
+gruppenpreise2 <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[(degree(gruppenpreise1, mode="out")=="1") & (type == 0)])
+gruppenpreise <- delete_vertices (gruppenpreise2, V(gruppenpreise2)[degree(gruppenpreise2, mode="all")=="0"])
+```
+
 **Einzelpreisnetzwerk** erstellen
 Netzwerk erstellen:  
 ```
@@ -610,6 +626,7 @@ Indegree von Einzelpreisen
 indeinzelpreise <- degree(einzelpreise, mode="in")
 sort(indeinzelpreise)
 ```
+
 Einzelpreise speziell in PT-Netzwerk  
 ```
 einzelpreise1 <- delete_edges(preistraegerfinal, E(preistraegerfinal)[which(format == 2)])
