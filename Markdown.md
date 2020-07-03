@@ -619,12 +619,6 @@ einzelpreise1 <- delete_edges(g, E(g)[which(format == 2)])
 einzelpreise <- delete_vertices (einzelpreise1, V(einzelpreise1)[degree(einzelpreise1, mode="all")=="0"])
 einzelpreise
 ```
-Netzwerk ohne Jurymitglieder (**nur PT & Arbeitsbeziehungen**):  
-```
-einzelpreise_nurpt <- delete_edges(einzelpreise, E(einzelpreise)[which(relation == 3)])
-einzelpreise_nurpt <- delete_vertices (einzelpreise_nurpt, V(einzelpreise_nurpt)[degree(einzelpreise_nurpt, mode="all")=="0"])
-einzelpreise_nurpt
-```
 
 nach **Jahren**
 ```
@@ -928,8 +922,8 @@ sum (frauen20xx, na.rm = TRUE)
 ```
 **Jury** nach Jahren zählen
 ```
-juryfinal20xx <- subgraph.edges(juryfinal, E(juryfinal)[year == Jahr])
-plot(juryfinal20xx,
+jury20xx <- subgraph.edges(jury, E(jury)[year == Jahr])
+plot(jury20xx,
      edge.arrow.size=.02,
      edge.label.degree=0.1,
      vertex.frame.color="white",
@@ -940,15 +934,15 @@ plot(juryfinal20xx,
 ```
 Geschlechter in Jury nach Jahren
 ```
-frauenjury20xx <- V(juryfinal20xx)$sex == 2
+frauenjury20xx <- V(jury20xx)$sex == 2
 sum (frauenjury20xx, na.rm = TRUE)
-maennerjury20xx <- V(juryfinal20xx)$sex == 1
+maennerjury20xx <- V(jury20xx)$sex == 1
 sum (maennerjury20xx, na.rm = TRUE)
 
 ```
 **Preisträger** nach Jahren zählen
 ```
-preistraeger20xx <- subgraph.edges(preistraegerfinal, E(preistraegerfinal)[year == Jahr])
+preistraeger20xx <- subgraph.edges(preistraeger, E(preistraeger)[year == Jahr])
 plot(preistraeger20xx,
      edge.arrow.size=.02,
      edge.label.degree=0.1,
@@ -966,27 +960,7 @@ maennerpreistraeger20xx <- V(preistraeger20xx)$sex == 1
 sum (maennerpreistraeger20xx, na.rm = TRUE)
 ```
 
-**Dominanz einzelner Personen** nach Jahren
-Frage: Wer hat die meisten Preise gewonnen?
-(Entspricht: preisträger20xx ohne Arbeitsverhältnisse)
-```
-nur_preistraeger20xx <- subgraph.edges(year20xx, E(year20xx)[relation == 1]) 
-plot(nur_preistraeger20xx,
-     edge.arrow.size=.02,
-     edge.label.degree=0.1,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_kk)
-```
-Größter Outdegree Preisträger
-```
-outd_nur_preistraeger20xx <- degree(nur_preistraeger20xx, mode="out")
-sort(outd_nur_preistraeger20xx)
-```
-
-**Dominanz einzelner Medienunternehmen** nach Jahren
+**Dominanz einzelner Medienunternehmen** nach Jahren  
 
 Größten Indegree (_gesamt_) nach Jahren berechnen:
 ```
@@ -1032,36 +1006,51 @@ sum(einzelpreise20xx_einzeln, na.rm = TRUE)
 
 
 ## Netzwerke von Medienunternehmen
-Unternehmen auswählen (z.B. Zeit)
+Unternehmen auswählen (z.B. Zeit)  
 ```
 Unternehmen <- "Die ZEIT"
 ```
-Ego-Netzwerk (zweiten Grades) erstellen
+Ego-Netzwerk (zweiten Grades) erstellen  
 ```
 unternehmen <- subgraph <- make_ego_graph(g, order=2, Unternehmen)
 unternehmen
 plot(unternehmen[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
-Auswertung der Netzwerke:
+**Auswertung** der Netzwerke:  
+Preisträger-Beziehungen:  
 ```
 preistraeger_relations_unternehmen <- E(unternehmen[[1]])$relation == 1
 sum(preistraeger_relations_unternehmen, na.rm = TRUE)
-
+```
+Jury-Beziehungen:  
+```
 jury_relations_unternehmen <- E(unternehmen[[1]])$relation == 3
 sum(jury_relations_unternehmen, na.rm = TRUE)
-
+```
+Wie viele Personen im Netzwerk?  
+```
 unternehmen_personen <- induced_subgraph(unternehmen[[1]], V(unternehmen[[1]])[which (type == 0)])
 unternehmen_personen
-
-unternehmen_preistraeger <- induced_subgraph(unternehmen_personen, V(unternehmen_personen)[which (is.na(workinmedia))])
-unternehmen_preistraeger
-
-unternehmen_juroren <- induced_subgraph(unternehmen_personen, V(unternehmen_personen)[which (!is.na(workinmedia))])
-unternehmen_juroren
-
+```
+Wie viele Preisträger im Netzwerk?  
+```
+preistraeger <- subgraph.edges(g, E(g)[which (relation == 1)])
+preistraeger_personen <- induced.subgraph(preistraeger, V(preistraeger)[type == 0])
+preistraeger_personen
+```
+Wie viele Juroren im Netzwerk?  
+```
+juroren <- subgraph.edges(g, E(g)[which (relation == 3)])
+juroren_personen <- induced.subgraph(juroren, V(juroren)[type == 0])
+juroren_personen
+```
+Wie viele Gruppenpreise wurden verliehen?  
+```
 gruppenpreise_unternehmen <- (E(unternehmen[[1]])$format == 2)
 sum(gruppenpreise_unternehmen, na.rm = TRUE)
-
+```
+Bei wie vielen Preisen haben Mitarbeiter des Unternehmens etwas gewonnen?  
+```
 unternehmen_preise <- induced_subgraph(unternehmen[[1]], V(unternehmen[[1]])[which (institutiontype == 1)])
 unternehmen_preise
 ```
