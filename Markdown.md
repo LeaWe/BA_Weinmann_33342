@@ -512,20 +512,9 @@ plot(x2, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", ve
 
 #### Auswertung
 Wie viele **Personen** gibt es (einfach gezählt) im Preisnetzwerk?
-```
-personen_x <- V(x1[[1]])$type == 0
-sum(personen_x, na.rm = TRUE)
-```
-davon Jurymitglieder (einfach gezählt):
-```
-jury_x <- V(personen_x)$type == 0
-sum(personen_x, na.rm = TRUE)
-```
-davon Preisträger (einfach gezählt):
-```
-personen_x <- V(x[[1]])$type == 0
-sum(personen_x, na.rm = TRUE)
-```
+davon Jurymitglieder (einfach gezählt)
+davon Preisträger (einfach gezählt)
+--> wie oben mit g Gesamtnetzwerk!  
 
 Wie viele **Beziehungen zum Preis** (über Jurymitgliedschaft oder Preisträgerschaft) gibt es im Preisnetzwerk?
 ```
