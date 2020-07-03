@@ -1053,17 +1053,27 @@ unternehmen_preise
 
 ## Ressorts
 
-#### Gesamt
+**Gesamt**
 
-Ressort auswählen
+1. Alle Nicht-Arbeitsbeziehungen löschen
 ```
 task_ber <- delete.edges(x2, E(x2)[relation != 2])
+```
+2. Alle Arbeitsbeziehungen löschen, die task = "NA" sind
+```
 task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
+```
+3. Alle freistehenden Nodes löschen
+```
 task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
 task_ber
-
+```
+4. Weise "tasks" die verschiedenen Kategorien der Ressorts zu
+```
 tasks <- c("leader", "investigative", "data", "economics", "digital", "local", "freelancer", "former", "reporter", "trainee", "presenter", "politics", "empty", "empty", "others")
-
+```
+5. Schleife alle Kategorien durch alle übrig gebliebenen relations == 2 und summiere für jede Kategorie
+```
 for (i in (1:15)){
   summe <- 0
   taskx <- E(task_ber)$task == i
@@ -1073,6 +1083,40 @@ for (i in (1:15)){
   }
 
 length(taskx)
+```
+unter **Preisträgern**  
+(wie oben, nur Selektion der Preisträger-relations durch preistraeger-Netzwerk)  
+```
+task_ber <- preistraeger
+task_ber <- delete.edges(preistraeger, E(preistraeger)[relation != 2])
+task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
+task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
+task_ber
+
+for (i in (1:15)){
+  summe <- 0
+  taskx <- E(task_ber)$task == i
+  summe <- sum(taskx, na.rm = TRUE)
+  print(tasks[i])
+  print(summe)
+}
+```
+unter **Jurymitgliedern**  
+(wie oben, nur Selektion der Jury-relations durch jury-Netzwerk)  
+```
+task_ber <- jury
+task_ber <- delete.edges(jury, E(jury)[relation != 2])
+task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
+task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
+task_ber
+
+for (i in (1:15)){
+  summe <- 0
+  taskx <- E(task_ber)$task == i
+  summe <- sum(taskx, na.rm = TRUE)
+  print(tasks[i])
+  print(summe)
+}
 ```
 
 #### unter Preisträgern
