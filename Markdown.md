@@ -1503,6 +1503,111 @@ length(matrix)
 ```
 ! Werte sind unsortiert, muss nun händisch nach größten Werten (+ Preisträger dazu) durchsucht werden, weil sort() nicht funktioniert.
 
+### WANDERUNG
+**Wer wandert innerhalb eines Preises von Preisträgern in Jury und umgekehrt?** 
+Arbeitgeber löschen
+```
+ohneAG <- delete_vertices(g, V(g)[which (institutiontype == 2)])
+```
+Namen extrahieren
+```
+Personen <- delete.vertices(ohneAG, V(ohneAG)[type!=0])
+Namen <- V(Personen)$name
+Namen
+```
+Personen löschen, die keine Preisbeziegung oder keine Jurybeziehung haben
+(dazu: Schleife alle Namen durch und lösche diejenigen, die Jurybeziehung oder Preisbeziehung = 0 haben)
+```
+PuJ <- ohneAG
+for (i in (1:(length(Namen)))){
+  ego <- subgraph <- make_ego_graph(g, order=1, Namen[i])
+  jurybeziehung <- E(ego[[1]])$relation == 3
+  preisbeziehung <- E(ego[[1]])$relation == 1
+  if ((sum(jurybeziehung) == 0) | ((sum(preisbeziehung) == 0))){
+    PuJ <- delete_vertices(PuJ, V(PuJ)[name == Namen[i]])
+  }
+}
+```
+Zeige Netzwerk
+```
+PuJ
+```
+**Welche Personen sind Preisträger und Jurymitglied im gleichen Preis (und im gleichen Jahr)?**
+Personen und Preise extrahieren
+```
+Personen <- delete.vertices(PuJ, V(PuJ)[type!=0])
+Namen <- V(Personen)$name
+Namen
+
+Preise <- delete.vertices(PuJ, V(PuJ)[type == 0])
+Preise <- V(Preise)$name
+Preise
+```
+1. Schleife alle Preise und print
+```
+for (i in (1:(length(Preise)))){
+  ego <- subgraph <- make_ego_graph(g, order=1, Preise[i])
+  print("######################")
+  print(Preise[i])
+  print(i)
+  ```
+  2. Schleife alle Personen
+  ```
+  for (j in (1:(length(Namen)))){
+    ```
+    3. alle anderen Personen löschen
+    ```
+    ego2 <- delete_vertices(ego[[1]], V(ego[[1]])[(name != Namen[j]) & (type == 0)])
+    ```
+    4. Beziehungen zählen
+    ```
+    jurybeziehung <- E(ego2)$relation == 3
+    preisbeziehung <- E(ego2)$relation == 1
+    ```
+    5. wenn sowohl Preisträger als auch Jurymitglied --> print
+    ```
+    if ((sum(jurybeziehung) > 0) & ((sum(preisbeziehung) > 0))){
+      print(Namen[j])
+      print(j)
+    ```
+      6. Schleife alle Jahre
+      ```
+      for (k in (2015:2019)){
+        Jahr <- as.character(k)
+        ego3 <- delete_edges(ego2, E(ego2)[year != Jahr])
+        jurybeziehung <- 0
+        preisbeziehung <- 0
+        jurybeziehung <- E(ego3)$relation == 3
+        preisbeziehung <- E(ego3)$relation == 1
+        ```
+        7. Wenn Preisträger und Jurymitglied im selben Jahr --> print!
+        ```
+        if ((sum(jurybeziehung) > 0) & ((sum(preisbeziehung) > 0))){
+          print(k)
+          print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        }
+      }
+    }
+  }
+  print("   ")
+}
+```
+Einzeltests: Bei Preise[] Nummer aus Liste eintragen (Preisnummer), ebenso bei Name[] (Namensnummer), um einzelne Personen zu plotten
+```
+ego <- subgraph <- make_ego_graph(g, order=1, Preise[12])                            #i = Preisnummer
+ego2 <- delete_vertices(ego[[1]], V(ego[[1]])[(name != Namen[17]) & (type == 0)])    #i = Namensnummer
+liste <- E(ego2)
+edge_attr(ego2)
+
+plot(ego2,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
 ## Visualisierungen
 
 ### Ideensammlung
