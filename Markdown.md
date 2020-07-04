@@ -1680,12 +1680,4 @@ plot(ego[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="whit
 
 ## ab hier: Spielwiese 
 
-# Ego-Netzwerk Obermayer
-```
-edge_attr(g, "relation", index = E(g))
-h <- simplify(g, edge.attr.comb = "sum"))
-h
-obermayer <- subgraph <- make_ego_graph(h, order=1, c("Bastian Obermayer"))
-obermayer
-plot(obermayer[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-```
+
