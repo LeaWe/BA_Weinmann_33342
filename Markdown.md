@@ -910,7 +910,17 @@ plot(year20xx,
      vertex.label.cex=.6,
      layout = layout_with_kk)
 ```
-
+Anzahl Preisträger-Beziehungen im Netzwerk:
+```
+preistraeger_relations_x <- E(year20xx)$relation == 1
+sum(preistraeger_relations_x, na.rm = TRUE)
+```
+Anzahl Jury-Beziehungen im Netzwerk:
+```
+jury_relations_x <- E(year20xx)$relation == 3
+sum(jury_relations_x, na.rm = TRUE)
+```
+  
 #### Auswertung
 
 **Geschlecht** nach Jahren zählen
