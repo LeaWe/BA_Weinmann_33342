@@ -340,11 +340,6 @@ for (i in (1:length(Namen))){
 preistraeger <- delete_vertices (preistraeger, V(preistraeger)[degree(preistraeger, mode="all")=="0"]) 
 preistraeger
 ```
-Nach Jahren selektieren/untersuchen (2015 beliebig ersetzen)
-```
-preistraegeryear <- subgraph.edges(preistraeger, E(preistraeger)[which(year == 2015)])
-preistraegeryear
-```
 Berechnet Out-Degree von Preisträgernetzwerk 
 ```
 outdpreistraeger <- degree(preistraeger, mode="out")
@@ -363,6 +358,25 @@ preistraeger_ohneag <- delete.edges(preistraeger, E(preistraeger)[which(relation
 preistraeger_ohneag <- delete_vertices (preistraeger_ohneag, V(preistraeger_ohneag)[degree(preistraeger_ohneag, mode="all")=="0"]) 
 outdpreistraeger_ohneag <- degree(preistraeger_ohneag, mode="out")
 sort(outdpreistraeger_ohneag)
+```
+**Nach Jahren** selektieren/untersuchen (2015 beliebig ersetzen)
+```
+preistraegeryear <- subgraph.edges(preistraeger, E(preistraeger)[which(year == 2015)])
+preistraegeryear
+```
+Selektiere PT, die zwei oder mehr Preise gewonnen haben:
+```
+preistraegeryear <- delete_vertices (preistraegeryear, V(preistraegeryear)[(type == 0) &(degree(preistraegeryear, mode="out")<3)])
+```
+Sortiere die übrigen nach Outdegree (Wer hat zwei oder mehr Preise gewonnen in Jahr x?):
+```
+outdpreistraeger <- degree(preistraegeryear, mode="out")
+sort(outdpreistraeger)
+```
+Sortiere die übrigen nach Indegree (Wo haben die Personen gearbeitet, die im Jahr x zwei oder mehr Preise gewonnen haben?):
+```
+indpreistraegeryear <- degree(preistraegeryear, mode="in")
+sort(indpreistraegeryear)
 ```
 
 
