@@ -337,8 +337,13 @@ for (i in (1:length(Namen))){
 ```
 4. Löscht alleinstehende Nodes und wirft das Preisträgernetzwerk aus
 ```
-preistrager <- delete_vertices (preistraeger, V(preistraeger)[degree(preistraeger, mode="all")=="0"]) 
+preistraeger <- delete_vertices (preistraeger, V(preistraeger)[degree(preistraeger, mode="all")=="0"]) 
 preistraeger
+```
+Nach Jahren selektieren/untersuchen (2015 beliebig ersetzen)
+```
+preistraegeryear <- subgraph.edges(preistraeger, E(preistraeger)[which(year == 2015)])
+preistraegeryear
 ```
 Berechnet Out-Degree von Preisträgernetzwerk 
 ```
