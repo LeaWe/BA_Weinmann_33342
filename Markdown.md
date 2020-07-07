@@ -1089,6 +1089,11 @@ task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
 task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
 task_ber
 ```
+ODER:
+```
+task <- subgraph.edges(g, E(g)[which (relation == 2) & (!is.na(task))])
+task
+```
 4. Weise "tasks" die verschiedenen Kategorien der Ressorts zu
 ```
 tasks <- c("leader", "investigative", "data", "economics", "digital", "local", "freelancer", "former", "reporter", "trainee", "presenter", "politics", "empty", "empty", "others")
@@ -1105,6 +1110,7 @@ for (i in (1:15)){
 
 length(taskx)
 ```
+
 unter **Preisträgern**  
 (wie oben, nur Selektion der Preisträger-relations durch preistraeger-Netzwerk)  
 ```
@@ -1113,7 +1119,15 @@ task_ber <- delete.edges(preistraeger, E(preistraeger)[relation != 2])
 task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
 task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
 task_ber
-
+```
+ODER:
+```
+preistraeger_av <- subgraph.edges(preistraeger, E(preistraeger)[which (relation == 2)])
+preistraeger_task <- subgraph.edges(preistraeger_av, E(preistraeger_av)[which (!is.na(task))])
+preistraeger_task
+```
+Schleife:
+```
 for (i in (1:15)){
   summe <- 0
   taskx <- E(task_ber)$task == i
@@ -1122,6 +1136,7 @@ for (i in (1:15)){
   print(summe)
 }
 ```
+
 unter **Jurymitgliedern**  
 (wie oben, nur Selektion der Jury-relations durch jury-Netzwerk)  
 ```
@@ -1130,7 +1145,15 @@ task_ber <- delete.edges(jury, E(jury)[relation != 2])
 task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
 task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
 task_ber
-
+```
+ODER:
+```
+jury_av <- subgraph.edges(jury, E(jury)[which (relation == 2)])
+jury_task <- subgraph.edges(jury_av, E(jury_av)[which (!is.na(task))])
+jury_task
+```
+Schleife:
+```
 for (i in (1:15)){
   summe <- 0
   taskx <- E(task_ber)$task == i
@@ -1140,28 +1163,6 @@ for (i in (1:15)){
 }
 ```
 
-#### unter Preisträgern
-Dafür: Aus g alle Jurymitglieder löschen
-```
-task_pt <- delete_vertices(g, V(g)[(type == 0) & (!is.na(workinmedia))])
-task_pt
-```
-Dann auswerten:
-```
-taskx_pt <- E(task_pt)$task == 15
-sum(taskx_pt, na.rm = TRUE)
-```
-#### unter Jury
-Alle Preisträger löschen
-```
-task_jury <- delete_vertices(g, V(g)[(type == 0) & (is.na(workinmedia))])
-task_jury
-```
-Dann auswerten:
-```
-taskx_jury <- E(task_jury)$task == 6
-sum(taskx_jury, na.rm = TRUE)
-```
 ## SONSTIGES GESAMTNETZWERK
 
 #### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:
