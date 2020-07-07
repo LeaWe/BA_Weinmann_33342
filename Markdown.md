@@ -2,7 +2,7 @@
 ## Legende
 *g* = Gesamtnetzwerk  
 *g2* = bereinigtes Netzwerk, alle gelöscht mit degree < 3  
-*g3* = Elite in der Elite, alle gelöscht mit degree < 20  
+*g3* = Elite in der Elite, alle gelöscht mit degree < 15  
 *preistraegerfinal* = Preisträgernetzwerk  
   nach Jahren: *preistraeger2015, preistraeger2016,...*  
 *juryfinal* = Jurynetzwerk  
@@ -217,6 +217,11 @@ Erzeugt Teilnetzwerk mit ausschließlich Juroren (Frage: Wie viele Juroren im Ge
 juroren <- subgraph.edges(g, E(g)[which (relation == 3)])
 juroren_personen <- induced.subgraph(juroren, V(juroren)[type == 0])
 juroren_personen
+```
+Erzeugt Teilnetzwerk mit ausschließlich Arbeitsverhältnissen (Frage: Wie viele Arbeitsverhältnisse im Gesamtnetzwerk?)
+```
+av <- subgraph.edges(g, E(g)[which (relation == 2)])
+av
 ```
 Wie viele Juroren arbeiten nicht in den Medien?  
 ```
