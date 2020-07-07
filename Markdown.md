@@ -373,7 +373,8 @@ Sortiere die übrigen nach Outdegree (Wer hat zwei oder mehr Preise gewonnen in 
 outdpreistraeger <- degree(preistraegeryear, mode="out")
 sort(outdpreistraeger)
 ```
-Sortiere die übrigen nach Indegree (Wo haben die Personen gearbeitet, die im Jahr x zwei oder mehr Preise gewonnen haben?):
+Sortiere die übrigen nach Indegree (Wo haben die Personen gearbeitet, die im Jahr x zwei oder mehr Preise gewonnen haben?):  
+(ACHTUNG: Verzerrrung durch mehrere Arbeitgeber / Person --> visuelle Auswertung durch Plot!)
 ```
 indpreistraegeryear <- degree(preistraegeryear, mode="in")
 sort(indpreistraegeryear)
