@@ -1698,6 +1698,34 @@ plot(ego2,
 ```
 ## Visualisierungen
 
+### Dendrogramm des Elitenetzwerks
+1. Selektiere Namen aus Elitenetzwerk:  
+```
+Namen <- V(g4)$name
+Namen
+g4
+```
+2. Weise Namen kürzere Bezeichnungen zu:  
+```
+Namen[[11]] <- "djp"
+Namen[[18]] <- "G. v. H.-Preis"
+Namen[[25]] <- "ifp"
+Namen[[32]] <- "Leuchtturm"
+Namen[[34]] <- "Ludwig-Erhard-Preis"
+Namen[[37]] <- "NDR"
+Namen[[47]] <- "Wächterpreis"
+Namen
+```
+3. Überführe geänderte Namen wieder in Vertex-Attribute:  
+```
+V(g4)$name <- Namen
+```
+4. Führe Clusteranalyse durch und wird Dendrogramm aus:  
+```
+clg4 <- cluster_walktrap(g4)
+plot_dendrogram(clg4)
+```
+
 ### Ideensammlung
 nach Degree-Größen visualisieren:  
 ```
@@ -1765,7 +1793,4 @@ E(ego[[1]])$width <- count.multiple(ego[[1]])
 
 plot(ego[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
-
-## ab hier: Spielwiese 
-
 
