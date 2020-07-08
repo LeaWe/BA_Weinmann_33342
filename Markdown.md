@@ -1185,7 +1185,58 @@ for (i in (1:15)){
 
 ## SONSTIGES GESAMTNETZWERK
 
-#### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:
+### CLUSTERANALYSE
+Clusteranalyse im **Gesamtnetzwerk**:  
+```
+clusters(g)
+clg <- cluster_walktrap(g)
+
+membership(clg)
+modularity(clg)
+communities(clg)
+size_clg2 <- sizes(clg)
+sort(size_clg)
+```
+Clusteranalyse im **Netzwerk Stufe 1**:  
+```
+clusters(g2)
+clg2 <- cluster_walktrap(g2)
+  
+membership(clg2)
+modularity(clg2)
+communities(clg2)
+size_clg2 <- sizes(clg2)
+sort(size_clg2)
+```  
+Clusteranalyse im **Netzwerk Stufe 2**:  
+```
+clusters(g3)
+```
+Zwei Komponenten im Netzwerk. Auftrennen mit decompose():  
+```
+g3_comp <- decompose.graph(g3)
+g3_comp
+clg3 <- cluster_walktrap(g3)
+  
+membership(clg3)
+modularity(clg3)
+communities(clg3)
+size_clg3 <- sizes(clg3)
+sort(size_clg3)
+```
+Clusteranalyse im **Elitenetzwerk**:  
+```
+clusters(g4)
+clg4 <- cluster_walktrap(g4)
+  
+membership(clg4)
+modularity(clg4)
+communities(clg4)
+size_clg4 <- sizes(clg4)
+sort(size_clg4)
+```  
+
+### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:
 
 **2015**  
 ```
