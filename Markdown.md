@@ -449,6 +449,18 @@ g4
 plot(g4)
 ```
 
+### Netzwerk ohne Arbeitsverhältnisse
+Lösche alle Arbeitsbeziehungen und freistehende Nodes im Netzwerk:  
+```
+ohneav <- delete.edges(g, E(g)[which(relation == 2)])
+ohneav <- delete_vertices (ohneav, V(ohneav)[degree(ohneav, mode="all")=="0"])
+ohneav  
+```
+Sind die Knoten im Netzwerk alle miteinander verbunden?
+```
+is.connected(ohneav)
+```
+
 ### Männer- & Frauennetzwerk
 Frauen:
 ```
@@ -1724,6 +1736,17 @@ V(g4)$name <- Namen
 ```
 clg4 <- cluster_walktrap(g4)
 plot_dendrogram(clg4)
+```
+
+### Netzwerk ohne Arbeitsverhältnisse
+```
+plot(ohneav, edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label=NA,
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
 ```
 
 ### Ideensammlung
