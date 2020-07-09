@@ -419,7 +419,13 @@ indjury <- degree(jury, mode="in")
 indjury
 sort(indjury)
 ```
-
+Wer saß am Häufigsten in einer Jury? (Netzwerk mit nur Jurymitgliedern, relation == 3, sort nach Outdegree)
+```
+jury_ohneag <- delete.edges(jury, E(jury)[which(relation == 2)])
+jury_ohneag <- delete_vertices (jury_ohneag, V(jury_ohneag)[degree(jury_ohneag, mode="all")=="0"]) 
+outdjury_ohneag <- degree(jury_ohneag, mode="out")
+sort(outdjury_ohneag)
+```
 
 ## TEILNETZWERKE
 
