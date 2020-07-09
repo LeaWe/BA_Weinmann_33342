@@ -277,7 +277,6 @@ edge_density(g)
 ```
 centr_betw(g, directed=TRUE)
 betw <- betweenness(g, directed=TRUE)
-betw <- betweenness(g, directed = TRUE)
 ```
 
 **Degree-Zentralität**
@@ -460,6 +459,17 @@ Sind die Knoten im Netzwerk alle miteinander verbunden?
 ```
 is.connected(ohneav)
 ```
+Clusteranalyse:  
+```
+cl_ohneav <- cluster_walktrap(ohneav)
+modularity(cl_ohneav)
+communities(cl_ohneav)
+sizes(cl_ohneav)
+mean_distance(ohneav, directed=F)
+betw <- betweenness(ohneav, directed=F)
+sort(betw)
+```
+
 
 ### Männer- & Frauennetzwerk
 Frauen:
@@ -1739,6 +1749,7 @@ plot_dendrogram(clg4)
 ```
 
 ### Netzwerk ohne Arbeitsverhältnisse
+Netzwerk ohne Label visualisieren, zeigt Beziehungen:
 ```
 plot(ohneav, edge.arrow.size=.02,
      edge.label.degree=0.1,
@@ -1746,6 +1757,38 @@ plot(ohneav, edge.arrow.size=.02,
      vertex.label=NA,
      vertex.label.dist=0.5,
      vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+Netzwerkvisualisierung mit wichtigen Brokern:
+```
+options(max.print = 999999)
+Namen <- V(ohneav)$name
+Namen[1:923]
+g4
+Namen[[1510]] <- "Preis für Freiheit"
+Namen[[614]] <- "G. v. H.-Preis"
+Namen[[716]] <- "Helmut Schmidt Preis"
+Namen[[1097]] <- "Leuchtturm"
+Namen[[1118]] <- "Ludwig-Erhard-Preis"
+Namen[[1056]] <- "Kurt-Tucholsky-Preis"
+Namen[[465]] <- "djp"
+Namen[[51]] <- "Alt. Medienpreis"
+Namen
+V(ohneav)$name <- Namen
+deg <- degree(ohneav, mode="all")
+deg
+V(ohneav)$deg <- deg
+V(ohneav)$deg
+V(ohneav)$label <- V(ohneav)$name
+V(ohneav)$label <- ifelse(V(ohneav)$deg>15, V(ohneav)$label, NA) 
+plot(ohneav, edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     main="Die Broker im Netzwerk",
      layout = layout_with_kk)
 ```
 
