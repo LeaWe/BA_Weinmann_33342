@@ -1875,6 +1875,50 @@ V(g4)$name <- Namen
 clg4 <- cluster_walktrap(g4)
 plot_dendrogram(clg4)
 ```
+### Broker-Medien Visualisierung
+```
+V(g)$betw <- betw
+V(g)$label <- V(g)$name
+V(g)$label <- ifelse(V(g)$betw> 2.504404e+04, V(g)$label, NA)
+V(g)$label <- ifelse(V(g)$institutiontype==2, V(g)$label, NA)
+
+plot(g,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="darkred",
+     vertex.label.dist=0.8,
+     vertex.label.cex=.6,
+     layout = layout_with_kk,
+     main="Broker-Medien",
+     asp=-5,
+     rescale=T)
+```
+
+### Broker-Personen Visualisierung:
+```
+V(g)$betw <- betw
+V(g)$label <- V(g)$name
+V(g)$label <- ifelse(V(g)$betw> 2.504404e+04, V(g)$label, NA)
+V(g)$label <- ifelse(V(g)$type==0, V(g)$label, NA)
+
+plot(g,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="darkred",
+     vertex.label.dist=0.8,
+     vertex.label.cex=.6,
+     layout = layout_with_kk,
+     main="Broker-Personen",
+     asp=-5,
+     rescale=T)
+```
+
 
 ### Netzwerk ohne Arbeitsverhältnisse
 Netzwerk ohne Label visualisieren, zeigt Beziehungen:
