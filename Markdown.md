@@ -1619,6 +1619,7 @@ length(matrix)
 ```
 ! Werte sind unsortiert, muss nun händisch nach größten Werten (+ Preisträger dazu) durchsucht werden, weil sort() nicht funktioniert.
 
+
 ### WANDERUNG
 **Wer wandert innerhalb eines Preises von Preisträgern in Jury und umgekehrt?** 
 Arbeitgeber löschen
@@ -1724,6 +1725,71 @@ plot(ego2,
      vertex.label.cex=.6,
      layout = layout_with_kk)
 ```
+
+### Teilnetzwerk PuJ
+= Teilnetzwerk mit ausschließlich Personen, die Jurymitglied & Preisträger zugleich im Netzwerk sind und ihren Beziehungen (ohne Arbeitsverhältnisse):  
+
+Erstelle Netzwerk (siehe oben):  
+```
+PuJ
+```
+Wie viele Personen im Netzwerk?
+```
+Personen <- V(PuJ)$type==0
+sum(Personen, na.rm=T)
+```
+Zeige Namen:
+```
+Namen <- V(PuJ)$name
+Namen
+```
+Berechne Dichte:
+```
+edge_density(PuJ)
+```
+Clusteranalyse:
+```
+is.connected(PuJ)
+
+cl_PuJ <- cluster_walktrap(PuJ)
+modularity(cl_PuJ)
+communities(cl_PuJ)
+sizes(cl_PuJ)
+betw <- betweenness(PuJ, directed=F)
+sort(betw)
+```
+**Netzwerk ohne djp und J.d.J**
+```
+PuJ_ber <- delete.vertices(PuJ, V(PuJ)[49, 108])
+PuJ_ber <- delete_vertices (PuJ_ber, V(PuJ_ber)[degree(PuJ_ber, mode="all")=="0"]) 
+PuJ_ber
+```
+Wie viele Personen im Netzwerk?
+```
+Personen <- V(PuJ_ber)$type==0
+sum(Personen, na.rm=T)
+```
+Zeige Namen:
+```
+Namen <- V(PuJ_ber)$name
+Namen
+```
+Berechne Dichte:
+```
+edge_density(PuJ_ber)
+```
+Clusteranalyse:
+```
+is.connected(PuJ_ber)
+
+cl_PuJ_ber <- cluster_walktrap(PuJ_ber)
+modularity(cl_PuJ_ber)
+communities(cl_PuJ_ber)
+sizes(cl_PuJ_ber)
+betw <- betweenness(PuJ_ber, directed=F)
+sort(betw)
+```
+
 ## Visualisierungen
 
 ### Dendrogramm des Elitenetzwerks
@@ -1796,6 +1862,34 @@ plot(ohneav, edge.arrow.size=.02,
      vertex.label.cex=.6,
      main="Die Broker im Netzwerk",
      layout = layout_with_kk)
+```
+
+## Visualisierung der Broker im Netzwerk PuJ_ber:
+```
+Namen
+Namen[[13]] <- "Axel-Springer-Preis"
+Namen[[42]] <- "E.-Schneider-Preis"
+Namen[[149]] <- "Thomas Tuma"
+Namen[[126]] <- "Preis für Freiheit"
+Namen[[53]] <- "G. v. H.-Preis"
+V(PuJ_ber)$name <- Namen
+
+V(PuJ_ber)$betw <- betw
+V(PuJ_ber)$betw
+V(PuJ_ber)$label <- V(PuJ_ber)$name
+V(PuJ_ber)$label <- ifelse(V(PuJ_ber)$betw>600, V(PuJ_ber)$label, NA) 
+
+plot(PuJ_ber, 
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     main="Die Broker im Netzwerk PuJ_ber",
+     layout = layout_with_kk,
+     asp=0)
 ```
 
 ### Ideensammlung
