@@ -476,6 +476,62 @@ betw <- betweenness(ohneav, directed=F)
 sort(betw)
 ```
 
+### Netzwerk mit ausschließlich Arbeitsverhältnissen
+
+Selektiere alle Arbeitsverhältnisse(AV):
+```
+av <- subgraph.edges(g, E(g)[relation == 2])
+av
+plot(av)
+```
+Clusteranalyse:
+```
+is.connected(av)
+clusters(av)
+cl_av <- cluster_walktrap(av)
+sizes <- sizes(cl_av)
+sort(sizes)
+
+modularity(cl_av)
+edge_density(av)
+```
+Erster plot: Zeigt große Verdichtung zur Mitte
+```
+plot(av,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label=NA,
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk,
+     main="Arbeitsbeziehungen im Gesamtnetzwerk",
+     asp=0)
+```
+Auftrennen der einzelnen Komponenen --> Komponente Nr. 3 ist besonders groß:
+```
+av_comp <- decompose(av)
+av_comp
+
+av_comp[[3]]
+```
+Plot Komponente Nr.3:
+```
+V(av_comp[[3]])$label <- V(av_comp[[3]])$name
+V(av_comp[[3]])$label <- ifelse(V(av_comp[[3]])$type==1, V(av_comp[[3]])$label, NA)
+plot(av_comp[[3]],
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.6,
+     vertex.label.cex=.55,
+     layout = layout_with_kk,
+     main="av_comp[[3]]",
+     asp=0)
+```
 
 ### Männer- & Frauennetzwerk
 Frauen:
