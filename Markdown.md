@@ -1202,16 +1202,16 @@ unternehmen_preise
 
 1. Alle Nicht-Arbeitsbeziehungen löschen
 ```
-task_ber <- delete.edges(x2, E(x2)[relation != 2])
+task <- delete.edges(x2, E(x2)[relation != 2])
 ```
 2. Alle Arbeitsbeziehungen löschen, die task = "NA" sind
 ```
-task_ber <- delete.edges(task_ber, E(task_ber)[(relation == 2) & (is.na(task))])
+task <- delete.edges(task, E(task)[(relation == 2) & (is.na(task))])
 ```
 3. Alle freistehenden Nodes löschen
 ```
-task_ber <- delete_vertices(task_ber, V(task_ber)[degree(task_ber, mode="all")=="0"])
-task_ber
+task <- delete_vertices(task, V(task)[degree(task, mode="all")=="0"])
+task
 ```
 ODER:
 ```
