@@ -484,6 +484,26 @@ av <- subgraph.edges(g, E(g)[relation == 2])
 av
 plot(av)
 ```
+Wie viele Arbeitgeber im Netzwerk?
+```
+arbeitgeber <- V(av)$type==1
+sum(arbeitgeber, na.rm=T)
+```
+Selektiere Knoten mit Indegree < 4 und zähle Arbeitgeber darin:
+```
+V(av)$ind <- ind
+
+av_klein <- induced.subgraph(av, V(av)[ind<4])
+av_klein
+
+arbeitgeber_klein <- V(av_klein)$type==1
+sum(arbeitgeber_klein, na.rm=T)
+```
+Selektiere Knoten mit Indegree > 49:
+```
+av_groß <- induced.subgraph(av, V(av)[ind>49])
+av_groß
+```
 Clusteranalyse:
 ```
 is.connected(av)
