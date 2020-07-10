@@ -1226,7 +1226,7 @@ tasks <- c("leader", "investigative", "data", "economics", "digital", "local", "
 ```
 for (i in (1:15)){
   summe <- 0
-  taskx <- E(task_ber)$task == i
+  taskx <- E(task)$task == i
   summe <- sum(taskx, na.rm = TRUE)
   print(tasks[i])
   print(summe)
