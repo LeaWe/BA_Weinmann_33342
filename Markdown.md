@@ -1979,6 +1979,57 @@ plot(av,
      asp=0,
      rescale=T)
 ```
+
+### Das konservative Netzwerk
+```
+konservativ
+
+V(konservativ)$label <- ifelse(V(konservativ)$institutiontype == 1, V(konservativ)$name, NA)
+V(konservativ)[type == 0]$color <- "lightgrey"
+
+Namen <- V(konservativ)$name
+Namen
+V(konservativ)[[33]]$color <- "red"
+V(konservativ)[[149]]$color <- "red"
+V(konservativ)[[150]]$color <- "red"
+V(konservativ)[[34]]$color <- "red"
+V(konservativ)[[40]]$color <- "orange"
+V(konservativ)[[151]]$color <- "orange"
+V(konservativ)[[20]]$color <- "orange"
+
+V(konservativ)[[33]]$label <- V(konservativ)[[33]]$name
+V(konservativ)[[149]]$label <- V(konservativ)[[149]]$name
+V(konservativ)[[150]]$label <- V(konservativ)[[150]]$name
+V(konservativ)[[34]]$label <- V(konservativ)[[34]]$name
+V(konservativ)[[40]]$label <- V(konservativ)[[40]]$name
+V(konservativ)[[151]]$label <- V(konservativ)[[151]]$name
+V(konservativ)[[20]]$label <- V(konservativ)[[20]]$name
+V(konservativ)[[52]]$label <- V(konservativ)[[52]]$name
+V(konservativ)[[78]]$label <- V(konservativ)[[78]]$name
+V(konservativ)[[137]]$label <- V(konservativ)[[137]]$name
+
+E(konservativ)$curved=0.2
+E(konservativ)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
+E(konservativ)[relation == 2]$color <- rgb(0, 0, 1, 0.3)
+E(konservativ)[relation == 1]$color <- rgb(1, 0.7, 0, 0.3)
+E(konservativ)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.3)
+
+l <- layout.fruchterman.reingold(konservativ)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(konservativ,
+     edge.arrow.size=.02,
+     vertex.size=4,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="black",
+     vertex.label.dist=0.6,
+     vertex.label.cex=1.7,
+     layout = l*1.2,
+     asp=0,
+     rescale=F)
+```
+
 ### Das Elitenetzwerk
 
 #### Gesamtes Netzwerk (einfache Visualisierung)
@@ -2023,6 +2074,7 @@ V(g4)$name <- Namen
 clg4 <- cluster_walktrap(g4)
 plot_dendrogram(clg4)
 ```
+
 ### Broker-Medien Visualisierung
 ```
 V(g)$betw <- betw
@@ -2141,53 +2193,9 @@ plot(PuJ_ber,
 ```
 
 ### Ideensammlung
-nach Degree-Größen visualisieren:  
-```
-deg <- degree(net, mode="all")
-plot(net, vertex.size=deg*3)
-```
+
 bestimmte Hubs visualisieren:
 ```
 hs <- hub_score(g4, weights=NA)$vector
 plot(g4, vertex_size=hs*50....)
 ```
-
-#### Die konservativen Preise
-```
-group_media <- c("Handelsblatt", "Frankfurter Allgemeine Zeitung (FAZ)", "Frankfurter Allgemeine Sonntagszeitung (FAS)", "Welt", "Wirtschaftswoche")
-
-V(konservativ)[which(institutiontype == 2)]$size <- deg*1.2
-# Bereinigtes Preisnetzwerk
-par(mfrow=c(1,1), mar=c(0,0,1,2))
-l <- layout.fruchterman.reingold(konservativ)
-l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
-plot(konservativ, 
-     edge.arrow.size=.1,
-     mark.groups = group_media,
-     vertex.size=5,
-     edge.label.degree=0,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_fr,
-     rescale=T,
-     layout = l*0.6)
-```
-#### Die linkeren Preise
-(Preisnetzwerke zusammenfassen oder nebneinander plotten, wenn erstes nicht geht)
-
-### Elite in Elite-Netzwerk
-(noch nicht schön!)
-```
-plot(g3be,
-     edge.arrow.size=.02,
-     edge.label.degree=0.1,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_kk)
-```
-
-
