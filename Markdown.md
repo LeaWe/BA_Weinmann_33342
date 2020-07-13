@@ -151,32 +151,6 @@ g
 plot(g)
 head(el)
 head(nl)
-```
-
-## Grundsätzliche Darstellung
-```
-options(max.print = 99999)
-E(g)$curved=.2 
-E(g)$vertex.label.family="Helvetica"
-```
-
-## Darstellung von Personen und Institutionen, bi-partite
-
-Färbt edges unterschiedlicher types verschieden ein & gib ihnen unterscheidbare Formen
-```
-V(g)[V(g)$type == 1]$shape <- "square"
-V(g)[V(g)$type == 0]$shape <- "circle"
-V(g)[V(g)$type == 0]$color <- "cornflowerblue"
-V(g)[V(g)$type == 1]$color <- "aquamarine2"
-V(g)[(V(g)$type == 1) & (institutiontype == 2)]$color <- "grey"
-```
-
-Färbt verschiedene relations unterschiedlich ein
-```
-E(g)[relation == 3]$color <- "green"
-E(g)[relation == 2]$color <- "orange"
-E(g)[relation == 1]$color <- "blue"
-E(g)[(relation == 1) & (format == 2)]$color <- "red"
 
 plot(g)
 ```
@@ -1867,6 +1841,31 @@ sort(betw)
 ```
 
 ## Visualisierungen
+
+### Grundsätzliche Darstellung
+```
+E(g)$curved=.2 
+E(g)$vertex.label.family="Helvetica"
+```
+
+### Darstellung von Personen und Institutionen, bi-partite
+
+Färbt edges unterschiedlicher types verschieden ein & gib ihnen unterscheidbare Formen
+```
+V(g)[V(g)$type == 1]$shape <- "square"
+V(g)[V(g)$type == 0]$shape <- "circle"
+V(g)[V(g)$type == 0]$color <- "cornflowerblue"
+V(g)[V(g)$type == 1]$color <- "aquamarine2"
+V(g)[(V(g)$type == 1) & (institutiontype == 2)]$color <- "grey"
+```
+
+Färbt verschiedene relations unterschiedlich ein
+```
+E(g)[relation == 3]$color <- "green"
+E(g)[relation == 2]$color <- "blue"
+E(g)[relation == 1]$color <- orange"
+E(g)[(relation == 1) & (format == 2)]$color <- "red"
+```
 
 ### Dendrogramm des Elitenetzwerks
 1. Selektiere Namen aus Elitenetzwerk:  
