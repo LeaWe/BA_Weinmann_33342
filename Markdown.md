@@ -1866,6 +1866,61 @@ E(g)[relation == 2]$color <- "blue"
 E(g)[relation == 1]$color <- orange"
 E(g)[(relation == 1) & (format == 2)]$color <- "red"
 ```
+### Degree-Verteilung im Gesamtnetzwerk visualisieren (Abb. xx)
+
+#### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
+```
+V(g)[V(g)$type == 1]$shape <- "square"
+V(g)[V(g)$type == 0]$shape <- "circle"
+
+install.packages('RColorBrewer')
+library('RColorBrewer')
+
+outd <- degree(g, mode="out", normalized=T)
+fine = 9
+palette = colorRampPalette(c (rgb(0,1,1,0.5), rgb(0,0,0.7,1)))
+graphCol = palette(fine)[as.numeric(cut(outd, breaks = fine))]
+
+plot(g,
+     vertex.color=graphCol,
+     vertex.size=outd*800,
+     edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label=NA,
+     layout = layout_with_kk,
+     main="Outdegree-Verteilung im Gesamtnetzwerk",
+     asp=0,
+     rescale=T)
+```
+
+#### Indegreeverteilung im Netzwerk mit nur Arbeitgebern  
+(Preise ausgeklammert, um Degree-Verteilung der Medien zeigen zu können)  
+```
+av <- subgraph.edges(g, E(g)[relation == 2])
+av
+
+V(av)[V(av)$type == 1]$shape <- "square"
+V(av)[V(av)$type == 0]$shape <- "circle"
+
+ind_av <- degree(av, mode="in", normalized=T)
+fine = 9
+palette = colorRampPalette(c (rgb(0.4,1,0.2,0.5), rgb(0,0.4,0,1)))
+graphCol = palette(fine)[as.numeric(cut(ind_av, breaks = fine))]
+
+plot(av,
+     vertex.color=graphCol,
+     vertex.size=ind_av*200,
+     edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label=NA,
+     layout = layout_with_kk,
+     main="Indegree-Verteilung im Mediennetzwerk",
+     sub="(enthält ausschließlich Arbeitsbeziehungen)",
+     asp=0,
+     rescale=T)
+```
 
 ### Dendrogramm des Elitenetzwerks
 1. Selektiere Namen aus Elitenetzwerk:  
