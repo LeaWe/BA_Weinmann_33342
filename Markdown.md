@@ -1866,6 +1866,64 @@ E(g)[relation == 2]$color <- "blue"
 E(g)[relation == 1]$color <- orange"
 E(g)[(relation == 1) & (format == 2)]$color <- "red"
 ```
+
+### Namen verkürzen
+```
+options(max.print = 99999)
+Namen <- V(g)$name
+Namen
+Namen[1:1195]
+g
+```
+**Preise**
+```
+Namen[[60]] <- "Alt. Medienpreis"
+Namen[[193]] <- "Axel-Springer-Preis"
+Namen[[500]] <- "Dt. Radiopreis"
+Namen[[501]] <- "Dt. Reporterpreis"
+Namen[[528]] <- "djp"
+Namen[[705]] <- "G. v. H.-Preis"
+Namen[[820]] <- "Helmut-Schmidt-Preis"
+Namen[[840]] <- "Herbert-Quandt-Preis"
+Namen[[1032]] <- "Journ. d. Jahres"
+Namen[[1196]] <- "Kurt-Tucholsky-Preis"
+Namen[[1242]] <- "Leuchtturm"
+Namen[[1263]] <- "Ludwig-Erhard-Preis"
+Namen[[1695]] <- "Preis für Freiheit"
+Namen[[1757]] <- "Rob. Geisendö. Preis"
+Namen[[2144]] <- "Wächterpreis"
+```
+**Personen**
+```
+Namen[[1167]] <- "Klaus Meier"
+```
+**Medien**
+```
+Namen[[215]] <- "BR"
+Namen[[496]] <- "DJS"
+Namen[[497]] <- "dpa"
+Namen[[588]] <- "epd"
+Namen[[654]] <- "FAS"
+Namen[[655]] <- "FAZ"
+Namen[[706]] <- "G. v. H.-Schule"
+Namen[[886]] <- "ifp"
+Namen[[1117]] <- "Uni Eichstätt"
+Namen[[1508]] <- "MDR"
+Namen[[1548]] <- "NZZ"
+Namen[[1595]] <- "NDR"
+Namen[[1700]] <- "rbb"
+Namen[[1795]] <- "SR"
+Namen[[1949]] <- "SZ"
+Namen[[1950]] <- "SZ Magazin"
+Namen[[1954]] <- "SWR"
+Namen[[1980]] <- "taz"
+Namen[[2152]] <- "WDR"
+Namen[[2190]] <- "ZEIT"
+Namen[[2195]] <- "ZDF"
+V(g)$name <- Namen
+V(g)$label <- V(g)$name
+```
+
 ### Degree-Verteilung im Gesamtnetzwerk visualisieren (Abb. xx)
 
 #### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
@@ -1928,17 +1986,6 @@ plot(av,
 Namen <- V(g4)$name
 Namen
 g4
-```
-2. Weise Namen kürzere Bezeichnungen zu:  
-```
-Namen[[11]] <- "djp"
-Namen[[18]] <- "G. v. H.-Preis"
-Namen[[25]] <- "ifp"
-Namen[[32]] <- "Leuchtturm"
-Namen[[34]] <- "Ludwig-Erhard-Preis"
-Namen[[37]] <- "NDR"
-Namen[[47]] <- "Wächterpreis"
-Namen
 ```
 3. Überführe geänderte Namen wieder in Vertex-Attribute:  
 ```
@@ -2116,21 +2163,4 @@ plot(g3be,
      layout = layout_with_kk)
 ```
 
-### Ego-Netzwerke
-
-Auswahl des Objekts (Person, Unternehmen, Preis)
-```
-Objekt <- "Bastian Obermayer"
-```
-Erzeuge Ego-Netzwerk 1. Grades
-```
-ego <- subgraph <- make_ego_graph(g, order=1, Objekt)
-ego
-```
-Edges gewichten
-```
-E(ego[[1]])$width <- count.multiple(ego[[1]])
-
-plot(ego[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-```
 
