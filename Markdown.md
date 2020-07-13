@@ -1979,6 +1979,33 @@ plot(av,
      asp=0,
      rescale=T)
 ```
+### Das Elitenetzwerk
+
+#### Gesamtes Netzwerk (einfache Visualisierung)
+```
+V(g4)$label <- V(g4)$name
+
+E(g4)$curved=0.2
+E(g4)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
+E(g4)[relation == 2]$color <- rgb(0, 0, 1, 0.3)
+E(g4)[relation == 1]$color <- rgb(1, 0.7, 0, 0.3)
+E(g4)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.3)
+
+outd <- degree(g4, mode="all", normalized=T)
+
+plot(g4,
+     edge.arrow.size=.02,
+     vertex.size=outd*10,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="black",
+     vertex.label.dist=0.4,
+     vertex.label.cex=1.2,
+     main="Die Elite in der Elite",
+     asp=0,
+     layout=layout_with_dh,
+     rescale=T)
+```
 
 ### Dendrogramm des Elitenetzwerks
 1. Selektiere Namen aus Elitenetzwerk:  
