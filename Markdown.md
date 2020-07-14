@@ -1924,7 +1924,7 @@ V(g)$name <- Namen
 V(g)$label <- V(g)$name
 ```
 
-### Degree-Verteilung im Gesamtnetzwerk visualisieren (Abb. xx)
+### Das Gesamtnetzwerk
 
 #### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
 ```
@@ -1980,6 +1980,126 @@ plot(av,
      rescale=T)
 ```
 
+#### Broker-Medien Visualisierung
+```
+av
+betw <- betweenness(av, directed=F, normalized = T)
+sort(betw)
+
+V(av)$betw <- betw
+V(av)$label <- V(av)$name
+V(av)$label <- ifelse(V(av)$betw> 4.508710e-02, V(av)$label, NA)
+V(av)$label <- ifelse(V(av)$institutiontype==2, V(av)$label, NA)
+
+V(av)[type==1]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[type==0]$color <- "darkgrey"
+
+l <- layout.kamada.kawai(av)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(av,
+     edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.size=betw*50,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="black",
+     vertex.label.dist=-0.6,
+     vertex.label.cex=1.2,
+     layout = l*1.1,
+     main="Broker-Medien im Gesamtnetzwerk",
+     asp=0,
+     rescale=F)
+```
+
+#### Broker-Personen Visualisierung:
+```
+ohneav
+betw <- betweenness(ohneav, directed=F, normalized = T)
+sort(betw)
+
+V(ohneav)$betw <- betw
+V(ohneav)$label <- V(ohneav)$name
+
+V(ohneav)$label <- ifelse(V(ohneav)$type==0, V(ohneav)$name, NA)
+V(ohneav)$label <- ifelse(V(ohneav)$betw> 2.781636e-02, V(ohneav)$label, NA)
+
+V(ohneav)[type==0]$color <- rgb(0, 0.7, 1, 1)
+V(ohneav)[type==1]$color <- "darkgrey"
+
+l <- layout.kamada.kawai(ohneav)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(ohneav,
+     edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.size=betw*60,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="black",
+     vertex.label.dist=0.6,
+     vertex.label.cex=1.2,
+     layout = l*1.2,
+     main="Broker-Personen im Gesamtnetzwerk",
+     asp=0,
+     rescale=F)
+```
+
+
+### Netzwerk ohne Arbeitsverhältnisse
+Netzwerk ohne Label visualisieren, zeigt Beziehungen:
+```
+ohneav
+edge_attr(ohneav)
+
+normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
+V(ohneav)$size <- normalize_01(degree(ohneav)) *5
+
+V(ohneav)[type==0]$color <- "cornflowerblue"
+
+V(ohneav)$label <- V(ohneav)$name
+V(ohneav)$label <- ifelse(V(ohneav)$institutiontype==1, V(ohneav)$label, NA) 
+
+E(ohneav)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
+E(ohneav)[relation == 1]$color <- rgb(1, 0.7, 0, 0.5)
+E(ohneav)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.5)
+
+plot(ohneav, edge.arrow.size=.02,
+     vertex.frame.color="white",
+     vertex.label=NA,
+     main="Netzwerk ohne Arbeitsbeziehungen",
+     layout = layout_with_kk,
+     asp=0)
+```
+#### Netzwerkvisualisierung mit wichtigen Broker-Preisen:
+```
+betw <- betweenness(ohneav, directed=F)
+options(max.print = 999999)
+sort(betw)
+
+V(ohneav)$betw <- betw
+V(ohneav)$betw
+V(ohneav)$label <- V(ohneav)$name
+V(ohneav)$label <- ifelse(V(ohneav)$betw>106203.42359, V(ohneav)$name, NA) 
+
+V(ohneav)[type==0]$color="grey"
+
+normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
+V(ohneav)$size <- normalize_01(degree(ohneav)) * 7
+
+plot(ohneav, edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.color="black",
+     vertex.label.cex=1.4,
+     main="Die Broker im Netzwerk ohne Arbeitsbeziehungen",
+     layout = layout_with_kk,
+     asp=0)
+```
+
+
 ### Das konservative Netzwerk
 ```
 konservativ
@@ -2030,6 +2150,7 @@ plot(konservativ,
      rescale=F)
 ```
 
+
 ### Das Elitenetzwerk
 
 #### Gesamtes Netzwerk (einfache Visualisierung)
@@ -2058,7 +2179,7 @@ plot(g4,
      rescale=T)
 ```
 
-### Dendrogramm des Elitenetzwerks
+#### Dendrogramm des Elitenetzwerks
 1. Selektiere Namen aus Elitenetzwerk:  
 ```
 Namen <- V(g4)$name
@@ -2075,115 +2196,8 @@ clg4 <- cluster_walktrap(g4)
 plot_dendrogram(clg4)
 ```
 
-### Broker-Medien Visualisierung
-```
-av
-betw <- betweenness(av, directed=F, normalized = T)
-sort(betw)
 
-V(av)$betw <- betw
-V(av)$label <- V(av)$name
-V(av)$label <- ifelse(V(av)$betw> 4.508710e-02, V(av)$label, NA)
-V(av)$label <- ifelse(V(av)$institutiontype==2, V(av)$label, NA)
-
-V(av)[type==1]$color <- rgb(0.8, 0, 0, 0.7)
-V(av)[type==0]$color <- "darkgrey"
-
-l <- layout.kamada.kawai(av)
-l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
-
-plot(av,
-     edge.arrow.size=.02,
-     edge.color="lightgrey",
-     vertex.size=betw*50,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.color="black",
-     vertex.label.dist=-0.6,
-     vertex.label.cex=1.2,
-     layout = l*1.1,
-     main="Broker-Medien im Gesamtnetzwerk",
-     asp=0,
-     rescale=F)
-```
-
-### Broker-Personen Visualisierung:
-```
-V(g)$betw <- betw
-V(g)$label <- V(g)$name
-V(g)$label <- ifelse(V(g)$betw> 2.504404e+04, V(g)$label, NA)
-V(g)$label <- ifelse(V(g)$type==0, V(g)$label, NA)
-
-plot(g,
-     edge.arrow.size=.02,
-     edge.label.degree=0.1,
-     edge.color="lightgrey",
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.color="darkred",
-     vertex.label.dist=0.8,
-     vertex.label.cex=.6,
-     layout = layout_with_kk,
-     main="Broker-Personen",
-     asp=-5,
-     rescale=T)
-```
-
-
-### Netzwerk ohne Arbeitsverhältnisse
-Netzwerk ohne Label visualisieren, zeigt Beziehungen:
-```
-ohneav
-edge_attr(ohneav)
-
-normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
-V(ohneav)$size <- normalize_01(degree(ohneav)) *5
-
-V(ohneav)[type==0]$color <- "cornflowerblue"
-
-V(ohneav)$label <- V(ohneav)$name
-V(ohneav)$label <- ifelse(V(ohneav)$institutiontype==1, V(ohneav)$label, NA) 
-
-E(ohneav)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
-E(ohneav)[relation == 1]$color <- rgb(1, 0.7, 0, 0.5)
-E(ohneav)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.5)
-
-plot(ohneav, edge.arrow.size=.02,
-     vertex.frame.color="white",
-     vertex.label=NA,
-     main="Netzwerk ohne Arbeitsbeziehungen",
-     layout = layout_with_kk,
-     asp=0)
-```
-Netzwerkvisualisierung mit wichtigen Brokern:
-```
-betw <- betweenness(ohneav, directed=F)
-options(max.print = 999999)
-sort(betw)
-
-V(ohneav)$betw <- betw
-V(ohneav)$betw
-V(ohneav)$label <- V(ohneav)$name
-V(ohneav)$label <- ifelse(V(ohneav)$betw>106203.42359, V(ohneav)$name, NA) 
-
-V(ohneav)[type==0]$color="grey"
-
-normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
-V(ohneav)$size <- normalize_01(degree(ohneav)) * 7
-
-plot(ohneav, edge.arrow.size=.02,
-     edge.color="lightgrey",
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.color="black",
-     vertex.label.cex=1.4,
-     main="Die Broker im Netzwerk ohne Arbeitsbeziehungen",
-     layout = layout_with_kk,
-     asp=0)
-```
-
-## Visualisierung der Broker im Netzwerk "Doppelrollen":
+### Visualisierung der Broker im Netzwerk "Doppelrollen":
 ```
 Namen
 Namen[[13]] <- "Axel-Springer-Preis"
