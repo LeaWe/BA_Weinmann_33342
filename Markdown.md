@@ -2230,7 +2230,56 @@ plot(PuJ,
      asp=0)
 ```
 
-#### Die Broker-Medien im Netzwerk:
+#### Die Broker-Personen im Netzwerk:
+```
+betw <- betweenness(PuJ, directed=F, normalized=T)
+sort(betw)
+
+V(PuJ)$betw <- betw
+V(PuJ)$betw
+
+V(PuJ)[[580]]$name <- "2"  ## Nr. 2 = Frederik Obermaier
+V(PuJ)[[193]]$name <- "1"  ## Nr. 1 = Bastian Obermayer
+
+V(PuJ)$label <- V(PuJ)$name
+V(PuJ)$label <- ifelse(V(PuJ)$betw>2.377628e-02, V(PuJ)$label, NA) 
+V(PuJ)$label <- ifelse(V(PuJ)$type==0, V(PuJ)$label, NA)
+
+V(PuJ)$color <- ifelse(V(PuJ)$betw>2.377628e-02, rgb(0, 0.8, 1, 1), "grey")
+V(PuJ)[type==1]$color <- "darkgrey"
+
+normalize_01 <- function(PuJ) (PuJ - min(PuJ)) / (max(PuJ) - min(PuJ)) + 0.25
+V(PuJ)$size <- normalize_01(degree(PuJ)) * 4
+
+V(PuJ)[[580]]$size <- 5
+V(PuJ)[[193]]$size <- 5
+V(PuJ)[[401]]$size <- 5
+V(PuJ)[[372]]$size <- 5
+V(PuJ)[[477]]$size <- 5
+V(PuJ)[[200]]$size <- 5
+V(PuJ)[[1080]]$size <- 5
+V(PuJ)[[1299]]$size <- 5
+V(PuJ)[[1486]]$size <- 5
+V(PuJ)[[1106]]$size <- 5
+
+
+l <- layout.fruchterman.reingold(PuJ)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(PuJ, 
+     edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="black",
+     vertex.label.dist=0.7,
+     vertex.label.cex=1.4,
+     vertex.lebel.deg=0.5,
+     #main="Die Broker-Personen im Netzwerk der Doppelakteure",
+     layout = l*1.2,
+     rescale=F,
+     asp=0)
+```
 
 ### Ideensammlung
 
