@@ -2147,38 +2147,33 @@ plot(ohneav, edge.arrow.size=.02,
 ```
 Netzwerkvisualisierung mit wichtigen Brokern:
 ```
+betw <- betweenness(ohneav, directed=F)
 options(max.print = 999999)
-Namen <- V(ohneav)$name
-Namen[1:923]
-g4
-Namen[[1510]] <- "Preis für Freiheit"
-Namen[[614]] <- "G. v. H.-Preis"
-Namen[[716]] <- "Helmut Schmidt Preis"
-Namen[[1097]] <- "Leuchtturm"
-Namen[[1118]] <- "Ludwig-Erhard-Preis"
-Namen[[1056]] <- "Kurt-Tucholsky-Preis"
-Namen[[465]] <- "djp"
-Namen[[51]] <- "Alt. Medienpreis"
-Namen
-V(ohneav)$name <- Namen
-deg <- degree(ohneav, mode="all")
-deg
-V(ohneav)$deg <- deg
-V(ohneav)$deg
+sort(betw)
+
+V(ohneav)$betw <- betw
+V(ohneav)$betw
 V(ohneav)$label <- V(ohneav)$name
-V(ohneav)$label <- ifelse(V(ohneav)$deg>15, V(ohneav)$label, NA) 
+V(ohneav)$label <- ifelse(V(ohneav)$betw>106203.42359, V(ohneav)$name, NA) 
+
+V(ohneav)[type==0]$color="grey"
+
+normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
+V(ohneav)$size <- normalize_01(degree(ohneav)) * 7
+
 plot(ohneav, edge.arrow.size=.02,
-     edge.label.degree=0.1,
      edge.color="lightgrey",
      vertex.frame.color="white",
      vertex.label.family="Helvetica",
      vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     main="Die Broker im Netzwerk",
-     layout = layout_with_kk)
+     vertex.label.color="black",
+     vertex.label.cex=1.4,
+     main="Die Broker im Netzwerk ohne Arbeitsbeziehungen",
+     layout = layout_with_kk,
+     asp=0)
 ```
 
-## Visualisierung der Broker im Netzwerk PuJ_ber:
+## Visualisierung der Broker im Netzwerk "Doppelrollen":
 ```
 Namen
 Namen[[13]] <- "Axel-Springer-Preis"
