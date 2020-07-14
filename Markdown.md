@@ -2077,24 +2077,34 @@ plot_dendrogram(clg4)
 
 ### Broker-Medien Visualisierung
 ```
-V(g)$betw <- betw
-V(g)$label <- V(g)$name
-V(g)$label <- ifelse(V(g)$betw> 2.504404e+04, V(g)$label, NA)
-V(g)$label <- ifelse(V(g)$institutiontype==2, V(g)$label, NA)
+av
+betw <- betweenness(av, directed=F, normalized = T)
+sort(betw)
 
-plot(g,
+V(av)$betw <- betw
+V(av)$label <- V(av)$name
+V(av)$label <- ifelse(V(av)$betw> 4.508710e-02, V(av)$label, NA)
+V(av)$label <- ifelse(V(av)$institutiontype==2, V(av)$label, NA)
+
+V(av)[type==1]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[type==0]$color <- "darkgrey"
+
+l <- layout.kamada.kawai(av)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(av,
      edge.arrow.size=.02,
-     edge.label.degree=0.1,
      edge.color="lightgrey",
+     vertex.size=betw*50,
      vertex.frame.color="white",
      vertex.label.family="Helvetica",
-     vertex.label.color="darkred",
-     vertex.label.dist=0.8,
-     vertex.label.cex=.6,
-     layout = layout_with_kk,
-     main="Broker-Medien",
-     asp=-5,
-     rescale=T)
+     vertex.label.color="black",
+     vertex.label.dist=-0.6,
+     vertex.label.cex=1.2,
+     layout = l*1.1,
+     main="Broker-Medien im Gesamtnetzwerk",
+     asp=0,
+     rescale=F)
 ```
 
 ### Broker-Personen Visualisierung:
