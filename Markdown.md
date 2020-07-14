@@ -2197,33 +2197,40 @@ plot_dendrogram(clg4)
 ```
 
 
-### Visualisierung der Broker im Netzwerk "Doppelrollen":
+### Das Netzwerk der "Doppelrollen":
+
+#### Die Broker-Preise im Netzwerk:
 ```
-Namen
-Namen[[13]] <- "Axel-Springer-Preis"
-Namen[[42]] <- "E.-Schneider-Preis"
-Namen[[149]] <- "Thomas Tuma"
-Namen[[126]] <- "Preis für Freiheit"
-Namen[[53]] <- "G. v. H.-Preis"
-V(PuJ_ber)$name <- Namen
+betw <- betweenness(PuJ, directed=F, normalized=T)
+sort(betw)
 
-V(PuJ_ber)$betw <- betw
-V(PuJ_ber)$betw
-V(PuJ_ber)$label <- V(PuJ_ber)$name
-V(PuJ_ber)$label <- ifelse(V(PuJ_ber)$betw>600, V(PuJ_ber)$label, NA) 
+V(PuJ)$betw <- betw
+V(PuJ)$betw
 
-plot(PuJ_ber, 
+V(PuJ)$label <- V(PuJ)$name
+V(PuJ)$label <- ifelse(V(PuJ)$betw>6.924608e-02, V(PuJ)$label, NA) 
+
+V(PuJ)[type==1]$color <- rgb(0, 1, 1, 0.6)
+V(PuJ)[type==0]$color <- "darkgrey"
+
+l <- layout.kamada.kawai(PuJ)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(PuJ, 
      edge.arrow.size=.02,
-     edge.label.degree=0.1,
      edge.color="lightgrey",
+     vertex.size=betw*30,
      vertex.frame.color="white",
      vertex.label.family="Helvetica",
+     vertex.label.color="black",
      vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     main="Die Broker im Netzwerk PuJ_ber",
-     layout = layout_with_kk,
+     vertex.label.cex=1.4,
+     main="Die Broker-Preise im Netzwerk der Doppelakteure",
+     layout = l*1.3,
      asp=0)
 ```
+
+#### Die Broker-Medien im Netzwerk:
 
 ### Ideensammlung
 
