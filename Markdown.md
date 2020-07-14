@@ -2123,13 +2123,27 @@ plot(g,
 ### Netzwerk ohne Arbeitsverhältnisse
 Netzwerk ohne Label visualisieren, zeigt Beziehungen:
 ```
+ohneav
+edge_attr(ohneav)
+
+normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
+V(ohneav)$size <- normalize_01(degree(ohneav)) *5
+
+V(ohneav)[type==0]$color <- "cornflowerblue"
+
+V(ohneav)$label <- V(ohneav)$name
+V(ohneav)$label <- ifelse(V(ohneav)$institutiontype==1, V(ohneav)$label, NA) 
+
+E(ohneav)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
+E(ohneav)[relation == 1]$color <- rgb(1, 0.7, 0, 0.5)
+E(ohneav)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.5)
+
 plot(ohneav, edge.arrow.size=.02,
-     edge.label.degree=0.1,
      vertex.frame.color="white",
      vertex.label=NA,
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_kk)
+     main="Netzwerk ohne Arbeitsbeziehungen",
+     layout = layout_with_kk,
+     asp=0)
 ```
 Netzwerkvisualisierung mit wichtigen Brokern:
 ```
