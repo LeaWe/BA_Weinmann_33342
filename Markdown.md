@@ -1926,6 +1926,41 @@ V(g)$label <- V(g)$name
 
 ### Das Gesamtnetzwerk
 
+#### Gesamtes Netzwerk mit Indgree-Verteilung (Preise hervorgehoben)
+```
+V(g)[[1118]]$label <- "2" ## Katholischer Medienpreis
+V(g)[[2144]]$label <- "1" ## Wächterpreis
+V(g)[[1757]]$label <- "3" ## Robert-Geisendörfer-Preis
+V(g)[[1695]]$label <- "4" ## Preis für Freiheit
+V(g)[[705]]$label <- "5" ## G. v. H.-Preis
+V(g)[[840]]$label <- "6" ## Herbert-Quandt-Preis
+V(g)[[2001]]$label <- "8" ## Theodor-Wolff-Preis
+V(g)[[1532]]$label <- "7" ## Nannenpreis
+V(g)[[1624]]$label <- "9" ## Otto-Brenner-Preis
+
+
+V(g)$label <- ifelse(V(g)$institutiontype == 1, V(g)$label, NA)
+
+ind <- degree(g, mode="all", normalized=T)
+
+l <- layout_with_fr(g)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(g,
+     edge.arrow.size=0.02,
+     vertex.size=ind*50,
+     edge.color="grey",
+     vertex.label.family="Helvetica",
+     vertex.frame.color="white",
+     vertex.label.cex=1.3,
+     vertex.label.dist=0.5,
+     vertex.label.degree=-0.5,
+     layout = l*1.2,
+     main="Das Gesamtnetzwerk",
+     rescale=F,
+     asp=0)
+```
+
 #### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
 ```
 V(g)[V(g)$type == 1]$shape <- "square"
