@@ -2281,6 +2281,63 @@ plot(PuJ,
      asp=0)
 ```
 
+
+### Die Dominanz der ARD
+```
+av
+ind_av <- degree(av, mode="in", normalized=T)
+
+V(av)[V(av)$type == 1]$shape <- "square"
+V(av)[V(av)$type == 0]$shape <- "circle"
+
+V(av)$label <- NA
+V(av)$color= "darkgrey"
+
+V(av)[[140]]$label <- V(av)[[140]]$name
+V(av)[[140]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[172]]$label <- V(av)[[172]]$name
+V(av)[[172]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[408]]$label <- V(av)[[408]]$name
+V(av)[[408]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[410]]$label <- V(av)[[410]]$name
+V(av)[[410]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[564]]$label <- V(av)[[564]]$name
+V(av)[[564]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[703]]$name <- "HR"
+V(av)[[703]]$label <- V(av)[[703]]$name
+V(av)[[703]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[1260]]$label <- V(av)[[1260]]$name
+V(av)[[1260]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[1330]]$label <- V(av)[[1330]]$name
+V(av)[[1330]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[1422]]$label <- V(av)[[1422]]$name
+V(av)[[1422]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[1423]]$label <- V(av)[[1423]]$name
+V(av)[[1423]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[1637]]$label <- V(av)[[1637]]$name
+V(av)[[1637]]$color <- rgb(0.8, 0, 0, 0.7)
+V(av)[[1799]]$label <- V(av)[[1799]]$name
+V(av)[[1799]]$color <- rgb(0.8, 0, 0, 0.7)
+
+l <- layout.kamada.kawai(av)
+l <- layout.norm(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(av,
+     vertex.size=ind_av*80,
+     edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="black",
+     vertex.label.size=4,
+     vertex.label.dist=-0.5,
+     layout = l*1.1,
+     main="Dominanz des ARD-Netzwerks",
+     asp=0,
+     rescale=F)
+```
+
+
 ### Ideensammlung
 
 bestimmte Hubs visualisieren:
