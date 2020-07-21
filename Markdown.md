@@ -2199,6 +2199,7 @@ E(g4)[relation == 1]$color <- rgb(1, 0.7, 0, 0.3)
 E(g4)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.3)
 
 outd <- degree(g4, mode="all", normalized=T)
+E(g4)$width <- count.multiple(g4)
 
 plot(g4,
      edge.arrow.size=.02,
