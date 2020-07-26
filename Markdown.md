@@ -324,18 +324,23 @@ sort(indpreistraegeryear)
 ### Netzwerk der Einzelpreise
 **(mit Arbeitgeberbeziehungen)**
 
+
+
+
+
+
+plot(einzelpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=5, vertex.frame.color="white", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+
 Netzwerk erstellen:  
-**1. Alle Gruppenpreisbeziehungen löschen und alle Knoten ohne Beziehungen löschen**
+**1. Alle Gruppenpreisbeziehungen und Jurybeziehungen löschen und alle Knoten ohne Beziehungen löschen**
 ```
-einzelpreise1 <- delete_edges(preistraeger, E(preistraeger)[which(format == 2)])
-einzelpreise <- delete_vertices (einzelpreise1, V(einzelpreise1)[degree(einzelpreise1, mode="all")=="0"])
+einzelpreise <- delete_edges(preistraeger, E(preistraeger)[which(format == 2)])
+einzelpreise <- delete_edges (einzelpreise, E(einzelpreise)[relation == 3])
+einzelpreise <- delete_vertices (einzelpreise, V(einzelpreise)[degree(einzelpreise, mode="all")=="0"])
 einzelpreise
+einzelpreistraeger <- einzelpreise
 ```
-**2. Alle Jurybeziehungen löschen** 
-```
-einzelpreistraeger <- delete_edges (einzelpreise, E(einzelpreise)[relation == 3])
-```
-**3. Alle Personen durchschleifen & diejenigen löschen, die keine Preisbeziehung im Netzwerk mehr haben**
+**2. Alle Personen durchschleifen & diejenigen löschen, die keine Preisbeziehung im Netzwerk mehr haben**
 ```
 Personen <- delete.vertices(einzelpreistraeger, V(einzelpreistraeger)[type!=0])
 Namen <- V(Personen)$name
@@ -348,28 +353,45 @@ for (i in (1:length(Namen))){
     einzelpreistraeger <- delete_vertices(einzelpreistraeger, V(einzelpreistraeger)[name == Namen[i]])
   }
 }
-```
-**4. Alle Knoten ohne Beziehungen rauslöschen** 
-```
+
 einzelpreistrager <- delete_vertices (einzelpreistraeger, V(einzelpreistraeger)[degree(einzelpreistraeger, mode="all")=="0"]) 
 einzelpreistraeger
 ```
-nach **Jahren**
+**Zweite Schleife: Alle Jahre durchschleifen und nur die jew. Jahresbeziehungen behalten, die übrigen löschen** 
 ```
-einzelpreise15 <- subgraph.edges(einzelpreistraeger, E(einzelpreistraeger)[year == 2015])
-einzelpreise16 <- subgraph.edges(einzelpreistraeger, E(einzelpreistraeger)[year == 2016])
-einzelpreise17 <- subgraph.edges(einzelpreistraeger, E(einzelpreistraeger)[year == 2017])
-einzelpreise18 <- subgraph.edges(einzelpreistraeger, E(einzelpreistraeger)[year == 2018])
-einzelpreise19 <- subgraph.edges(einzelpreistraeger, E(einzelpreistraeger)[year == 2019])
+temp <- einzelpreistraeger
+for (i in (2015:2019)){
+  einzelpreisexx <- subgraph.edges(einzelpreistraeger, E(einzelpreistraeger)[year == i])
+  for (j in (1:length(Namen))){
+    ego <- delete_vertices(einzelpreisexx, V(einzelpreisexx)[(name != Namen[j]) & (type == 0)])
+    preistraegerbeziehungen <- E(ego)[relation == 1]
+    if (sum(preistraegerbeziehungen) == 0){
+      einzelpreisexx <- delete_vertices(einzelpreisexx, V(einzelpreisexx)[name == Namen[j]])
+    }
+  }
+  temp <- temp - einzelpreisexx
+}
 ```
+**Ergebnis von Netzwerk "einzelpreistraeger" abziehen**
+```
+einzelpreisnetzwerk <- (einzelpreistraeger - temp)
+einzelpreisnetzwerk <- delete_vertices (einzelpreisnetzwerk, V(einzelpreisnetzwerk)[degree(einzelpreisnetzwerk, mode="all")=="0"])
+einzelpreisnetzwerk
+```
+**Plot**
+```
+plot(einzelpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=5, vertex.frame.color="white", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+
 **Indegree** von Einzelpreisen  
 ```
-indeinzelpreise <- degree(einzelpreistraeger, mode="in")
+indeinzelpreise <- degree(einzelpreisnetzwerk, mode="in")
 sort(indeinzelpreise)
 ```
 **Outdegree** von Einzelpreisen  
 ```
-outdeinzelpreise <- degree(einzelpreistraeger, mode="out")
+outdeinzelpreise <- degree(einzelpreisnetzwerk, mode="out")
 sort(outdeinzelpreise)
 ```
 
@@ -378,15 +400,15 @@ sort(outdeinzelpreise)
 (mit Arbeitgeberbeziehungen) 
 
 Netzwerk **erstellen**:
+**1. Alle Einzelpreisbeziehungen und Jurybeziehungen löschen und alle Knoten ohne Beziehungen löschen**
 ```
-gruppenpreise1 <- delete_edges(preistraeger, E(preistraeger)[which(format == 1)])
-gruppenpreise <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[degree(gruppenpreise1, mode="all")=="0"])
+gruppenpreise <- delete_edges(preistraeger, E(preistraeger)[which(format == 1)])
+gruppenpreise <- delete_edges (gruppenpreise, E(gruppenpreise)[relation == 3])
+gruppenpreise <- delete_vertices (gruppenpreise, V(gruppenpreise)[degree(gruppenpreise, mode="all")=="0"])
 gruppenpreise
+gruppenpreistraeger <- gruppenpreise
 ```
-```
-gruppenpreistraeger <- delete_edges (gruppenpreise, E(gruppenpreise)[relation == 3])
-```
-**3. Alle Personen durchschleifen & diejenigen löschen, die keine Preisbeziehung im Netzwerk mehr haben**
+**2. Alle Personen durchschleifen & diejenigen löschen, die keine Preisbeziehung im Netzwerk mehr haben**
 ```
 Personen <- delete.vertices(gruppenpreistraeger, V(gruppenpreistraeger)[type!=0])
 Namen <- V(Personen)$name
@@ -399,13 +421,36 @@ for (i in (1:length(Namen))){
     gruppenpreistraeger <- delete_vertices(gruppenpreistraeger, V(gruppenpreistraeger)[name == Namen[i]])
   }
 }
-```
-**4. Alle Knoten ohne Beziehungen rauslöschen** 
-```
-gruppenpreistraeger <- delete_vertices (gruppenpreistraeger, V(gruppenpreistraeger)[degree(gruppenpreistraeger, mode="all")=="0"]) 
+
+gruppenpreistrager <- delete_vertices (gruppenpreistraeger, V(gruppenpreistraeger)[degree(gruppenpreistraeger, mode="all")=="0"]) 
 gruppenpreistraeger
 ```
-sonst: Auswertung wie Einzelpreise (s.o.), graph ersetzen!
+**Zweite Schleife: Alle Jahre durchschleifen und nur die jew. Jahresbeziehungen behalten, die übrigen löschen** 
+```
+temp <- gruppenpreistraeger
+for (i in (2015:2019)){
+  gruppenpreisexx <- subgraph.edges(gruppenpreistraeger, E(gruppenpreistraeger)[year == i])
+  for (j in (1:length(Namen))){
+    ego <- delete_vertices(gruppenpreisexx, V(gruppenpreisexx)[(name != Namen[j]) & (type == 0)])
+    preistraegerbeziehungen <- E(ego)[relation == 1]
+    if (sum(preistraegerbeziehungen) == 0){
+      gruppenpreisexx <- delete_vertices(gruppenpreisexx, V(gruppenpreisexx)[name == Namen[j]])
+    }
+  }
+  temp <- temp - gruppenpreisexx
+}
+```
+**Ergebnis von Netzwerk "gruppenpreistraeger" abziehen**
+```
+gruppenpreisnetzwerk <- (gruppenpreistraeger - temp)
+gruppenpreisnetzwerk <- delete_vertices (gruppenpreisnetzwerk, V(gruppenpreisnetzwerk)[degree(gruppenpreisnetzwerk, mode="all")=="0"])
+gruppenlpreisnetzwerk
+```
+**Plot**
+```
+plot(gruppenpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=5, vertex.frame.color="white", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
 
 
 #### Wie viele Einzel- und Gruppenpreise wurden verliehen? 
