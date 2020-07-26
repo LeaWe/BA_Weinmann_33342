@@ -509,6 +509,11 @@ jury_ohneag <- delete_vertices (jury_ohneag, V(jury_ohneag)[degree(jury_ohneag, 
 outdjury_ohneag <- degree(jury_ohneag, mode="out")
 sort(outdjury_ohneag)
 ```
+Netzwerk mit **nur Arbeitsbeziehungen** der Jurymitglieder:
+```
+jury_av <- subgraph.edges(jury, E(jury)[relation == 2])
+jury_av
+```
 
 ## TEILNETZWERKE
 
