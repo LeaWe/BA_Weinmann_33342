@@ -16,128 +16,101 @@
 ### Bezeichnungen der Preise  
 Alternativer Medienpreis:  
 ```
-id: alternativer_medienpreis
 name: "Alternativer Medienpreis"
 ```
 Axel-Springer-Preis:  
 ```
-id: axel_springer_preis 
 name: "Axel-Springer-Preis für junge Journalisten"
 ```
 Bremer Fernsehpreis:  
 ```
-id: bremer_fernsehpreis
 name: "Bremer Fernsehpreis"
 ```
 Deutscher Journalistenpreis Wirtschaft:  
 ```
-id: djp  
 name: "Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"
 ```
 Deutscher Radiopreis:  
 ```
-id: deutscher_radiopreis
 name: "Deutscher Radiopreis"
 ```
 Deutscher Reporterpreis:  
 ```
-id: deutscher_reporterpreis
 name: "Deutscher Reporterpreis"
 ```
 Ernst-Schneider-Preis:  
 ```
-id: ernst_schneider_preis
 name: "Ernst-Schneider-Preis"
 ```
 Georg v. Holtzbrinck-Preis:  
 ```
-id: georg_von_holtzbrinck_preis_fuer_wirtschaftspublizistik
 name: "Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"
 ```
 Grimme Online Award:  
 ```
-id: grimme_online_award
 name: "Grimme Online Award"
 ```
 Helmut-Schmidt-Preis:  
 ```
-id: helmut_schmidt_journalistenpreis
 name: "Helmut-Schmidt-Journalistenpreis"
 ```
 Herbert-Quandt-Preis:  
 ```
-id: herbert_quandt_medienpreis
 name: "Herbert Quandt Medienpreis"
 ```
 Journalist des Jahres:  
 ```
-id: journalist_des_jahres
 name: "Journalist des Jahres"
 ```
 Katholischer Medienpreis:  
 ```
-id: katholischer_medienpreis
 name: "Katholischer Medienpreis"
 ```
 Kurt-Magnus-Preis:
 ```
-id: kurtmagnuspreis
 name: "Kurt-Magnus-Preis"
 ```
 Kurt-Tucholsky-Preis:  
 ```
-id: kurttucholskypreis
 name: "Kurt-Tucholsky-Preis für literarische Publizistik"
 ```
 Leuchtturm:  
 ```
-id: leuchtturm
 name: "Leuchtturm für besondere publizistische Leistungen"
 ```
 Ludwig-Börne-Preis:  
 ```
-id: ludwig_boerne_preis
 name: "Ludwig-Börne-Preis"
 ```
 Ludwig-Erhard-Preis:  
 ```
-id: ludwig_erhard_preis
 name: "Ludwig-Erhard-Preis für Wirtschaftspublizistik"
 ```
 Nannenpreis:  
 ```
-id: nannenpreis
 name: "Nannen Preis"
 ```
 Otto Brenner Preis:
 ```
-id: otto_brenner_preis
 name: "Otto Brenner Preis"
 ```
 Preis für die Freiheit und die Zukunft der Medien:
 ```
-id: preis_fuer_freiheit
 name: "Preis für die Freiheit und die Zukunft der Medien"
 ```
 Robert-Geisendörfer-Preis: 
 ```
-id: robert_geisendoerfer_preis
 name: "Robert Geisendörfer Preis"
 ```
 Theodor-Wolff-Preis:  
 ```
-id: theodor_wolff_preis
 name: "Theodor-Wolff-Preis"
 ```
 Wächterpreis:  
 ```
-id: waechterpreis 
 name: "Wächterpreis der Tagespresse"
 ```
-Standard-Visualisierung zum Kopieren:
-```
-plot(xx, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-```
+
 
 ## Netzwerk laden
 ```
@@ -201,13 +174,6 @@ Wie viele Juroren arbeiten nicht in den Medien?
 ```
 notinmedia <- V(juroren_personen)$workinmedia == 2
 sum(notinmedia, na.rm = T)
-```
-Wie viele Jury-Beziehungen gibt es im Netzwerk und wie viele davon zu Personen, die nicht in den Medien arbeiten?  
-```
-juroren
-juroren_notinmedia <- delete.vertices(juroren, V(juroren)[which(workinmedia == 1)])
-juroren_notinmedia <- delete_vertices (juroren_notinmedia, V(juroren_notinmedia)[degree(juroren_notinmedia, mode="all")=="0"])
-juroren_notinmedia
 ```
 Erzeugt Teilnetzwerk mit ausschließlich Männern (Frage: Wie viele Männer im Gesamtnetzwerk?)
 ```
