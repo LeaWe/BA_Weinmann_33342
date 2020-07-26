@@ -324,13 +324,6 @@ sort(indpreistraegeryear)
 ### Netzwerk der Einzelpreise
 **(mit Arbeitgeberbeziehungen)**
 
-
-
-
-
-
-plot(einzelpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=5, vertex.frame.color="white", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
-
 Netzwerk erstellen:  
 **1. Alle Gruppenpreisbeziehungen und Jurybeziehungen löschen und alle Knoten ohne Beziehungen löschen**
 ```
@@ -389,9 +382,10 @@ plot(einzelpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=5
 indeinzelpreise <- degree(einzelpreisnetzwerk, mode="in")
 sort(indeinzelpreise)
 ```
-**Outdegree** von Einzelpreisen  
+**Outdegree** von Einzelpreisen (ohne Arbeitgeber! --> Wer hat die meisten Einzelpreise gewonnen?) 
 ```
-outdeinzelpreise <- degree(einzelpreisnetzwerk, mode="out")
+einzelpreisnetzwerk_ohneav <- delete.edges(einzelpreisnetzwerk, E(einzelpreisnetzwerk)[relation == 2])
+outdeinzelpreise <- degree(einzelpreisnetzwerk_ohneav, mode="out")
 sort(outdeinzelpreise)
 ```
 
