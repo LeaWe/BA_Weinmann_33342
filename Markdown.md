@@ -319,7 +319,14 @@ indpreistraegeryear <- degree(preistraegeryear, mode="in")
 sort(indpreistraegeryear)
 ```
 
-## Gruppen- und Einzelpreisnetzwerk
+Netzwerk mit **ausschließlich Arbeitsbeziehungen** der Preisträger:  
+```
+preistraeger_av <- subgraph.edges(preistraeger, E(preistraeger)[relation == 2])
+preistraeger_av
+```
+
+
+## GRUPPEN- UND EINZELPREISNETZWERK
 
 ### Netzwerk der Einzelpreise
 **(mit Arbeitgeberbeziehungen)**
