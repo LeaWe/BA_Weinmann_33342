@@ -319,6 +319,57 @@ indpreistraegeryear <- degree(preistraegeryear, mode="in")
 sort(indpreistraegeryear)
 ```
 
+## Gruppen- und Einzelpreisnetzwerk
+
+### Netzwerk der Einzelpreise
+**(mit Arbeitgeberbeziehungen)**
+
+Netzwerk erstellen:  
+```
+einzelpreise1 <- delete_edges(preistraeger, E(preistraeger)[which(format == 2)])
+einzelpreise <- delete_vertices (einzelpreise1, V(einzelpreise1)[degree(einzelpreise1, mode="all")=="0"])
+einzelpreise
+```
+nach **Jahren**
+```
+einzelpreise15 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2015])
+einzelpreise16 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2016])
+einzelpreise17 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2017])
+einzelpreise18 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2018])
+einzelpreise19 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2019])
+```
+**Indegree** von Einzelpreisen  
+```
+indeinzelpreise <- degree(einzelpreise, mode="in")
+sort(indeinzelpreise)
+```
+**Outdegree** von Einzelpreisen  
+```
+outdeinzelpreise <- degree(einzelpreise, mode="out")
+sort(outdeinzelpreise)
+```
+
+
+### Netzwerk der Gruppenpreise
+(mit Arbeitgeberbeziehungen) 
+
+Netzwerk **erstellen**:
+```
+gruppenpreise1 <- delete_edges(preistraeger, E(preistraeger)[which(format == 1)])
+gruppenpreise <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[degree(gruppenpreise1, mode="all")=="0"])
+gruppenpreise
+```
+sonst: Auswertung wie Einzelpreise (s.o.), graph ersetzen!
+
+
+#### Wie viele Einzel- und Gruppenpreise wurden verliehen? 
+```
+einzelpreise_count <- subgraph.edges(g, E(g)[which(format == 1)])
+gsize(einzelpreise_count)
+gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
+gsize(gruppenpreise_count)
+```
+
 
 ## JURY-NETZWERK
 
@@ -669,57 +720,6 @@ Anzahl Frauen unter Preisträgern
 frauen_preistraeger_x <- E(frauen_x)$relation == 1	
 sum(frauen_preistraeger_x, na.rm = TRUE)
 ```
-
-
-### Gruppenpreis- und Einzelnetzwerke  
-
-#### Wie viele Einzel- und Gruppenpreise wurden verliehen?**  
-```
-einzelpreise_count <- subgraph.edges(g, E(g)[which(format == 1)])
-gsize(einzelpreise_count)
-gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
-gsize(gruppenpreise_count)
-```
-
-#### Einzelpreisnetzwerk  
-Netzwerk erstellen:  
-```
-einzelpreise1 <- delete_edges(g, E(g)[which(format == 2)])
-einzelpreise <- delete_vertices (einzelpreise1, V(einzelpreise1)[degree(einzelpreise1, mode="all")=="0"])
-einzelpreise
-```
-
-nach **Jahren**
-```
-einzelpreise15 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2015])
-einzelpreise16 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2016])
-einzelpreise17 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2017])
-einzelpreise18 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2018])
-einzelpreise19 <- subgraph.edges(einzelpreise, E(einzelpreise)[year == 2019])
-```
-alternativ: siehe unten --> Auswertung nach Jahren
-
-**Indegree** von Einzelpreisen  
-```
-indeinzelpreise <- degree(einzelpreise, mode="in")
-sort(indeinzelpreise)
-```
-**Outdegree** von Einzelpreisen  
-```
-outdeinzelpreise <- degree(einzelpreise, mode="out")
-sort(outdeinzelpreise)
-```
-
-
-#### Gruppenpreisnetzwerk  
-
-Netzwerk **erstellen**:
-```
-gruppenpreise1 <- delete_edges(g, E(g)[which(format == 1)])
-gruppenpreise <- delete_vertices (gruppenpreise1, V(gruppenpreise1)[degree(gruppenpreise1, mode="all")=="0"])
-gruppenpreise
-```
-sonst: Auswertung wie Einzelpreise (s.o.), graph ersetzen!
 
 ### ARD-Netzwerk
 
