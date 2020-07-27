@@ -1394,6 +1394,10 @@ sort(size_clg4)
 
 ### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:
 
+```
+Preis <- "xxx" #(jew. Preis eintragen)
+```
+
 **2015**  
 ```
 x15 <- subgraph <- make_ego_graph(year2015, order=2, Preis)
