@@ -181,7 +181,7 @@ verleihung
 
 ## Netzwerkmaße
 
-**Out-Degree im Gesamtnetzwerk**
+### Outdegree
 ```
 outd <- degree(g, mode="out")
 outd
@@ -202,44 +202,57 @@ sum(personen, na.rm=T)
 plot(g_test)
 ```
 
-**In-Degree im Gesamtnetzwerk**
+### Indegree
 ```
 ind <- degree(g, mode="in")
 ind
 sort(ind)
 ```
 
-**Dichte**
+**Analyse der Indegree-Verteilung der Arbeitgeber**
+Lösche Arbeitgeber mit Outdegree kleiner x bzw. lösche Arbeitgeber mit Outdegree größer x und zähle die Arbeitgeber im Netzwerk  
+(dann: prozentualer Anteil an Gesamtzahl Arbeitgeber (275) berechnen)  
+```
+x <- (Zahl definieren)
+
+g_ag <- delete_vertices (g, V(g)[(type == 1) & (degree(g, mode="in")>x)])
+g_ag <- delete_vertices (g_ag, V(g_ag)[degree(g_ag, mode="all")=="0"])
+g_ag
+ag <- V(g4_ag)$institutiontype == 2
+sum(ag, na.rm=T)
+```
+
+### Dichte
 ```
 edge_density(g)
 ```
 
-**Betweenness-Zentralität und Betweenness**
+### Betweenness-Zentralität und Betweenness
 ```
 centr_betw(g, directed=FALSE)
 betw <- betweenness(g, directed=FALSE)
 ```
 
-**Degree-Zentralität**
+### Degree-Zentralität
 ```
 centralization.degree(g, mode = "all")
 centralization.degree(g, mode = "in")
 centralization.degree(g, mode = "out")
 ```
 
-**Closeness-Zentralität**
+### Closeness-Zentralität
 (Closeness centrality measures how many steps is required to access every other vertex from a given vertex)
 ```
 clo <- closeness(g)
 sort(clo)
 ```
 
-**Zentralisierter Closeness-Wert (wie dicht die Knoten zusammenstehen)**
+### Zentralisierter Closeness-Wert (wie dicht die Knoten zusammenstehen)
 ```
 centr_clo(g, mode = "all")$centralization
 ```
 
-**Pfaddistanz**
+### Pfaddistanz
 Durchschnittliche Pfaddistanz:
 ```
 mean_distance(g, directed = FALSE) 
