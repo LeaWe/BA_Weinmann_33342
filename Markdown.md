@@ -179,18 +179,15 @@ verleihung
 
 Wie viele Preisverleihungen (Preisbeziehungen) gibt es im Netzwerk?
 ```
-preistraeger_relations_g <- E(g)$relation == 1
-sum(preistraeger_relations_g, na.rm = TRUE)
+preistraeger_relations_g <- subgraph.edges(g, E(g)[which (relation == 1)])
 ```
 Wie viele Jurymitgliedschaften (Jurybeziehungen) gibt es im Netzwerk?
 ```
-jury_relations_g <- E(g)$relation == 3
-sum(jury_relations_g, na.rm = TRUE)
+jury_relations_g <- subgraph.edges(g, E(g)[which (relation == 3)])
 ```
 Wie viele Arbeitsverhältnisse gibt es im Gesamtnetzwerk?)
 ```
-av <- subgraph.edges(g, E(g)[which (relation == 2)])
-av
+av_g <- subgraph.edges(g, E(g)[which (relation == 2)])
 ```
 
 ## Netzwerkmaße
