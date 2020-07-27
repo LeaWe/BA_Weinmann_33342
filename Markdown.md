@@ -757,6 +757,10 @@ Bereinigtes Preisnetzwerk
 plot(x2, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
 
+#### Auswertung der Einzelpreisnetzwerke  
+
+(wie oben, "g" durch "einzelpreisnetzwerk" ersetzen) 
+
 #### Auswertung
 Wie viele **Personen** gibt es (einfach gezählt) im Preisnetzwerk?
 davon Jurymitglieder (einfach gezählt)
