@@ -266,6 +266,21 @@ Von wo nach wo führt die längste Pfaddistanz im Netzwerk?
 farthest_vertices(g, directed = FALSE)
 ```
 
+### CLUSTERANALYSE
+Clusteranalyse im **Gesamtnetzwerk**:  
+```
+clusters(g)
+clg <- cluster_walktrap(g)
+
+membership(clg)
+modularity(clg)
+communities(clg)
+size_clg2 <- sizes(clg)
+sort(size_clg)
+```
+
+
+
 ## PREISTRÄGER-NETZWERK
 
 1. Entfernt alle Jury-relations (relation = 3)
@@ -425,6 +440,7 @@ einzelpreistraeger_3
 ```
 --> Namen auswerfen lassen & Arbeitgebern zuordnen!
 
+
 ### Netzwerk der Gruppenpreise
 (mit Arbeitgeberbeziehungen) 
 
@@ -481,7 +497,6 @@ plot(gruppenpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=
 ```
 
 
-
 #### Wie viele Einzel- und Gruppenpreise wurden verliehen? 
 ```
 einzelpreise_count <- subgraph.edges(g, E(g)[which(format == 1)])
@@ -489,6 +504,8 @@ gsize(einzelpreise_count)
 gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
 gsize(gruppenpreise_count)
 ```
+
+
 
 
 ## JURY-NETZWERK
@@ -543,6 +560,8 @@ jury_av <- subgraph.edges(jury, E(jury)[relation == 2])
 jury_av
 ```
 
+
+
 ## TEILNETZWERKE
 
 ### Elite-Netzwerke
@@ -554,12 +573,42 @@ g2 <- delete_vertices (g2_1, V(g2_1)[degree(g2_1, mode="all")=="0"])
 g2
 plot(g2)
 ```
+
+Clusteranalyse im **Netzwerk Stufe 1**:  
+```
+clusters(g2)
+clg2 <- cluster_walktrap(g2)
+  
+membership(clg2)
+modularity(clg2)
+communities(clg2)
+size_clg2 <- sizes(clg2)
+sort(size_clg2)
+```  
+
 Schritt 2: **Bereinigtes Netzwerk (Stufe 2)** (Entferne alle Nodes mit degree < 10)
 ```
 g3_1 <- delete_vertices (g, V(g)[(type == 0) &(degree(g, mode="out")<10)])
 g3 <- delete_vertices (g3_1, V(g3_1)[degree(g3_1, mode="all")=="0"])
 g3
 plot(g3)
+```
+
+Clusteranalyse im **Netzwerk Stufe 2**:  
+```
+clusters(g3)
+```
+Zwei Komponenten im Netzwerk. Auftrennen mit decompose():  
+```
+g3_comp <- decompose.graph(g3)
+g3_comp
+clg3 <- cluster_walktrap(g3)
+  
+membership(clg3)
+modularity(clg3)
+communities(clg3)
+size_clg3 <- sizes(clg3)
+sort(size_clg3)
 ```
 
 Schritt 3: **Elite in Elite** (Entferne alle Nodes mit degree < 15)
@@ -569,6 +618,19 @@ g4 <- delete_vertices (g4_1, V(g4_1)[degree(g4_1, mode="all")=="0"])
 g4
 plot(g4)
 ```
+
+Clusteranalyse im **Elitenetzwerk**:  
+```
+clusters(g4)
+clg4 <- cluster_walktrap(g4)
+  
+membership(clg4)
+modularity(clg4)
+communities(clg4)
+size_clg4 <- sizes(clg4)
+sort(size_clg4)
+```  
+
 
 ### Netzwerk ohne Arbeitsverhältnisse
 Lösche alle Arbeitsbeziehungen und freistehende Nodes im Netzwerk:  
@@ -1366,60 +1428,9 @@ for (i in (1:15)){
 }
 ```
 
-## SONSTIGES GESAMTNETZWERK
+## SONSTIGES GESAMTNETZWERK  
 
-### CLUSTERANALYSE
-Clusteranalyse im **Gesamtnetzwerk**:  
-```
-clusters(g)
-clg <- cluster_walktrap(g)
-
-membership(clg)
-modularity(clg)
-communities(clg)
-size_clg2 <- sizes(clg)
-sort(size_clg)
-```
-Clusteranalyse im **Netzwerk Stufe 1**:  
-```
-clusters(g2)
-clg2 <- cluster_walktrap(g2)
-  
-membership(clg2)
-modularity(clg2)
-communities(clg2)
-size_clg2 <- sizes(clg2)
-sort(size_clg2)
-```  
-Clusteranalyse im **Netzwerk Stufe 2**:  
-```
-clusters(g3)
-```
-Zwei Komponenten im Netzwerk. Auftrennen mit decompose():  
-```
-g3_comp <- decompose.graph(g3)
-g3_comp
-clg3 <- cluster_walktrap(g3)
-  
-membership(clg3)
-modularity(clg3)
-communities(clg3)
-size_clg3 <- sizes(clg3)
-sort(size_clg3)
-```
-Clusteranalyse im **Elitenetzwerk**:  
-```
-clusters(g4)
-clg4 <- cluster_walktrap(g4)
-  
-membership(clg4)
-modularity(clg4)
-communities(clg4)
-size_clg4 <- sizes(clg4)
-sort(size_clg4)
-```  
-
-### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:
+### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:  
 
 ```
 Preis <- "xxx" #(jew. Preis eintragen)
