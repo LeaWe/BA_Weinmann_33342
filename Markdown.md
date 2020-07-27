@@ -188,6 +188,20 @@ outd
 sort (outd)
 ```
 
+**Analyse der Outdegree-Verteilung der Akteure**
+Lösche Personen mit Outdegree kleiner x und zähle die Personen im Netzwerk  
+(dann: prozentualer Anteil an Gesamtzahl Personen (1896) berechnen)  
+```
+x <- (Zahl definieren)
+
+g_test <- delete_vertices (g, V(g)[(type == 0) & (degree(g, mode="out")<x)])
+g_test <- delete_vertices (g_test, V(g_test)[degree(g_test, mode="all")=="0"])
+g_test
+personen <- V(g_test)$type == 0
+sum(personen, na.rm=T)
+plot(g_test)
+```
+
 **In-Degree im Gesamtnetzwerk**
 ```
 ind <- degree(g, mode="in")
