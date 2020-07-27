@@ -231,6 +231,7 @@ edge_density(g)
 ```
 centr_betw(g, directed=FALSE)
 betw <- betweenness(g, directed=FALSE)
+sort(betw)
 ```
 
 ### Degree-Zentralität
