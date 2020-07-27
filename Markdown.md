@@ -123,7 +123,9 @@ edge_attr(g)
 vertex_attr(g)
 ```
 
-## Beschreibung Gesamtnetzwerk
+## Beschreibung Gesamtnetzwerk  
+
+**Knoten**  
 
 Erzeugt Teilnetzwerk mit ausschließlich Preisen (Frage: Wie viele Preise im Gesamtnetzwerk?)
 ```
@@ -152,11 +154,6 @@ juroren <- subgraph.edges(g, E(g)[which (relation == 3)])
 juroren_personen <- induced.subgraph(juroren, V(juroren)[type == 0])
 juroren_personen
 ```
-Erzeugt Teilnetzwerk mit ausschließlich Arbeitsverhältnissen (Frage: Wie viele Arbeitsverhältnisse im Gesamtnetzwerk?)
-```
-av <- subgraph.edges(g, E(g)[which (relation == 2)])
-av
-```
 Wie viele Juroren arbeiten nicht in den Medien?  
 ```
 notinmedia <- V(juroren_personen)$workinmedia == 2
@@ -178,6 +175,23 @@ verleihung <- subgraph.edges(g, E(g)[relation == 1])
 verleihung
 ```
 
+**Beziehungen**  
+
+Wie viele Preisverleihungen (Preisbeziehungen) gibt es im Netzwerk?
+```
+preistraeger_relations_g <- E(g)$relation == 1
+sum(preistraeger_relations_g, na.rm = TRUE)
+```
+Wie viele Jurymitgliedschaften (Jurybeziehungen) gibt es im Netzwerk?
+```
+jury_relations_g <- E(g)$relation == 3
+sum(jury_relations_g, na.rm = TRUE)
+```
+Wie viele Arbeitsverhältnisse gibt es im Gesamtnetzwerk?)
+```
+av <- subgraph.edges(g, E(g)[which (relation == 2)])
+av
+```
 
 ## Netzwerkmaße
 
