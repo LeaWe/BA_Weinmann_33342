@@ -1,17 +1,4 @@
 # BA (kommentierter Code)
-## Legende
-*g* = Gesamtnetzwerk  
-*g2* = bereinigtes Netzwerk, alle gelöscht mit degree < 3  
-*g3* = Elite in der Elite, alle gelöscht mit degree < 15  
-*preistraegerfinal* = Preisträgernetzwerk  
-  nach Jahren: *preistraeger2015, preistraeger2016,...*  
-*juryfinal* = Jurynetzwerk  
-   nach Jahren: *juryfinal2015, juryfinal2016,...*  
-*ind-/outd-* = Präfix für In-/Outdegree-Netzwerke  
-*preistraeger_xx* = Preisträgernetzwerk eines Teilnetzwerks  
-*jury_xx* = Jurynetzwerk eines Teilnetzwerks  
-*gruppenpreise2015, gruppenpreise2016...* = Teilnetzwerke mit Gruppenpreisen der einzelnen Jahre  
-*einzelpreise2015,...* = Teilnetzwerke mit Einzelpreisen der einzelnen Jahre 
 
 ### Bezeichnungen der Preise  
 Alternativer Medienpreis:  
@@ -757,11 +744,8 @@ Bereinigtes Preisnetzwerk
 plot(x2, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
 
-#### Auswertung der Einzelpreisnetzwerke  
-
-(wie oben, "g" durch "einzelpreisnetzwerk" ersetzen) 
-
 #### Auswertung
+
 Wie viele **Personen** gibt es (einfach gezählt) im Preisnetzwerk?
 davon Jurymitglieder (einfach gezählt)
 davon Preisträger (einfach gezählt)
@@ -835,6 +819,19 @@ Anzahl Frauen unter Preisträgern
 frauen_preistraeger_x <- E(frauen_x)$relation == 1	
 sum(frauen_preistraeger_x, na.rm = TRUE)
 ```
+
+#### Auswertung der Preisnetzwerke  
+
+(wie oben, "g" durch "preistraeger" ersetzen) 
+
+#### Auswertung der Einzelpreisnetzwerke  nach einzelnen Preisnetzwerken
+
+(wie oben, "g" durch "einzelpreisnetzwerk" ersetzen) 
+
+#### Auswertung der Jurynetzwerke nach einzelnen Preisnetzwerken  
+
+(wie oben, "g" durch "jury" ersetzen) 
+
 
 ### ARD-Netzwerk
 
