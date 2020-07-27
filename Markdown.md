@@ -291,6 +291,7 @@ indpreistraeger <- degree(preistraeger, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
+
 #### Mehrfache Preisträger im Betrachtungszeitraum  
 Wer hat die meisten Preise abgeräumt? (Netzwerk mit nur Preisträgern, relation == 1, sort nach Outdegree)
 ```
@@ -299,11 +300,14 @@ preistraeger_ohneag <- delete_vertices (preistraeger_ohneag, V(preistraeger_ohne
 outdpreistraeger_ohneag <- degree(preistraeger_ohneag, mode="out")
 sort(outdpreistraeger_ohneag)
 ```
-Wer hat im Betrachtungszeitraum drei oder mehr Preise gewonnen?
+Wer hat im Betrachtungszeitraum **drei oder mehr Preise** gewonnen?
 ```
 preistraeger_3 <- delete_vertices (preistraeger_ohneag, V(preistraeger_ohneag)[(type == 0) &(degree(preistraeger_ohneag, mode="out")<3)])
 preistraeger_3
 ```
+--> Namen auswerfen lassen & Arbeitgebern zuordnen!
+
+
 **Nach Jahren**  
 selektieren/untersuchen (2015 beliebig ersetzen)
 ```
@@ -394,11 +398,18 @@ sort(indeinzelpreise)
 ```
 **Outdegree** von Einzelpreisen (ohne Arbeitgeber! --> Wer hat die meisten Einzelpreise gewonnen?) 
 ```
-einzelpreisnetzwerk_ohneav <- delete.edges(einzelpreisnetzwerk, E(einzelpreisnetzwerk)[relation == 2])
-outdeinzelpreise <- degree(einzelpreisnetzwerk_ohneav, mode="out")
+einzelpreisnetzwerk_ohneag <- delete.edges(einzelpreisnetzwerk, E(einzelpreisnetzwerk)[relation == 2])
+outdeinzelpreise <- degree(einzelpreisnetzwerk_ohneag, mode="out")
 sort(outdeinzelpreise)
 ```
 
+#### Mehrfache Preisträger im Betrachtungszeitraum (nur unter Einzelpreisträgern)  
+Wer hat **drei oder mehr Einzelpreise** gewonnen?  
+```
+einzelpreistraeger_3 <- delete_vertices (einzelpreisnetzwerk_ohneag, V(einzelpreisnetzwerk_ohneag)[(type == 0) &(degree(einzelpreisnetzwerk_ohneag, mode="out")<3)])
+einzelpreistraeger_3
+```
+--> Namen auswerfen lassen & Arbeitgebern zuordnen!
 
 ### Netzwerk der Gruppenpreise
 (mit Arbeitgeberbeziehungen) 
