@@ -291,6 +291,7 @@ indpreistraeger <- degree(preistraeger, mode="in")
 indpreistraeger
 sort(indpreistraeger)
 ```
+#### Mehrfache Preisträger im Betrachtungszeitraum  
 Wer hat die meisten Preise abgeräumt? (Netzwerk mit nur Preisträgern, relation == 1, sort nach Outdegree)
 ```
 preistraeger_ohneag <- delete.edges(preistraeger, E(preistraeger)[which(relation == 2)])
@@ -298,16 +299,18 @@ preistraeger_ohneag <- delete_vertices (preistraeger_ohneag, V(preistraeger_ohne
 outdpreistraeger_ohneag <- degree(preistraeger_ohneag, mode="out")
 sort(outdpreistraeger_ohneag)
 ```
-**Nach Jahren** selektieren/untersuchen (2015 beliebig ersetzen)
+Wer hat im Betrachtungszeitraum drei oder mehr Preise gewonnen?
+```
+preistraeger_3 <- delete_vertices (preistraeger_ohneag, V(preistraeger_ohneag)[(type == 0) &(degree(preistraeger_ohneag, mode="out")<3)])
+preistraeger_3
+```
+**Nach Jahren**  
+selektieren/untersuchen (2015 beliebig ersetzen)
 ```
 preistraegeryear <- subgraph.edges(preistraeger, E(preistraeger)[which(year == 2015)])
 preistraegeryear
 ```
-Selektiere PT, die zwei oder mehr Preise gewonnen haben:
-```
-preistraegeryear <- delete_vertices (preistraegeryear, V(preistraegeryear)[(type == 0) &(degree(preistraegeryear, mode="out")<3)])
-```
-Sortiere die übrigen nach Outdegree (Wer hat zwei oder mehr Preise gewonnen in Jahr x?):
+Sortiere nach Outdegree:
 ```
 outdpreistraeger <- degree(preistraegeryear, mode="out")
 sort(outdpreistraeger)
@@ -321,8 +324,8 @@ sort(indpreistraegeryear)
 
 Netzwerk mit **ausschließlich Arbeitsbeziehungen** der Preisträger:  
 ```
-preistraeger_av <- subgraph.edges(preistraeger, E(preistraeger)[relation == 2])
-preistraeger_av
+preistraeger_ag <- subgraph.edges(preistraeger, E(preistraeger)[relation == 2])
+preistraeger_ag
 ```
 
 
