@@ -273,12 +273,24 @@ clusters(g)
 clg <- cluster_walktrap(g)
 
 membership(clg)
+```
+Berechne Modularität im Netzwerk:
+```
 modularity(clg)
+```
+Zeige die verschiedenen Cluster im Netzwerk:
+```
 communities(clg)
+```
+Berechne die Größe der Cluster & sortiere sie danach:
+```
 size_clg2 <- sizes(clg)
 sort(size_clg)
 ```
-
+Zeige Mitglieder des größten Clusters [[4]]:
+```
+communities(clg)[[4]]
+```
 
 
 ## PREISTRÄGER-NETZWERK
