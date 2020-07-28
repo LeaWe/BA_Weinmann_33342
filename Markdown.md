@@ -1585,7 +1585,7 @@ unternehmen_preise
 
 1. Alle Nicht-Arbeitsbeziehungen löschen
 ```
-task <- delete.edges(x2, E(x2)[relation != 2])
+task <- delete.edges(g, E(g)[relation != 2])
 ```
 2. Alle Arbeitsbeziehungen löschen, die task = "NA" sind
 ```
