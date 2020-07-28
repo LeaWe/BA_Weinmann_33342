@@ -943,7 +943,183 @@ sum(frauen_preistraeger_x, na.rm = TRUE)
 
 #### Auswertung der Jurynetzwerke nach einzelnen Preisnetzwerken  
 
-(wie oben, "g" durch "jury" ersetzen) 
+(wie oben, "g" durch "jury" ersetzen)  
+
+### TEILNETZWERK PREISTRÄGER UND JURYMITGLIED (PuJ)  
+
+### WANDERUNG  
+**Wer wandert innerhalb eines Preises von Preisträgern in Jury und umgekehrt?** 
+Arbeitgeber löschen
+```
+ohneAG <- delete_vertices(g, V(g)[which (institutiontype == 2)])
+```
+Namen extrahieren
+```
+Personen <- delete.vertices(ohneAG, V(ohneAG)[type!=0])
+Namen <- V(Personen)$name
+Namen
+```
+Personen löschen, die keine Preisbeziegung oder keine Jurybeziehung haben
+(dazu: Schleife alle Namen durch und lösche diejenigen, die Jurybeziehung oder Preisbeziehung = 0 haben)
+```
+PuJ <- ohneAG
+for (i in (1:(length(Namen)))){
+  ego <- subgraph <- make_ego_graph(g, order=1, Namen[i])
+  jurybeziehung <- E(ego[[1]])$relation == 3
+  preisbeziehung <- E(ego[[1]])$relation == 1
+  if ((sum(jurybeziehung) == 0) | ((sum(preisbeziehung) == 0))){
+    PuJ <- delete_vertices(PuJ, V(PuJ)[name == Namen[i]])
+  }
+}
+```
+Zeige Netzwerk
+```
+PuJ
+```
+**Welche Personen sind Preisträger und Jurymitglied im gleichen Preis (und im gleichen Jahr)?**  
+Personen und Preise extrahieren
+```
+Personen <- delete.vertices(PuJ, V(PuJ)[type!=0])
+Namen <- V(Personen)$name
+Namen
+
+Preise <- delete.vertices(PuJ, V(PuJ)[type == 0])
+Preise <- V(Preise)$name
+Preise
+```
+1. Schleife alle Preise und print
+```
+for (i in (1:(length(Preise)))){
+  ego <- subgraph <- make_ego_graph(g, order=1, Preise[i])
+  print("######################")
+  print(Preise[i])
+  print(i)
+  ```
+  2. Schleife alle Personen
+  ```
+  for (j in (1:(length(Namen)))){
+    ```
+    3. alle anderen Personen löschen
+    ```
+    ego2 <- delete_vertices(ego[[1]], V(ego[[1]])[(name != Namen[j]) & (type == 0)])
+    ```
+    4. Beziehungen zählen
+    ```
+    jurybeziehung <- E(ego2)$relation == 3
+    preisbeziehung <- E(ego2)$relation == 1
+    ```
+    5. wenn sowohl Preisträger als auch Jurymitglied --> print
+    ```
+    if ((sum(jurybeziehung) > 0) & ((sum(preisbeziehung) > 0))){
+      print(Namen[j])
+      print(j)
+    ```
+      6. Schleife alle Jahre
+      ```
+      for (k in (2015:2019)){
+        Jahr <- as.character(k)
+        ego3 <- delete_edges(ego2, E(ego2)[year != Jahr])
+        jurybeziehung <- 0
+        preisbeziehung <- 0
+        jurybeziehung <- E(ego3)$relation == 3
+        preisbeziehung <- E(ego3)$relation == 1
+        ```
+        7. Wenn Preisträger und Jurymitglied im selben Jahr --> print!
+        ```
+        if ((sum(jurybeziehung) > 0) & ((sum(preisbeziehung) > 0))){
+          print(k)
+          print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        }
+      }
+    }
+  }
+  print("   ")
+}
+```
+Einzeltests: Bei Preise[] Nummer aus Liste eintragen (Preisnummer), ebenso bei Name[] (Namensnummer), um einzelne Personen zu plotten
+```
+ego <- subgraph <- make_ego_graph(g, order=1, Preise[12])                            #i = Preisnummer
+ego2 <- delete_vertices(ego[[1]], V(ego[[1]])[(name != Namen[17]) & (type == 0)])    #i = Namensnummer
+liste <- E(ego2)
+edge_attr(ego2)
+
+plot(ego2,
+     edge.arrow.size=.02,
+     edge.label.degree=0.1,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_kk)
+```
+
+#### Teilnetzwerk PuJ  
+= Teilnetzwerk mit ausschließlich Personen, die Jurymitglied & Preisträger zugleich im Netzwerk sind und ihren Beziehungen (ohne Arbeitsverhältnisse):  
+
+Erstelle Netzwerk (siehe oben):  
+```
+PuJ
+```
+Wie viele Personen im Netzwerk?
+```
+Personen <- V(PuJ)$type==0
+sum(Personen, na.rm=T)
+```
+Zeige Namen:
+```
+Namen <- V(PuJ)$name
+Namen
+```
+Berechne Dichte:
+```
+edge_density(PuJ)
+```
+Clusteranalyse:
+```
+is.connected(PuJ)
+
+cl_PuJ <- cluster_walktrap(PuJ)
+modularity(cl_PuJ)
+communities(cl_PuJ)
+sizes(cl_PuJ)
+betw <- betweenness(PuJ, directed=F)
+sort(betw)
+```
+**Netzwerk ohne djp und J.d.J**
+```
+PuJ[[108]]
+PuJ[[49]]
+
+PuJ_ber <- delete.vertices(PuJ, V(PuJ)[49, 108])
+PuJ_ber <- delete_vertices (PuJ_ber, V(PuJ_ber)[degree(PuJ_ber, mode="all")=="0"]) 
+PuJ_ber
+```
+Wie viele Personen im Netzwerk?
+```
+Personen <- V(PuJ_ber)$type==0
+sum(Personen, na.rm=T)
+```
+Zeige Namen:
+```
+Namen <- V(PuJ_ber)$name
+Namen
+```
+Berechne Dichte:
+```
+edge_density(PuJ_ber)
+```
+Clusteranalyse:
+```
+is.connected(PuJ_ber)
+
+cl_PuJ_ber <- cluster_walktrap(PuJ_ber)
+modularity(cl_PuJ_ber)
+communities(cl_PuJ_ber)
+sizes(cl_PuJ_ber)
+betw <- betweenness(PuJ_ber, directed=F)
+sort(betw)
+```
+
 
 
 ### ARD-Netzwerk
@@ -973,6 +1149,8 @@ ard <- g - (g - swr[[1]] - wdr[[1]] - radiobremen[[1]] - br[[1]] - hr[[1]] - mdr
 ard <- delete_vertices (ard, V(ard)[degree(ard, mode="all")=="0"])
 plot(ard)
 ```
+
+
 
 ### Das KONSERVATIVE Netzwerk
 (besteht aus: Theodor-Wolff-Preis, Herbert-Quandt-Preis, Ludwig-Erhard-Preis --> größter Anteil konservativer Medien unter PT & Jury)
@@ -1452,9 +1630,9 @@ for (i in (1:15)){
 }
 ```
 
-## SONSTIGES GESAMTNETZWERK  
+## SONSTIGES
 
-### Personen, die bei einem Preis Preisträger sind und in Jury sitzen:  
+### Doppelrollen: Personen, die bei einem Preis Preisträger sind und in Jury sitzen:  
 
 ```
 Preis <- "xxx" #(jew. Preis eintragen)
@@ -1814,178 +1992,6 @@ length(matrix)
 ! Werte sind unsortiert, muss nun händisch nach größten Werten (+ Preisträger dazu) durchsucht werden, weil sort() nicht funktioniert.
 
 
-### WANDERUNG
-**Wer wandert innerhalb eines Preises von Preisträgern in Jury und umgekehrt?** 
-Arbeitgeber löschen
-```
-ohneAG <- delete_vertices(g, V(g)[which (institutiontype == 2)])
-```
-Namen extrahieren
-```
-Personen <- delete.vertices(ohneAG, V(ohneAG)[type!=0])
-Namen <- V(Personen)$name
-Namen
-```
-Personen löschen, die keine Preisbeziegung oder keine Jurybeziehung haben
-(dazu: Schleife alle Namen durch und lösche diejenigen, die Jurybeziehung oder Preisbeziehung = 0 haben)
-```
-PuJ <- ohneAG
-for (i in (1:(length(Namen)))){
-  ego <- subgraph <- make_ego_graph(g, order=1, Namen[i])
-  jurybeziehung <- E(ego[[1]])$relation == 3
-  preisbeziehung <- E(ego[[1]])$relation == 1
-  if ((sum(jurybeziehung) == 0) | ((sum(preisbeziehung) == 0))){
-    PuJ <- delete_vertices(PuJ, V(PuJ)[name == Namen[i]])
-  }
-}
-```
-Zeige Netzwerk
-```
-PuJ
-```
-**Welche Personen sind Preisträger und Jurymitglied im gleichen Preis (und im gleichen Jahr)?**
-Personen und Preise extrahieren
-```
-Personen <- delete.vertices(PuJ, V(PuJ)[type!=0])
-Namen <- V(Personen)$name
-Namen
-
-Preise <- delete.vertices(PuJ, V(PuJ)[type == 0])
-Preise <- V(Preise)$name
-Preise
-```
-1. Schleife alle Preise und print
-```
-for (i in (1:(length(Preise)))){
-  ego <- subgraph <- make_ego_graph(g, order=1, Preise[i])
-  print("######################")
-  print(Preise[i])
-  print(i)
-  ```
-  2. Schleife alle Personen
-  ```
-  for (j in (1:(length(Namen)))){
-    ```
-    3. alle anderen Personen löschen
-    ```
-    ego2 <- delete_vertices(ego[[1]], V(ego[[1]])[(name != Namen[j]) & (type == 0)])
-    ```
-    4. Beziehungen zählen
-    ```
-    jurybeziehung <- E(ego2)$relation == 3
-    preisbeziehung <- E(ego2)$relation == 1
-    ```
-    5. wenn sowohl Preisträger als auch Jurymitglied --> print
-    ```
-    if ((sum(jurybeziehung) > 0) & ((sum(preisbeziehung) > 0))){
-      print(Namen[j])
-      print(j)
-    ```
-      6. Schleife alle Jahre
-      ```
-      for (k in (2015:2019)){
-        Jahr <- as.character(k)
-        ego3 <- delete_edges(ego2, E(ego2)[year != Jahr])
-        jurybeziehung <- 0
-        preisbeziehung <- 0
-        jurybeziehung <- E(ego3)$relation == 3
-        preisbeziehung <- E(ego3)$relation == 1
-        ```
-        7. Wenn Preisträger und Jurymitglied im selben Jahr --> print!
-        ```
-        if ((sum(jurybeziehung) > 0) & ((sum(preisbeziehung) > 0))){
-          print(k)
-          print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        }
-      }
-    }
-  }
-  print("   ")
-}
-```
-Einzeltests: Bei Preise[] Nummer aus Liste eintragen (Preisnummer), ebenso bei Name[] (Namensnummer), um einzelne Personen zu plotten
-```
-ego <- subgraph <- make_ego_graph(g, order=1, Preise[12])                            #i = Preisnummer
-ego2 <- delete_vertices(ego[[1]], V(ego[[1]])[(name != Namen[17]) & (type == 0)])    #i = Namensnummer
-liste <- E(ego2)
-edge_attr(ego2)
-
-plot(ego2,
-     edge.arrow.size=.02,
-     edge.label.degree=0.1,
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.cex=.6,
-     layout = layout_with_kk)
-```
-
-### Teilnetzwerk PuJ
-= Teilnetzwerk mit ausschließlich Personen, die Jurymitglied & Preisträger zugleich im Netzwerk sind und ihren Beziehungen (ohne Arbeitsverhältnisse):  
-
-Erstelle Netzwerk (siehe oben):  
-```
-PuJ
-```
-Wie viele Personen im Netzwerk?
-```
-Personen <- V(PuJ)$type==0
-sum(Personen, na.rm=T)
-```
-Zeige Namen:
-```
-Namen <- V(PuJ)$name
-Namen
-```
-Berechne Dichte:
-```
-edge_density(PuJ)
-```
-Clusteranalyse:
-```
-is.connected(PuJ)
-
-cl_PuJ <- cluster_walktrap(PuJ)
-modularity(cl_PuJ)
-communities(cl_PuJ)
-sizes(cl_PuJ)
-betw <- betweenness(PuJ, directed=F)
-sort(betw)
-```
-**Netzwerk ohne djp und J.d.J**
-```
-PuJ[[108]]
-PuJ[[49]]
-
-PuJ_ber <- delete.vertices(PuJ, V(PuJ)[49, 108])
-PuJ_ber <- delete_vertices (PuJ_ber, V(PuJ_ber)[degree(PuJ_ber, mode="all")=="0"]) 
-PuJ_ber
-```
-Wie viele Personen im Netzwerk?
-```
-Personen <- V(PuJ_ber)$type==0
-sum(Personen, na.rm=T)
-```
-Zeige Namen:
-```
-Namen <- V(PuJ_ber)$name
-Namen
-```
-Berechne Dichte:
-```
-edge_density(PuJ_ber)
-```
-Clusteranalyse:
-```
-is.connected(PuJ_ber)
-
-cl_PuJ_ber <- cluster_walktrap(PuJ_ber)
-modularity(cl_PuJ_ber)
-communities(cl_PuJ_ber)
-sizes(cl_PuJ_ber)
-betw <- betweenness(PuJ_ber, directed=F)
-sort(betw)
-```
 
 ## Visualisierungen
 
