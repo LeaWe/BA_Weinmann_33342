@@ -1954,6 +1954,9 @@ sort(betw)
 ```
 **Netzwerk ohne djp und J.d.J**
 ```
+PuJ[[108]]
+PuJ[[49]]
+
 PuJ_ber <- delete.vertices(PuJ, V(PuJ)[49, 108])
 PuJ_ber <- delete_vertices (PuJ_ber, V(PuJ_ber)[degree(PuJ_ber, mode="all")=="0"]) 
 PuJ_ber
