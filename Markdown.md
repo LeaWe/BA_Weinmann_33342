@@ -1179,11 +1179,17 @@ ard2 <- delete_vertices (ard, V(ard)[degree(ard, mode="all")=="0"])
 ard2
 ```
 
-Wie viele Preise im ARD-Netzwerk enthalten?
+**Wie viele Preise** im ARD-Netzwerk enthalten?  
 ```
 preise <- V(ard2)$institutiontype == 1
 sum(preise, na.rm=T)
 ```
+
+Bei **welchen Preisen** ist der Anteil der ARD-Mitarbeiter besonders hoch?  
+
+1. einzelne Preisnetzwerke plotten (s.o.) & alle ARD-Beziehungen addieren.
+2. Abgleich mit Gesamtzahl der Arb.beziehungen in den Netzwerken (anteilig)
+
 
 ### Das KONSERVATIVE Netzwerk
 (besteht aus: Theodor-Wolff-Preis, Herbert-Quandt-Preis, Ludwig-Erhard-Preis --> größter Anteil konservativer Medien unter PT & Jury)
