@@ -1150,7 +1150,40 @@ ard <- delete_vertices (ard, V(ard)[degree(ard, mode="all")=="0"])
 plot(ard)
 ```
 
+Wie viele Personen im ARD-Netzwerk enthalten?
+```
+personen <- V(ard)$type ==0
+sum(personen, na.rm=T)
+```
 
+**Netzwerk zweiten Grades (mit Preis- & Jurybeziehungen)**  
+(wie oben, aber order = 2):  
+```
+swr <- subgraph <- make_ego_graph(g, order = 2,  c("Südwestrundfunk (SWR)"))
+wdr <- subgraph <- make_ego_graph(g, order = 2,  c("Westdeutscher Rundfunk (WDR)"))
+radiobremen <- subgraph <- make_ego_graph(g, order = 2,  c("Radio Bremen"))
+br <- subgraph <- make_ego_graph(g, order = 2,  c("Bayerischer Rundfunk (BR)"))
+hr <- subgraph <- make_ego_graph(g, order = 2,  c("Hessischer Rundfunk (HR)"))
+mdr <- subgraph <- make_ego_graph(g, order = 2,  c("Mitteldeutscher Rundfunk (MDR)"))
+ndr <- subgraph <- make_ego_graph(g, order = 2,  c("Norddeutscher Rundfunk (NDR)"))
+sr <- subgraph <- make_ego_graph(g, order = 2,  c("Saarländischer Rundfunk (SR)"))
+funk <- subgraph <- make_ego_graph(g, order = 2,  c("Funk (ARD)"))
+rbb <- subgraph <- make_ego_graph(g, order = 2,  c("Radio Berlin Brandeburg (rbb)"))
+ard1 <- subgraph <- make_ego_graph(g, order = 2,  c("ARD"))
+dlr <- subgraph <- make_ego_graph(g, order = 2,  c("Deutschlandradio"))
+dw <- subgraph <- make_ego_graph(g, order = 2,  c("Deutsche Welle"))
+
+ard2 <- g - (g - swr[[1]] - wdr[[1]] - radiobremen[[1]] - br[[1]] - hr[[1]] - mdr[[1]] - ndr[[1]] - sr[[1]] - funk[[1]] - rbb[[1]] - ard1[[1]] - dlr[[1]] - dw[[1]]) 
+
+ard2 <- delete_vertices (ard, V(ard)[degree(ard, mode="all")=="0"])
+ard2
+```
+
+Wie viele Preise im ARD-Netzwerk enthalten?
+```
+preise <- V(ard2)$institutiontype == 1
+sum(preise, na.rm=T)
+```
 
 ### Das KONSERVATIVE Netzwerk
 (besteht aus: Theodor-Wolff-Preis, Herbert-Quandt-Preis, Ludwig-Erhard-Preis --> größter Anteil konservativer Medien unter PT & Jury)
@@ -1339,6 +1372,7 @@ Bereinigtes Preisnetzwerk
 ```
 plot(herbertquandtpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
+
 **Einzelnetzwerke zusammenfassen**
 Alle nicht zugehörigen Arbeitsverhältnisse löschen
 ```
@@ -1823,8 +1857,10 @@ for(i in 1:length(AGlist)) {
   }
 }
 print(countcases)
+```
 
-#zum Plotten der Einzelnetzwerke bei mehreren Fällen
+zum Plotten der Einzelnetzwerke bei mehreren Fällen:
+```
 AGtest <- subgraph <- make_ego_graph(x18, order=2, AGlist[i])
 plot(AGtest[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
