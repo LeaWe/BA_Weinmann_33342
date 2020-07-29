@@ -2286,6 +2286,30 @@ plot(av,
 
 ### Ego-Netzwerk Axel-Springer-Akademie (Abb. 2)  
 
+```
+Unternehmen <- "Axel-Springer-Akademie"
+unternehmen <- subgraph <- make_ego_graph(g, order=2, Unternehmen)
+unternehmen
+
+E(unternehmen[[1]])[relation == 3]$color <- "lightgrey"
+E(unternehmen[[1]])[relation == 2]$color <- "lightgrey"
+E(unternehmen[[1]])[relation == 1]$color <- "orange"
+E(unternehmen[[1]])[(relation == 1) & (format == 2)]$color <- rgb(1,0,0,0.5)
+E(unternehmen[[1]])$curved=.2
+
+V(unternehmen[[1]])$label <- ifelse(V(unternehmen[[1]])$institutiontype==1, V(unternehmen[[1]])$name, NA) 
+
+plot(unternehmen[[1]],
+     edge.arrow.size=.1, 
+     vertex.size=6,
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.cex=.6,
+     layout = layout_with_fr,
+     asp=0)
+```
+
 
 ### Broker-Medien (Abb. 3)  
 ```
