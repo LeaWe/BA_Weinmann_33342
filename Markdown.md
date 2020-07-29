@@ -29,6 +29,24 @@ _Dieses Dokument enthält den kommentierten Code, der zur Analyse und Visualisie
   -	Männer/Frauenanteil
   -	Ressortzugehörigkeit
 - Visualisierungen
+  -	Grundsätzliche Darstellung
+  -	Das Gesamtnetzwerk
+    -	Indegree-Verteilung
+    - Outdegree-Verteilung
+    - Indegree-Verteilung im Netzwerk der Arbeitsbeziehungen
+  - Broker-Medien
+  - Broker-Personen
+  - Netzwerk ohne Arbeitsbeziehungen
+    - …mit wichtigsten Broker-Preisen
+  - Das konservative Netzwerk
+  - Das Elitenetzwerk
+    - Gesamtes Netzwerk
+    - Clusteranalyse des Elitenetzwerks!!
+    - Dendrogramm des Elitenetzwerks
+  - Das Netzwerk der „Doppelrollen“
+    - …mit wichtigsten Broker-Preisen
+    - …mit wichtigsten Broker-Personen
+  - Die Dominanz der ARD
 
 
 
@@ -2172,7 +2190,8 @@ V(g)$label <- V(g)$name
 
 ## Das Gesamtnetzwerk
 
-### Gesamtes Netzwerk mit Indgree-Verteilung (Preise hervorgehoben)
+### Gesamtes Netzwerk mit Indegree-Verteilung  
+(Preise hervorgehoben)
 
 ```
 V(g)[[1118]]$label <- "2" ## Katholischer Medienpreis
@@ -2234,7 +2253,7 @@ plot(g,
      rescale=T)
 ```
 
-### Indegreeverteilung im Netzwerk mit nur Arbeitgebern  
+### Indegreeverteilung im Netzwerk mit nur Arbeitsbeziehungen  
 (Preise ausgeklammert, um Degree-Verteilung der Medien zeigen zu können)  
 
 ```
@@ -2331,7 +2350,8 @@ plot(ohneav,
 ```
 
 
-### Netzwerk ohne Arbeitsverhältnisse
+### Netzwerk ohne Arbeitsbeziehungen  
+
 Netzwerk ohne Label visualisieren, zeigt Beziehungen:
 ```
 ohneav
@@ -2357,7 +2377,7 @@ plot(ohneav, edge.arrow.size=.02,
      asp=0)
 ```
 
-#### Netzwerkvisualisierung mit wichtigen Broker-Preisen
+#### ...mit wichtigen Broker-Preisen
 ```
 betw <- betweenness(ohneav, directed=F)
 options(max.print = 999999)
@@ -2466,7 +2486,7 @@ plot(g4,
      rescale=T)
 ```
 
-#### Dendrogramm des Elitenetzwerks  
+#### Clusteranalyse des Elitenetzwerks  
 
 1. Selektiere Namen aus Elitenetzwerk:  
 ```
@@ -2478,7 +2498,15 @@ g4
 ```
 V(g4)$name <- Namen
 ```
-4. Führe Clusteranalyse durch und wird Dendrogramm aus:  
+4. Führe Clusteranalyse durch und plot:  
+```
+clg4 <- cluster_walktrap(g4)
+plot(clg4)
+```
+
+#### Dendrogramm des Elitenetzwerks  
+
+4. Führe Clusteranalyse durch und wirf Dendrogramm aus:  
 ```
 clg4 <- cluster_walktrap(g4)
 plot_dendrogram(clg4)
@@ -2487,7 +2515,7 @@ plot_dendrogram(clg4)
 
 ### Das Netzwerk der "Doppelrollen"  
 
-#### Die Broker-Preise im Netzwerk  
+#### ...mit den wichtigsten Broker-Preisen 
 ```
 betw <- betweenness(PuJ, directed=F, normalized=T)
 sort(betw)
@@ -2518,7 +2546,7 @@ plot(PuJ,
      asp=0)
 ```
 
-#### Die Broker-Personen im Netzwerk  
+#### ...mit den wichtigsten Broker-Personen
 ```
 betw <- betweenness(PuJ, directed=F, normalized=T)
 sort(betw)
