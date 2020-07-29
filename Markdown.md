@@ -363,7 +363,7 @@ preistraeger_ag
 ### GRUPPEN- UND EINZELPREISNETZWERK
 
 #### Netzwerk der Einzelpreise
-**(mit Arbeitgeberbeziehungen)**
+(mit Arbeitgeberbeziehungen)
 
 Netzwerk erstellen:  
 **1. Alle Gruppenpreisbeziehungen und Jurybeziehungen löschen und alle Knoten ohne Beziehungen löschen**
@@ -1604,6 +1604,7 @@ Bereinigtes Preisnetzwerk
 ```
 plot(ludwigerhardpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
+
 **2. Theodor-Wolff-Preis**
 ```
 Preis <- "Theodor-Wolff-Preis"
@@ -1621,7 +1622,7 @@ plot(x1[[1]],
      layout = layout_with_kk)
 ```
 Erzeuge unbereinigtes Preisnetzwerk zweiten Grades
-  ```
+```
 x2 <- subgraph <- make_ego_graph(g, order=2, Preis)
 plot(x2[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
@@ -1665,6 +1666,7 @@ Bereinigtes Preisnetzwerk
 ```
 plot(theodorwolffpreis, edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
+
 **3. Herbert-Quandt-Preis**
 ```
 Preis <- "Herbert Quandt Medienpreis"
@@ -2084,15 +2086,15 @@ length(matrix)
 
 
 
-## Visualisierungen
+# Visualisierungen
 
-### Grundsätzliche Darstellung
+## Grundsätzliche Darstellung
 ```
 E(g)$curved=.2 
 E(g)$vertex.label.family="Helvetica"
 ```
 
-### Darstellung von Personen und Institutionen, bi-partite
+## Darstellung von Personen und Institutionen, bi-partite
 
 Färbt edges unterschiedlicher types verschieden ein & gib ihnen unterscheidbare Formen
 ```
@@ -2111,7 +2113,7 @@ E(g)[relation == 1]$color <- orange"
 E(g)[(relation == 1) & (format == 2)]$color <- "red"
 ```
 
-### Namen verkürzen
+## Namen verkürzen
 ```
 options(max.print = 99999)
 Namen <- V(g)$name
@@ -2168,9 +2170,10 @@ V(g)$name <- Namen
 V(g)$label <- V(g)$name
 ```
 
-### Das Gesamtnetzwerk
+## Das Gesamtnetzwerk
 
-#### Gesamtes Netzwerk mit Indgree-Verteilung (Preise hervorgehoben)
+### Gesamtes Netzwerk mit Indgree-Verteilung (Preise hervorgehoben)
+
 ```
 V(g)[[1118]]$label <- "2" ## Katholischer Medienpreis
 V(g)[[2144]]$label <- "1" ## Wächterpreis
@@ -2205,7 +2208,7 @@ plot(g,
      asp=0)
 ```
 
-#### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
+### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
 ```
 V(g)[V(g)$type == 1]$shape <- "square"
 V(g)[V(g)$type == 0]$shape <- "circle"
@@ -2231,8 +2234,9 @@ plot(g,
      rescale=T)
 ```
 
-#### Indegreeverteilung im Netzwerk mit nur Arbeitgebern  
+### Indegreeverteilung im Netzwerk mit nur Arbeitgebern  
 (Preise ausgeklammert, um Degree-Verteilung der Medien zeigen zu können)  
+
 ```
 av <- subgraph.edges(g, E(g)[relation == 2])
 av
@@ -2259,7 +2263,8 @@ plot(av,
      rescale=T)
 ```
 
-#### Broker-Medien Visualisierung
+
+### Broker-Medien
 ```
 av
 betw <- betweenness(av, directed=F, normalized = T)
@@ -2291,7 +2296,8 @@ plot(av,
      rescale=F)
 ```
 
-#### Broker-Personen Visualisierung:
+
+### Broker-Personen
 ```
 ohneav
 betw <- betweenness(ohneav, directed=F, normalized = T)
@@ -2350,7 +2356,8 @@ plot(ohneav, edge.arrow.size=.02,
      layout = layout_with_kk,
      asp=0)
 ```
-#### Netzwerkvisualisierung mit wichtigen Broker-Preisen:
+
+#### Netzwerkvisualisierung mit wichtigen Broker-Preisen
 ```
 betw <- betweenness(ohneav, directed=F)
 options(max.print = 999999)
@@ -2459,7 +2466,8 @@ plot(g4,
      rescale=T)
 ```
 
-#### Dendrogramm des Elitenetzwerks
+#### Dendrogramm des Elitenetzwerks  
+
 1. Selektiere Namen aus Elitenetzwerk:  
 ```
 Namen <- V(g4)$name
@@ -2477,9 +2485,9 @@ plot_dendrogram(clg4)
 ```
 
 
-### Das Netzwerk der "Doppelrollen":
+### Das Netzwerk der "Doppelrollen"  
 
-#### Die Broker-Preise im Netzwerk:
+#### Die Broker-Preise im Netzwerk  
 ```
 betw <- betweenness(PuJ, directed=F, normalized=T)
 sort(betw)
@@ -2510,7 +2518,7 @@ plot(PuJ,
      asp=0)
 ```
 
-#### Die Broker-Personen im Netzwerk:
+#### Die Broker-Personen im Netzwerk  
 ```
 betw <- betweenness(PuJ, directed=F, normalized=T)
 sort(betw)
@@ -2562,7 +2570,7 @@ plot(PuJ,
 ```
 
 
-### Die Dominanz der ARD
+### Die Dominanz der ARD  
 ```
 av
 ind_av <- degree(av, mode="in", normalized=T)
