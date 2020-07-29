@@ -30,23 +30,24 @@ _Dieses Dokument enthält den kommentierten Code, der zur Analyse und Visualisie
   -	Ressortzugehörigkeit
 - Visualisierungen
   -	Grundsätzliche Darstellung
-  -	Das Gesamtnetzwerk
-    -	Indegree-Verteilung
-    - Outdegree-Verteilung
-    - Indegree-Verteilung im Netzwerk der Arbeitsbeziehungen
-  - Broker-Medien
-  - Broker-Personen
-  - Netzwerk ohne Arbeitsbeziehungen
-    - …mit wichtigsten Broker-Preisen
-  - Das konservative Netzwerk
+  -	Das Gesamtnetzwerk 
+    -	Indegree-Verteilung (Abb. 1)
+    - Outdegree-Verteilung (Abb. 5)
+    - Indegree-Verteilung im Netzwerk der Arbeitsbeziehungen (Abb. 6)
+  - Das Ego-Netzwerk der Axel-Springer-Akademie (Abb. 2)
+  - Broker-Medien (Abb. 3)
+  - Broker-Personen (Abb. 11)
+  - Das konservative Netzwerk (Abb. 4)
   - Das Elitenetzwerk
-    - Gesamtes Netzwerk
-    - Clusteranalyse des Elitenetzwerks!!
-    - Dendrogramm des Elitenetzwerks
+    - Gesamtes Netzwerk (Abb. 7)
+    - Clusteranalyse des Elitenetzwerks (Abb. 8)
+    - Dendrogramm des Elitenetzwerks (Abb. 9)
+  - Netzwerk ohne Arbeitsbeziehungen
+    - …mit wichtigsten Broker-Preisen (Abb. 10)
   - Das Netzwerk der „Doppelrollen“
-    - …mit wichtigsten Broker-Preisen
-    - …mit wichtigsten Broker-Personen
-  - Die Dominanz der ARD
+    - …mit wichtigsten Broker-Preisen (Abb. 12)
+    - …mit wichtigsten Broker-Personen (Abb. 13)
+  - Die Dominanz der ARD (Abb. 14)
 
 
 
@@ -2112,7 +2113,7 @@ E(g)$curved=.2
 E(g)$vertex.label.family="Helvetica"
 ```
 
-## Darstellung von Personen und Institutionen, bi-partite
+### Darstellung von Personen und Institutionen, bi-partite
 
 Färbt edges unterschiedlicher types verschieden ein & gib ihnen unterscheidbare Formen
 ```
@@ -2131,7 +2132,7 @@ E(g)[relation == 1]$color <- orange"
 E(g)[(relation == 1) & (format == 2)]$color <- "red"
 ```
 
-## Namen verkürzen
+### Namen verkürzen
 ```
 options(max.print = 99999)
 Namen <- V(g)$name
@@ -2190,7 +2191,7 @@ V(g)$label <- V(g)$name
 
 ## Das Gesamtnetzwerk
 
-### Gesamtes Netzwerk mit Indegree-Verteilung  
+### Gesamtes Netzwerk mit Indegree-Verteilung (Abb. 1)    
 (Preise hervorgehoben)
 
 ```
@@ -2227,7 +2228,7 @@ plot(g,
      asp=0)
 ```
 
-### Outdegree-Verteilung im Gesamtnetzwerk (Personen)
+### Outdegree-Verteilung im Gesamtnetzwerk (Personen) (Abb. 5)  
 ```
 V(g)[V(g)$type == 1]$shape <- "square"
 V(g)[V(g)$type == 0]$shape <- "circle"
@@ -2253,7 +2254,7 @@ plot(g,
      rescale=T)
 ```
 
-### Indegreeverteilung im Netzwerk mit nur Arbeitsbeziehungen  
+### Indegreeverteilung im Netzwerk mit nur Arbeitsbeziehungen (Abb. 6)  
 (Preise ausgeklammert, um Degree-Verteilung der Medien zeigen zu können)  
 
 ```
@@ -2283,7 +2284,10 @@ plot(av,
 ```
 
 
-### Broker-Medien
+### Ego-Netzwerk Axel-Springer-Akademie (Abb. 2)  
+
+
+### Broker-Medien (Abb. 3)  
 ```
 av
 betw <- betweenness(av, directed=F, normalized = T)
@@ -2316,7 +2320,7 @@ plot(av,
 ```
 
 
-### Broker-Personen
+### Broker-Personen (Abb. 11)  
 ```
 ohneav
 betw <- betweenness(ohneav, directed=F, normalized = T)
@@ -2350,63 +2354,7 @@ plot(ohneav,
 ```
 
 
-### Netzwerk ohne Arbeitsbeziehungen  
-
-Netzwerk ohne Label visualisieren, zeigt Beziehungen:
-```
-ohneav
-edge_attr(ohneav)
-
-normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
-V(ohneav)$size <- normalize_01(degree(ohneav)) *5
-
-V(ohneav)[type==0]$color <- "cornflowerblue"
-
-V(ohneav)$label <- V(ohneav)$name
-V(ohneav)$label <- ifelse(V(ohneav)$institutiontype==1, V(ohneav)$label, NA) 
-
-E(ohneav)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
-E(ohneav)[relation == 1]$color <- rgb(1, 0.7, 0, 0.5)
-E(ohneav)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.5)
-
-plot(ohneav, edge.arrow.size=.02,
-     vertex.frame.color="white",
-     vertex.label=NA,
-     main="Netzwerk ohne Arbeitsbeziehungen",
-     layout = layout_with_kk,
-     asp=0)
-```
-
-#### ...mit wichtigen Broker-Preisen
-```
-betw <- betweenness(ohneav, directed=F)
-options(max.print = 999999)
-sort(betw)
-
-V(ohneav)$betw <- betw
-V(ohneav)$betw
-V(ohneav)$label <- V(ohneav)$name
-V(ohneav)$label <- ifelse(V(ohneav)$betw>106203.42359, V(ohneav)$name, NA) 
-
-V(ohneav)[type==0]$color="grey"
-
-normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
-V(ohneav)$size <- normalize_01(degree(ohneav)) * 7
-
-plot(ohneav, edge.arrow.size=.02,
-     edge.color="lightgrey",
-     vertex.frame.color="white",
-     vertex.label.family="Helvetica",
-     vertex.label.dist=0.5,
-     vertex.label.color="black",
-     vertex.label.cex=1.4,
-     main="Die Broker im Netzwerk ohne Arbeitsbeziehungen",
-     layout = layout_with_kk,
-     asp=0)
-```
-
-
-### Das konservative Netzwerk
+### Das konservative Netzwerk (Abb. 4)  
 ```
 konservativ
 
@@ -2459,7 +2407,7 @@ plot(konservativ,
 
 ### Das Elitenetzwerk
 
-#### Gesamtes Netzwerk (einfache Visualisierung)
+#### Gesamtes Netzwerk (einfache Visualisierung) (Abb. 7)  
 ```
 V(g4)$label <- V(g4)$name
 
@@ -2486,7 +2434,7 @@ plot(g4,
      rescale=T)
 ```
 
-#### Clusteranalyse des Elitenetzwerks  
+#### Clusteranalyse des Elitenetzwerks (Abb. 8)  
 
 1. Selektiere Namen aus Elitenetzwerk:  
 ```
@@ -2504,7 +2452,7 @@ clg4 <- cluster_walktrap(g4)
 plot(clg4)
 ```
 
-#### Dendrogramm des Elitenetzwerks  
+#### Dendrogramm des Elitenetzwerks (Abb. 9)  
 
 4. Führe Clusteranalyse durch und wirf Dendrogramm aus:  
 ```
@@ -2513,9 +2461,65 @@ plot_dendrogram(clg4)
 ```
 
 
+### Netzwerk ohne Arbeitsbeziehungen  
+
+Netzwerk ohne Label visualisieren, zeigt Beziehungen:
+```
+ohneav
+edge_attr(ohneav)
+
+normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
+V(ohneav)$size <- normalize_01(degree(ohneav)) *5
+
+V(ohneav)[type==0]$color <- "cornflowerblue"
+
+V(ohneav)$label <- V(ohneav)$name
+V(ohneav)$label <- ifelse(V(ohneav)$institutiontype==1, V(ohneav)$label, NA) 
+
+E(ohneav)[relation == 3]$color <- rgb(0, 1, 0, 0.3)
+E(ohneav)[relation == 1]$color <- rgb(1, 0.7, 0, 0.5)
+E(ohneav)[(relation == 1) & (format == 2)]$color <- rgb(1, 0, 0, 0.5)
+
+plot(ohneav, edge.arrow.size=.02,
+     vertex.frame.color="white",
+     vertex.label=NA,
+     main="Netzwerk ohne Arbeitsbeziehungen",
+     layout = layout_with_kk,
+     asp=0)
+```
+
+#### ...mit den wichtigen Broker-Preisen (Abb. 10)  
+```
+betw <- betweenness(ohneav, directed=F)
+options(max.print = 999999)
+sort(betw)
+
+V(ohneav)$betw <- betw
+V(ohneav)$betw
+V(ohneav)$label <- V(ohneav)$name
+V(ohneav)$label <- ifelse(V(ohneav)$betw>106203.42359, V(ohneav)$name, NA) 
+
+V(ohneav)[type==0]$color="grey"
+
+normalize_01 <- function(ohneav) (ohneav - min(ohneav)) / (max(ohneav) - min(ohneav)) + 0.25
+V(ohneav)$size <- normalize_01(degree(ohneav)) * 7
+
+plot(ohneav, edge.arrow.size=.02,
+     edge.color="lightgrey",
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.dist=0.5,
+     vertex.label.color="black",
+     vertex.label.cex=1.4,
+     main="Die Broker im Netzwerk ohne Arbeitsbeziehungen",
+     layout = layout_with_kk,
+     asp=0)
+```
+
+
 ### Das Netzwerk der "Doppelrollen"  
 
-#### ...mit den wichtigsten Broker-Preisen 
+#### ...mit den wichtigsten Broker-Preisen (Abb. 12)   
 ```
 betw <- betweenness(PuJ, directed=F, normalized=T)
 sort(betw)
@@ -2546,7 +2550,7 @@ plot(PuJ,
      asp=0)
 ```
 
-#### ...mit den wichtigsten Broker-Personen
+#### ...mit den wichtigsten Broker-Personen (Abb. 13)  
 ```
 betw <- betweenness(PuJ, directed=F, normalized=T)
 sort(betw)
@@ -2598,7 +2602,7 @@ plot(PuJ,
 ```
 
 
-### Die Dominanz der ARD  
+### Die Dominanz der ARD (Abb. 14)  
 ```
 av
 ind_av <- degree(av, mode="in", normalized=T)
