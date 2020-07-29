@@ -48,9 +48,8 @@ _Dieses Dokument enthält den kommentierten Code, der zur Analyse und Visualisie
     - …mit wichtigsten Broker-Preisen (Abb. 12)
     - …mit wichtigsten Broker-Personen (Abb. 13)
   - Die Dominanz der ARD (Abb. 14)
-
-
-
+  
+  
 # Netzwerk laden
 
 ```
@@ -77,10 +76,10 @@ V(g)
 edge_attr(g)
 vertex_attr(g)
 ```
-
-
+  
+  
 # Das Gesamtnetzwerk  
-
+  
 ### Knoten  
 
 Erzeugt Teilnetzwerk mit ausschließlich Preisen (Frage: Wie viele Preise im Gesamtnetzwerk?)
@@ -179,8 +178,9 @@ Juroren
 jury_maenner <- subgraph.edges(maenner, E(maenner)[relation == 3])
 jury_maenner
 ```
-
-
+  
+  
+    
 # Netzwerkmaße
 
 ### Outdegree
@@ -294,8 +294,9 @@ Zeige Mitglieder des größten Clusters [[4]]:
 ```
 communities(clg)[[4]]
 ```
-
-
+  
+  
+    
 # TEILNETZWERKE
 
 ## PREISTRÄGER-NETZWERK
@@ -377,8 +378,9 @@ Netzwerk mit **ausschließlich Arbeitsbeziehungen** der Preisträger:
 preistraeger_ag <- subgraph.edges(preistraeger, E(preistraeger)[relation == 2])
 preistraeger_ag
 ```
-
-
+  
+  
+  
 ### GRUPPEN- UND EINZELPREISNETZWERK
 
 #### Netzwerk der Einzelpreise
@@ -520,8 +522,9 @@ gsize(einzelpreise_count)
 gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
 gsize(gruppenpreise_count)
 ```
-
-
+  
+  
+    
 ## JURY-NETZWERK
 
 1. Entfernt alle Preisträger-Beziehungen aus edgelist
@@ -573,9 +576,10 @@ Netzwerk mit **nur Arbeitsbeziehungen** der Jurymitglieder:
 jury_av <- subgraph.edges(jury, E(jury)[relation == 2])
 jury_av
 ```
-
-
-## Elite-Netzwerke
+  
+  
+    
+## ELITE-NETZWERKE
 
 Schritt 1: **Bereinigtes Netzwerk (Stufe 1)** (Entferne alle Nodes mit degree < 5)
 ```
@@ -641,8 +645,9 @@ communities(clg4)
 size_clg4 <- sizes(clg4)
 sort(size_clg4)
 ```  
-
-
+  
+    
+  
 ## ARBEITSBEZIEHUNGEN-NETZWERK
 
 Selektiere alle Arbeitsverhältnisse(AV):
@@ -719,8 +724,9 @@ plot(av_comp[[3]],
      main="av_comp[[3]]",
      asp=0)
 ```
-
-
+  
+  
+    
 ## NETZWERK OHNE ARBEITSBEZIEHUNGEN
 
 Lösche alle Arbeitsbeziehungen und freistehende Nodes im Netzwerk:  
@@ -743,9 +749,9 @@ mean_distance(ohneav, directed=F)
 betw <- betweenness(ohneav, directed=F)
 sort(betw)
 ```
-
-
-
+  
+  
+  
 ## PREISSPEZIFISCHE NETZWERKE
 
 Erstellt Teilnetzwerke der einzelnen Preise
@@ -1002,9 +1008,9 @@ sum(frauen_preistraeger_x, na.rm = TRUE)
 #### Auswertung der Jurybeziehungen nach einzelnen Preisnetzwerken  
 
 (wie oben, "g" durch "jury" ersetzen)  
-
-
-
+  
+  
+  
 ## EGO-NETZWERKE VON ARBEITGEBERN  
 
 Unternehmen auswählen (z.B. Zeit)  
@@ -1055,13 +1061,14 @@ Bei wie vielen Preisen haben Mitarbeiter des Unternehmens etwas gewonnen?
 unternehmen_preise <- induced_subgraph(unternehmen[[1]], V(unternehmen[[1]])[which (institutiontype == 1)])
 unternehmen_preise
 ```
-
-
+  
+  
+    
 ## DOPPELROLLEN: TEILNETZWERK PREISTRÄGER UND JURYMITGLIED (PuJ)  
 
-### WANDERUNG  
+### WANDERUNG    
 
-**Wer wandert innerhalb eines Preises von Preisträgern in Jury und umgekehrt?** 
+**Wer wandert innerhalb eines Preises von Preisträgern in Jury und umgekehrt?**  
 Arbeitgeber löschen
 ```
 ohneAG <- delete_vertices(g, V(g)[which (institutiontype == 2)])
@@ -1238,7 +1245,7 @@ betw <- betweenness(PuJ_ber, directed=F)
 sort(betw)
 ```
 
-### Auswertung nach einzelnen Jahren: Personen, die bei einem Preis Preisträger sind und in Jury sitzen:  
+### Auswertung nach einzelnen Preisnetzwerken: Personen, die bei einem Preis Preisträger sind und in Jury sitzen:  
 
 ```
 Preis <- "xxx" #(jew. Preis eintragen)
@@ -1488,7 +1495,7 @@ plot(AGtest[[1]], vertex.size = 5, edge.arrow.size=.1, edge.label.degree=0, vert
 ```
 
 
-## ARD-Netzwerk
+## ARD-NETZWERK
 
 1. Ego-Netzwerke aller ÖR-Sender erstellen
 ```
@@ -1558,7 +1565,7 @@ Bei **welchen Preisen** ist der Anteil der ARD-Mitarbeiter besonders hoch?
 
 
 
-## Das KONSERVATIVE Netzwerk
+## DAS KONSERVATIVE NETZWERK
 (besteht aus: Theodor-Wolff-Preis, Herbert-Quandt-Preis, Ludwig-Erhard-Preis --> größter Anteil konservativer Medien unter PT & Jury)
 
 **1. Ludwig-Erhard-Preis**
@@ -1769,7 +1776,7 @@ plot(konservativ, edge.arrow.size=.1, vertex.size=5, edge.label.degree=0, vertex
 
 
 
-# Analysen
+# ANALYSEN
 
 ## Auswertung nach Jahren
 
