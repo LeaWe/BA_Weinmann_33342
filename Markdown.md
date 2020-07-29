@@ -1,105 +1,35 @@
-# BA (kommentierter Code)
+# Bachelorarbeit: "Preisgekrönt" - Eine Soziale Netzwerkanalyse
 
-### Bezeichnungen der Preise  
-Alternativer Medienpreis:  
-```
-name: "Alternativer Medienpreis"
-```
-Axel-Springer-Preis:  
-```
-name: "Axel-Springer-Preis für junge Journalisten"
-```
-Bremer Fernsehpreis:  
-```
-name: "Bremer Fernsehpreis"
-```
-Deutscher Journalistenpreis Wirtschaft:  
-```
-name: "Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"
-```
-Deutscher Radiopreis:  
-```
-name: "Deutscher Radiopreis"
-```
-Deutscher Reporterpreis:  
-```
-name: "Deutscher Reporterpreis"
-```
-Ernst-Schneider-Preis:  
-```
-name: "Ernst-Schneider-Preis"
-```
-Georg v. Holtzbrinck-Preis:  
-```
-name: "Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"
-```
-Grimme Online Award:  
-```
-name: "Grimme Online Award"
-```
-Helmut-Schmidt-Preis:  
-```
-name: "Helmut-Schmidt-Journalistenpreis"
-```
-Herbert-Quandt-Preis:  
-```
-name: "Herbert Quandt Medienpreis"
-```
-Journalist des Jahres:  
-```
-name: "Journalist des Jahres"
-```
-Katholischer Medienpreis:  
-```
-name: "Katholischer Medienpreis"
-```
-Kurt-Magnus-Preis:
-```
-name: "Kurt-Magnus-Preis"
-```
-Kurt-Tucholsky-Preis:  
-```
-name: "Kurt-Tucholsky-Preis für literarische Publizistik"
-```
-Leuchtturm:  
-```
-name: "Leuchtturm für besondere publizistische Leistungen"
-```
-Ludwig-Börne-Preis:  
-```
-name: "Ludwig-Börne-Preis"
-```
-Ludwig-Erhard-Preis:  
-```
-name: "Ludwig-Erhard-Preis für Wirtschaftspublizistik"
-```
-Nannenpreis:  
-```
-name: "Nannen Preis"
-```
-Otto Brenner Preis:
-```
-name: "Otto Brenner Preis"
-```
-Preis für die Freiheit und die Zukunft der Medien:
-```
-name: "Preis für die Freiheit und die Zukunft der Medien"
-```
-Robert-Geisendörfer-Preis: 
-```
-name: "Robert Geisendörfer Preis"
-```
-Theodor-Wolff-Preis:  
-```
-name: "Theodor-Wolff-Preis"
-```
-Wächterpreis:  
-```
-name: "Wächterpreis der Tagespresse"
-```
+Hochschule der Medien, Stuttgart  
+Lea Weinmann  
+Matrikelnummer: 33342  
+
+_Dieses Dokument enthält den kommentierten Code, der zur Analyse und Visualisierung der im Rahmen der Beachelorarbeit erhobenen Daten erstellt wurde. (Stand: 07. August 2020)_   
+
+# Inhalt:  
+Netzwerk laden
+Das Gesamtnetzwerk
+Netzwerkmaße
+Teilnetzwerke
+-	PT-Netzwerk
+-	Jurynetzwerk
+-	Arbeitsbeziehungen-Netzwerk
+-	Einzelne Preise
+o	Bezeichnungen der Preise
+o	
+-	Netzwerk ohne Arbeitsbeziehungen
+-	Doppelrollen: PuJ
+-	ARD-Netzwerk
+Analysen
+-	Preisgeld
+-	Männer/Frauenanteil
+-	Ressortzugehörigkeit
+Visualisierungen
 
 
-## Netzwerk laden
+
+# Netzwerk laden
+
 ```
 library(igraph)
 el <- read.csv("el.csv", header = TRUE, as.is=T, sep = ";")
@@ -111,7 +41,9 @@ g
 plot(g)
 head(el)
 head(nl)
-
+```
+Zeigt das Gesamtnetzwerk g an:  
+```
 plot(g)
 ```
 
@@ -123,7 +55,8 @@ edge_attr(g)
 vertex_attr(g)
 ```
 
-## Beschreibung Gesamtnetzwerk  
+
+# Das Gesamtnetzwerk  
 
 **Knoten**  
 
@@ -190,7 +123,9 @@ Wie viele Arbeitsverhältnisse gibt es im Gesamtnetzwerk?)
 av_g <- subgraph.edges(g, E(g)[which (relation == 2)])
 ```
 
-## Netzwerkmaße
+
+
+# Netzwerkmaße
 
 ### Outdegree
 ```
@@ -304,6 +239,8 @@ Zeige Mitglieder des größten Clusters [[4]]:
 communities(clg)[[4]]
 ```
 
+
+# TEILNETZWERKE
 
 ## PREISTRÄGER-NETZWERK
 
@@ -520,7 +457,6 @@ gruppenlpreisnetzwerk
 plot(gruppenpreisnetzwerk, edge.arrow.size=.1, edge.label.degree=0, vertex.size=5, vertex.frame.color="white", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
 ```
 
-
 #### Wie viele Einzel- und Gruppenpreise wurden verliehen? 
 ```
 einzelpreise_count <- subgraph.edges(g, E(g)[which(format == 1)])
@@ -528,8 +464,6 @@ gsize(einzelpreise_count)
 gruppenpreise_count <- subgraph.edges(g, E(g)[which(format == 2)])
 gsize(gruppenpreise_count)
 ```
-
-
 
 
 ## JURY-NETZWERK
@@ -585,10 +519,7 @@ jury_av
 ```
 
 
-
-## TEILNETZWERKE
-
-### Elite-Netzwerke
+## Elite-Netzwerke
 
 Schritt 1: **Bereinigtes Netzwerk (Stufe 1)** (Entferne alle Nodes mit degree < 5)
 ```
@@ -788,11 +719,11 @@ jury_maenner
 ```
 
 
-### PREISSPEZIFISCHE NETZWERKE
+## PREISSPEZIFISCHE NETZWERKE
 
 Erstellt Teilnetzwerke der einzelnen Preise
 
-#### Preisauswahl
+### Preisauswahl
 Zuweisung des einzelnen Preisnamen (Bsp. "Alternativer Medienpreis", siehe Legende), dann run der Befehle
 ```
 Preis <- "Alternativer Medienpreis"
@@ -813,6 +744,104 @@ Erzeuge unbereinigtes Preisnetzwerk **zweiten Grades**
 ```
 x2 <- subgraph <- make_ego_graph(g, order=2, Preis)
 plot(x2[[1]], edge.arrow.size=.1, edge.label.degree=0, vertex.frame.color="white", vertex.label.family="Helvetica", vertex.label.dist=0.5, vertex.label.cex=.6, layout = layout_with_kk)
+```
+
+### Bezeichnungen der Preise  
+Alternativer Medienpreis:  
+```
+name: "Alternativer Medienpreis"
+```
+Axel-Springer-Preis:  
+```
+name: "Axel-Springer-Preis für junge Journalisten"
+```
+Bremer Fernsehpreis:  
+```
+name: "Bremer Fernsehpreis"
+```
+Deutscher Journalistenpreis Wirtschaft:  
+```
+name: "Deutscher Journalistenpreis Wirtschaft | Börse | Finanzen (djp)"
+```
+Deutscher Radiopreis:  
+```
+name: "Deutscher Radiopreis"
+```
+Deutscher Reporterpreis:  
+```
+name: "Deutscher Reporterpreis"
+```
+Ernst-Schneider-Preis:  
+```
+name: "Ernst-Schneider-Preis"
+```
+Georg v. Holtzbrinck-Preis:  
+```
+name: "Georg von Holtzbrinck-Preis für Wirtschaftspublizistik bzw. Ferdinand Simoneit-Nachwuchspreis"
+```
+Grimme Online Award:  
+```
+name: "Grimme Online Award"
+```
+Helmut-Schmidt-Preis:  
+```
+name: "Helmut-Schmidt-Journalistenpreis"
+```
+Herbert-Quandt-Preis:  
+```
+name: "Herbert Quandt Medienpreis"
+```
+Journalist des Jahres:  
+```
+name: "Journalist des Jahres"
+```
+Katholischer Medienpreis:  
+```
+name: "Katholischer Medienpreis"
+```
+Kurt-Magnus-Preis:
+```
+name: "Kurt-Magnus-Preis"
+```
+Kurt-Tucholsky-Preis:  
+```
+name: "Kurt-Tucholsky-Preis für literarische Publizistik"
+```
+Leuchtturm:  
+```
+name: "Leuchtturm für besondere publizistische Leistungen"
+```
+Ludwig-Börne-Preis:  
+```
+name: "Ludwig-Börne-Preis"
+```
+Ludwig-Erhard-Preis:  
+```
+name: "Ludwig-Erhard-Preis für Wirtschaftspublizistik"
+```
+Nannenpreis:  
+```
+name: "Nannen Preis"
+```
+Otto Brenner Preis:
+```
+name: "Otto Brenner Preis"
+```
+Preis für die Freiheit und die Zukunft der Medien:
+```
+name: "Preis für die Freiheit und die Zukunft der Medien"
+```
+Robert-Geisendörfer-Preis: 
+```
+name: "Robert Geisendörfer Preis"
+```
+Theodor-Wolff-Preis:  
+```
+name: "Theodor-Wolff-Preis"
+```
+Wächterpreis:  
+```
+name: "Wächterpreis der Tagespresse"
 ```
 
 #### Bereinigung
