@@ -2460,27 +2460,32 @@ plot(g4,
 
 #### Clusteranalyse des Elitenetzwerks (Abb. 8)  
 
-1. Selektiere Namen aus Elitenetzwerk:  
 ```
-Namen <- V(g4)$name
-Namen
-g4
-```
-3. Überführe geänderte Namen wieder in Vertex-Attribute:  
-```
-V(g4)$name <- Namen
-```
-4. Führe Clusteranalyse durch und plot:  
-```
+clusters(g4)
 clg4 <- cluster_walktrap(g4)
-plot(clg4)
+g4 <- simplify(g4, remove.multiple=T)
+E(g4)$curved=0.2
+l <- layout_with_kk(g4)
+l <- norm_coords(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(clg4, g4,
+     edge.arrow.size=.02,
+     vertex.size=4,
+     edge.color = rgb(0,0,0,0.3),
+     vertex.frame.color="white",
+     vertex.label.family="Helvetica",
+     vertex.label.color="darkblue",
+     vertex.label.dist=-0.6,
+     vertex.label.cex=1.3,
+     main="Clusteranalyse des Elitenetzwerks",
+     asp=0,
+     layout=l*0.02,
+     rescale=T)
 ```
 
 #### Dendrogramm des Elitenetzwerks (Abb. 9)  
-
-4. Führe Clusteranalyse durch und wirf Dendrogramm aus:  
+  
 ```
-clg4 <- cluster_walktrap(g4)
 plot_dendrogram(clg4)
 ```
 
