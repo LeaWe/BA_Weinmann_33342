@@ -2308,12 +2308,15 @@ V(unternehmen[[1]])$label <- ifelse(V(unternehmen[[1]])$institutiontype==1, V(un
 
 plot(unternehmen[[1]],
      edge.arrow.size=.1, 
+     edge.width=3,
      vertex.size=6,
      vertex.frame.color="white",
      vertex.label.family="Helvetica",
      vertex.label.dist=0.5,
-     vertex.label.cex=.6,
+     vertex.label.cex=1.2,
+     vertex.label.color="black",
      layout = layout_with_fr,
+     main = "Ego-Netzwerk: Axel-Springer-Akademie",
      asp=0)
 ```
 
